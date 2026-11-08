@@ -1,0 +1,19 @@
+/* =========================================================
+   CATÁLOGO DE OBJETOS que podem ser colocados nos mapas.
+   tex   = nome do desenho (src/art/objects.js)
+   corpo = [largura, altura] da área sólida, na base do objeto
+           (null = dá para atravessar)
+   ========================================================= */
+
+const OBJETOS = {
+  arvore:          { tex: 'tree',        corpo: [14, 8] },
+  cerejeira:       { tex: 'treePink',    corpo: [16, 8] },
+  canteiro_arvore: { tex: 'planterTree', corpo: [50, 16] },
+  canteiro:        { tex: 'planter',     corpo: [30, 12] },
+  banco:           { tex: 'bench',       corpo: [30, 9] },
+  poste:           { tex: 'lamp',        corpo: [6, 4] },
+  mesa:            { tex: 'table',       corpo: [32, 26] },
+  lixeira:         { tex: 'trash',       corpo: [10, 6] },
+  vaso:            { tex: 'plant',       corpo: [12, 7] },
+  placa:           { tex: 'sign',        corpo: [10, 4] },
+};

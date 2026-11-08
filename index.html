@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#2b1430">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="description" content="Nossa História — uma aventura a dois.">
+  <title>Nossa História</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 6' shape-rendering='crispEdges'%3E%3Cpath fill='%23ff5fa2' d='M1 0h2v1h1V0h2v1h1v2H6v1H5v1H4v1H3V5H2V4H1V3H0V1h1z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- O jogo (Phaser) é desenhado aqui -->
+  <div id="game"></div>
+
+  <!-- Interface (HTML por cima do jogo) -->
+  <div id="ui">
+    <div id="hud" hidden>
+      <div class="badge" id="hud-title"></div>
+      <div class="hud-right">
+        <div class="badge" id="hud-phase"></div>
+        <button class="badge icon-btn" id="btn-menu" aria-label="Menu">☰</button>
+      </div>
+    </div>
+
+    <div id="quiz-progress" hidden></div>
+    <div id="quiz" hidden><div class="quiz-opts"></div></div>
+
+    <div id="dialog" hidden>
+      <div class="dlg-portrait"><img class="px" alt=""></div>
+      <div class="dlg-box">
+        <div class="dlg-name"></div>
+        <div class="dlg-text"></div>
+        <div class="dlg-next"></div>
+      </div>
+    </div>
+
+    <div id="controls">
+      <div id="dpad" aria-label="Direcional">
+        <span class="arm up"></span><span class="arm down"></span>
+        <span class="arm left"></span><span class="arm right"></span>
+        <span class="hub"></span>
+      </div>
+      <button id="btn-a" aria-label="Interagir">A</button>
+    </div>
+
+    <div id="screen" hidden></div>
+    <div id="phase-intro" hidden></div>
+    <div id="modal" hidden></div>
+    <div id="toast"></div>
+    <div id="fade" class="on"></div>
+    <div id="loading">Carregando nossa história…</div>
+  </div>
+
+  <!-- Biblioteca de jogos -->
+  <script src="lib/phaser.min.js"></script>
+
+  <!-- Dados (textos, fases, mapas) — edite aqui! -->
+  <script src="src/data/config.js"></script>
+  <script src="src/data/registro.js"></script>
+  <script src="src/data/personagens.js"></script>
+  <script src="src/data/fases.js"></script>
+  <script src="src/data/bonus.js"></script>
+  <script src="src/data/objetos.js"></script>
+  <script src="src/data/roteiros/fase1.js"></script>
+  <script src="src/data/maps/escola_fachada.js"></script>
+  <script src="src/data/maps/escola_corredor.js"></script>
+
+  <!-- Arte em pixel art (gerada por código) -->
+  <script src="src/art/pixel.js"></script>
+  <script src="src/art/characters.js"></script>
+  <script src="src/art/tiles.js"></script>
+  <script src="src/art/objects.js"></script>
+  <script src="src/art/ArtFactory.js"></script>
+
+  <!-- Sistemas -->
+  <script src="src/systems/SaveSystem.js"></script>
+  <script src="src/systems/AudioSystem.js"></script>
+  <script src="src/systems/Controls.js"></script>
+  <script src="src/systems/MapBuilder.js"></script>
+  <script src="src/systems/ScriptRunner.js"></script>
+  <script src="src/ui/UI.js"></script>
+  <script src="src/characters/Character.js"></script>
+
+  <!-- Cenas -->
+  <script src="src/scenes/BootScene.js"></script>
+  <script src="src/scenes/MenuScene.js"></script>
+  <script src="src/scenes/WorldScene.js"></script>
+
+  <script src="main.js"></script>
+</body>
+</html>
