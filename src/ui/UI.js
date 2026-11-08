@@ -201,6 +201,27 @@ const UI = {
     });
   },
 
+  /** Pergunta sim/não dentro do jogo. Resolve com true ou false. */
+  confirm(titulo, texto, sim = 'Sim', nao = 'Cancelar') {
+    const m = UI.$('#modal');
+    m.className = '';
+    m.innerHTML = `<div class="panel"><h2>${UI.esc(titulo)}</h2><p>${UI.esc(texto)}</p>
+      <button class="btn primary" data-r="1">${UI.esc(sim)}</button>
+      <button class="btn" data-r="0">${UI.esc(nao)}</button></div>`;
+    m.hidden = false;
+    return new Promise((resolve) => {
+      m.onclick = (e) => {
+        const b = e.target.closest('[data-r]');
+        if (!b) return;
+        m.onclick = null;
+        m.hidden = true;
+        m.innerHTML = '';
+        AudioSystem.play('confirm');
+        resolve(b.dataset.r === '1');
+      };
+    });
+  },
+
   item(key, texto, titulo) {
     AudioSystem.play('item');
     return UI.modal(`

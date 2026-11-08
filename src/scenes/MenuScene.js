@@ -176,7 +176,7 @@ class MenuScene extends Phaser.Scene {
       case 'musica': AudioSystem.setMusic(!SaveSystem.data.musica); this.show('titulo'); break;
       case 'fase': this.startPhase(Number(ds.id)); break;
       case 'reset':
-        if (window.confirm('Apagar todo o progresso e começar do zero?')) { SaveSystem.reset(); this.show('titulo'); }
+        if (await UI.confirm('Recomeçar?', 'Isso apaga todo o progresso e as memórias encontradas.', 'Apagar e recomeçar', 'Cancelar')) { SaveSystem.reset(); this.show('titulo'); }
         break;
     }
   }

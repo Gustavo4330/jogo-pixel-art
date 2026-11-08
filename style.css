@@ -16,6 +16,7 @@
   --texto-escuro: #3a1838;
   --px: 3px; /* espessura das bordas "pixeladas" */
   --font: 'Pixelify Sans', 'Courier New', monospace;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
