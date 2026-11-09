@@ -103,7 +103,7 @@ class MenuScene extends Phaser.Scene {
             <button class="btn small" data-action="som">Som: ${d.som ? 'ligado' : 'desligado'}</button>
             <button class="btn small" data-action="musica">Música: ${d.musica ? 'ligada' : 'desligada'}</button>
           </div>
-          <div class="hint">Dica: jogue com o celular deitado ${UI.heart()}</div>
+          <div class="hint">Dica: jogue com o celular deitado ${UI.heart()} <span class="ver">v${UI.esc(CONFIG.versao)}</span></div>
         </div>
       </div>`, (a) => this.onAction(a));
   }

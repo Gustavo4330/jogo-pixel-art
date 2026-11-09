@@ -114,7 +114,6 @@ class WorldScene extends Phaser.Scene {
     if (n.oculto) this.setHidden(c, true);
     if (n.destaque && !SaveSystem.flag(`fase${this.map.fase}_concluida`)) {
       c.bubble = this.add.image(c.x, c.y - 25, 'bubbleHeart').setOrigin(0.5, 1).setDepth(99999);
-      this.tweens.add({ targets: c.bubble, y: '-=3', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.inOut' });
     }
     this.npcs[n.id] = c;
   }
@@ -291,7 +290,10 @@ class WorldScene extends Phaser.Scene {
         c.stop();
       }
       c.sync();
-      if (c.bubble) c.bubble.x = c.x;
+      if (c.bubble) {
+        // o balão acompanha o personagem e some durante as conversas
+        c.bubble.setPosition(c.x, Math.round(c.y - 25 + Math.sin(time / 190) * 1.5)).setVisible(!this.locked);
+      }
     }
   }
 

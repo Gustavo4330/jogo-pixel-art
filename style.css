@@ -275,6 +275,7 @@ body.show-controls #controls { display: block; }
 .subtitle { font-size: clamp(16px, 3vmin, 26px); color: var(--rosa-claro); margin-top: .6em; }
 .title-bottom { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .title-bottom .row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.hint .ver { opacity: .6; margin-left: .4em; }
 .hint { font-size: clamp(12px, 1.8vmin, 16px); color: #e8c3dc; opacity: .8; margin-top: 4px; }
 
 @media (orientation: landscape) {

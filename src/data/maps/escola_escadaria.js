@@ -5,7 +5,8 @@
    com faixa amarela antiderrapante, corrimão vermelho, porta
    de emergência com barra antipânico e placa de SAÍDA,
    hidrante, luz de emergência e o número do andar.
-   Ela entra pela porta lá em cima e desce até o Gustavo.
+   O Gustavo está esperando na escada; ela começa lá embaixo
+   e tem que subir até ele.
    ========================================================= */
 
 MAPAS.escola_escadaria = {
@@ -37,7 +38,7 @@ MAPAS.escola_escadaria = {
     'TTTTTTTTTTTTTTTTTTTTTTTTTT', // 0
     'wwEEwwQwwwwwwwwwwJwwwQwwww', // 1
     'uueeuuuuxuuuuuuNuuuuuuuuuu', // 2
-    'cccccccccccccccccccccccccc', // 3  patamar de cima (porta)
+    'cccccccccccccccccccccccccc', // 3  patamar de cima (porta com gente do lado de fora)
     'cccccccccccccccccccccccccc', // 4
     'cccccccccccccccccccccccccc', // 5
     'HHHHHHHHSSSSSSSSSSHHHHHHHH', // 6
@@ -46,7 +47,7 @@ MAPAS.escola_escadaria = {
     'ZZZZZZZYSSSSSSSSSSYZZZZZZZ', // 9
     'ZZZZZZZYSSSSSSSSSSYZZZZZZZ', // 10
     'ZZZZZZZYSSSSSSSSSSYZZZZZZZ', // 11
-    'ffffffffffffffffffffffffff', // 12 patamar de baixo (escondidinho)
+    'ffffffffffffffffffffffffff', // 12 patamar de baixo (ela começa aqui)
     'ffffffffffffffffffffffffff', // 13
     'ffffffffffffffffffffffffff', // 14
     'ffffffffffffffffffffffffff', // 15
@@ -54,13 +55,13 @@ MAPAS.escola_escadaria = {
   ],
 
   spawns: {
-    inicio: { x: 4, y: 4.4, dir: 'down' },
+    inicio: { x: 4, y: 14.6, dir: 'up' },
   },
 
   objetos: [],
 
   npcs: [
-    { id: 'ele', x: 20, y: 14.2, dir: 'left', roteiro: 'f2_ele', destaque: true },
+    { id: 'ele', x: 13, y: 8.7, dir: 'down', roteiro: 'f2_ele', destaque: true }, // na escada
     // aparecem só no final (passo "aparecer" do roteiro)
     { id: 'felipe', x: 3.5, y: 3.7, dir: 'down', oculto: true, roteiro: 'f2_felipe' },
     { id: 'amiga', x: 4.5, y: 3.7, dir: 'down', oculto: true, roteiro: 'f2_amiga' },
@@ -69,7 +70,7 @@ MAPAS.escola_escadaria = {
   bonus: [],
 
   objetivos: [
-    { seNao: 'f2_beijou', texto: 'Desça a escada de incêndio e encontre o seu baby', alvo: { npc: 'ele' } },
+    { seNao: 'f2_beijou', texto: 'Suba a escada de incêndio e encontre o seu baby', alvo: { npc: 'ele' } },
   ],
 
   aoEntrar: { roteiro: 'f2_intro', flag: 'f2_intro' },

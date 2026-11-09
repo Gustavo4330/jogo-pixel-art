@@ -19,8 +19,8 @@ Object.assign(ROTEIROS, {
     {
       passos: [
         { quem: 'narrador', fala: 'Fim de aula. A escada de incêndio estava vazia e silenciosa...' },
-        { quem: 'ela', fala: 'Ele disse que ia me esperar lá embaixo...', rosto: 'timido' },
-        { quem: 'narrador', fala: 'Desça a escada e siga a setinha rosa.' },
+        { quem: 'ela', fala: 'Ele disse que ia me esperar lá na escada...', rosto: 'timido' },
+        { quem: 'narrador', fala: 'Suba a escada de incêndio e siga a setinha rosa.' },
         { marcar: 'f2_intro' },
       ],
     },
@@ -37,7 +37,7 @@ Object.assign(ROTEIROS, {
       passos: [
         { olhar: 'ele', para: 'jogador' },
         { quem: 'ele', fala: 'Achei que você não vinha, vida.', rosto: 'feliz' },
-        { quem: 'ela', fala: 'Claro que eu vinha, baby.', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Claro que eu vinha, baby. Mas que escada, hein!', rosto: 'feliz' },
         { quem: 'ele', fala: 'Vem cá...', rosto: 'timido' },
         { andar: 'ele', ate: 'jogador', distancia: 11 },
         { quem: 'ela', fala: 'Aqui ninguém vê a gente...', rosto: 'timido' },
@@ -64,9 +64,10 @@ Object.assign(ROTEIROS, {
         { quem: 'felipe', fala: 'Alô? Vocês tão ONDE?! Na escada de incêndio?! Hahaha!', rosto: 'feliz' },
         { quem: 'ele', fala: 'Fala baixo! Tem gente na porta e a gente não consegue sair.', rosto: 'timido' },
         { quem: 'felipe', fala: 'Tá bom, tá bom. Vou chamar a Sofia e a gente tira vocês daí.', rosto: 'normal' },
-        { transicao: 'Alguns minutos depois...', posicoes: { felipe: [16, 13.4, 'right'], amiga: [17.2, 12.9, 'right'] } },
+        { transicao: 'Alguns minutos depois...', posicoes: { felipe: [12.2, 7.2, 'down'], amiga: [14, 7.2, 'down'] } },
         { aparecer: 'felipe' },
         { aparecer: 'amiga' },
+        { quem: 'narrador', fala: 'O Felipe e a Sofia desceram a escada de incêndio pela porta lá de cima.' },
         { quem: 'amiga', fala: 'Pronto, barra limpa! A gente levou todo mundo lá pra fora.', rosto: 'feliz' },
         { quem: 'felipe', fala: 'Vocês me devem uma, hein!', rosto: 'feliz' },
         { quem: 'ela', fala: 'Obrigada, gente! ♥', rosto: 'feliz' },
