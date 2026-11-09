@@ -121,6 +121,11 @@ const UI = {
       const mark = () => btns.forEach((b, i) => b.classList.toggle('selected', i === sel));
       mark();
       box.hidden = false;
+      // fica no meio do espaço livre acima da caixa de diálogo
+      const dlg = UI.$('#dialog');
+      const free = dlg.hidden ? window.innerHeight : dlg.getBoundingClientRect().top - 8;
+      box.style.maxHeight = Math.max(120, free - 70) + 'px';
+      box.style.top = Math.max(box.offsetHeight / 2 + 60, free / 2 + 20) + 'px';
       return new Promise((resolve) => {
         const pickIt = (i) => {
           Controls.off('action', onAct);

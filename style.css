@@ -172,12 +172,15 @@ img.px { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ---------- quiz ---------- */
 #quiz {
   position: absolute;
-  right: max(14px, env(safe-area-inset-right));
-  bottom: calc(clamp(84px, 17vmin, 140px) + 40px + env(safe-area-inset-bottom));
+  left: 50%;
+  top: 40%; /* ajustado pelo JS: centro do espaço acima da caixa de diálogo */
+  transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: stretch;
-  max-width: min(92vw, 520px);
-  animation: pop .2s ease-out;
+  width: min(90vw, 520px);
+  max-height: 70%;
+  overflow-y: auto;
 }
+#quiz .quiz-opts { animation: pop .2s ease-out; }
 .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
 .quiz-opt {
   font-family: var(--font);
@@ -190,7 +193,7 @@ img.px { image-rendering: pixelated; image-rendering: crisp-edges; }
   cursor: pointer;
   box-shadow: 0 0 0 var(--px) #c06aa8, 0 0 0 calc(var(--px) * 2) var(--roxo-escuro);
   margin: calc(var(--px) * 2);
-  display: flex; gap: .5em; align-items: center;
+  display: flex; gap: .5em; align-items: center; justify-content: center; text-align: center;
 }
 .quiz-opt .arrow { opacity: 0; color: #fff; font-size: .8em; }
 .quiz-opt.selected { background: var(--rosa-forte); box-shadow: 0 0 0 var(--px) #ffd0e6, 0 0 0 calc(var(--px) * 2) var(--roxo-escuro); }

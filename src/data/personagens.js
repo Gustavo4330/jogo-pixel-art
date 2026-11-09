@@ -5,7 +5,7 @@
    destas cores, então para mudar a cor da blusa, do cabelo ou
    da pele, basta trocar o código da cor aqui.
 
-   Estilos de cabelo disponíveis:  'longo' | 'curto' | 'rabo'
+   Estilos de cabelo disponíveis:  'longo' | 'curto' | 'rabo' | 'ondulado'
    Estilos de roupa disponíveis:   'regata' | 'polo' | 'camiseta'
    ========================================================= */
 
@@ -64,8 +64,9 @@ const PERSONAGENS = {
     nome: 'Felipe',
     visual: {
       pele: '#d7a27a',
-      cabelo: '#1d1512',
-      estiloCabelo: 'curto',
+      cabelo: '#6b4128',        // castanho
+      cabeloBrilho: '#93603d',
+      estiloCabelo: 'ondulado', // cabelo ondulado
       roupa: '#4a6fa8',
       estiloRoupa: 'camiseta',
       calca: '#3d3f52',

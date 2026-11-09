@@ -182,9 +182,22 @@ const CharacterArt = {
     const y = b;
     const H = L.hair, Hi = L.hairHi, Hs = L.hairS;
     const st = L.hairStyle;
+    const wavy = st === 'ondulado';
+
+    if (wavy) {
+      // cachinhos por cima da cabeça (todas as direções)
+      P(4, 0 + y, H); P(5, 0 + y, Hi); P(8, 0 + y, H); P(9, 0 + y, Hi); P(11, 1 + y, H);
+      P(2, 3 + y, H); P(13, 3 + y, Hs);
+    }
 
     if (d === 'down') {
       R(4, 1 + y, 8, 1, H); R(3, 2 + y, 10, 3, H);
+      if (wavy) {
+        P(4, 5 + y, H); P(5, 5 + y, Hi); P(7, 5 + y, H); P(8, 5 + y, H); P(10, 5 + y, Hi); P(11, 5 + y, H);
+        R(3, 5 + y, 1, 4, H); R(12, 5 + y, 1, 4, Hs); P(2, 6 + y, H); P(13, 6 + y, Hs);
+        R(5, 2 + y, 2, 1, Hi); P(8, 3 + y, Hi); P(10, 2 + y, Hi); P(4, 4 + y, Hi);
+        return;
+      }
       if (st === 'longo') {
         R(3, 5 + y, 3, 1, H); R(10, 5 + y, 3, 1, H); P(3, 6 + y, H); P(12, 6 + y, H);
         for (let j = 5; j <= 11; j++) {
@@ -201,6 +214,10 @@ const CharacterArt = {
       }
     } else if (d === 'up') {
       R(4, 1 + y, 8, 1, H); R(3, 2 + y, 10, 8, H); R(4, 10 + y, 8, 1, Hs);
+      if (wavy) {
+        P(2, 5 + y, H); P(13, 6 + y, Hs); P(4, 11 + y, H); P(7, 11 + y, H); P(10, 11 + y, H);
+        P(5, 4 + y, Hi); P(9, 6 + y, Hi); P(6, 8 + y, Hi); P(10, 3 + y, Hi);
+      }
       R(5, 2 + y, 3, 1, Hi); P(4, 3 + y, Hi); P(9, 3 + y, Hi);
       if (st === 'longo') {
         R(3, 10 + y, 10, 2, H);
@@ -221,6 +238,10 @@ const CharacterArt = {
       R(9, 5 + y, 3, 5, H); R(9, 10 + y, 2, 1, Hs); R(8, 5 + y, 1, 2, H);
       P(8, 7 + y, L.skinS); P(8, 8 + y, L.skinS); // orelha
       R(5, 2 + y, 3, 1, Hi); P(10, 3 + y, Hi);
+      if (wavy) {
+        P(12, 6 + y, H); P(12, 8 + y, Hs); P(9, 10 + y, H); P(6, 5 + y, H); P(2, 4 + y, H);
+        P(11, 6 + y, Hi); P(10, 9 + y, Hi);
+      }
       if (st === 'longo') {
         R(9, 5 + y, 4, 7, H); R(12, 5 + y, 1, 7, Hs);
         for (let j = 12; j <= 19; j++) {
@@ -322,6 +343,14 @@ const CharacterArt = {
       R(9, 10, 3, 2, L.hair); R(13, 10, 3, 1, L.hair); R(17, 10, 4, 2, L.hair); R(21, 10, 2, 1, L.hair);
       R(11, 5, 5, 1, L.hairHi); R(9, 7, 2, 1, L.hairHi); R(19, 5, 2, 1, L.hairHi);
       if (st === 'rabo') { R(22, 5, 2, 2, L.tie); }
+      if (st === 'ondulado') {
+        // cachos
+        R(9, 2, 3, 2, L.hair); R(14, 1, 4, 3, L.hair); R(20, 2, 3, 2, L.hair);
+        R(6, 5, 2, 3, L.hair); R(24, 5, 2, 3, L.hairS);
+        R(6, 10, 2, 6, L.hair); R(24, 10, 2, 6, L.hairS); R(5, 12, 1, 3, L.hair); R(26, 12, 1, 3, L.hairS);
+        R(10, 10, 2, 3, L.hair); R(15, 10, 2, 2, L.hair); R(20, 10, 2, 3, L.hair);
+        R(15, 2, 2, 1, L.hairHi); R(10, 3, 1, 1, L.hairHi); R(8, 6, 2, 1, L.hairHi); R(21, 3, 1, 1, L.hairHi); R(13, 7, 2, 1, L.hairHi); R(18, 8, 2, 1, L.hairHi);
+      }
     }
 
     const out = Pixel.outline(g, this.OUTLINE);
