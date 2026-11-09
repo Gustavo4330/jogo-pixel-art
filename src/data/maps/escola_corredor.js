@@ -1,8 +1,11 @@
 /* =========================================================
-   MAPA: CORREDOR INTERNO DA ESCOLA (Fase 1 — parte 2)
+   MAPA: CORREDOR DA ESCOLA (Fase 1 — parte 2)
    ---------------------------------------------------------
-   Corredor comprido com salas de aula, murais, janelas,
-   piso claro, mesas com bancos e jardineiras.
+   Baseado na foto do corredor: corredor aberto de concreto,
+   salas com portas duplas brancas e murais na parede azul,
+   piso polido junto à parede, calçamento de bloquetes no
+   meio com bancos de concreto e mesas compridas com
+   banquinhos, e plantas entre os pilares do lado do jardim.
    Aqui acontece a cena principal da Fase 1.
    ========================================================= */
 
@@ -12,66 +15,69 @@ MAPAS.escola_corredor = {
   nome: 'Corredor da escola',
 
   legenda: {
-    T: { tile: 'teto', solido: true },
-    w: { tile: 'parede', solido: true },
-    n: { tile: 'janela', solido: true, texto: 'Pela janela dá para ver o pátio lá fora.' },
-    K: { tile: 'porta_sala', solido: true },
-    k: { tile: 'porta_sala', solido: true, texto: 'A sala está fechada. A aula já vai começar!' },
-    E: { tile: 'porta_saida', solido: true },
-    e: { tile: 'porta_saida', porta: { para: 'escola_fachada', spawn: 'saida' } },
+    T: { tile: 'teto_concreto', solido: true },
+    w: { tile: 'parede_concreto', solido: true },
+    K: { tile: 'porta_dupla', solido: true },
+    k: { tile: 'porta_dupla', solido: true, texto: 'A porta dupla da sala está fechada. A aula já vai começar!' },
     b: { tile: 'rodape_azul', solido: true },
-    q: { tile: 'mural', solido: true, texto: 'Mural de avisos: "Feira de ciências na sexta!"... e alguém desenhou um coraçãozinho no canto. ♥' },
-    p: { tile: 'cartaz', solido: true, texto: 'Um cartaz colorido feito pelos alunos.' },
-    f: { tile: 'piso_corredor' },
-    L: { tile: 'jardineira', solido: true },
+    Q: { tile: 'quadro_mural', solido: true, texto: 'Mural de avisos: horários, recados... e alguém desenhou um coraçãozinho no canto. ♥' },
+    x: { tile: 'extintor', solido: true, texto: 'Um extintor de incêndio. Melhor não mexer!' },
+    R: { tile: 'parede_vermelha', solido: true },
+    c: { tile: 'piso_polido' },
+    e: { tile: 'borda_concreto' },
+    v: { tile: 'piso_bloquete' },
+    X: { tile: 'piso_bloquete', porta: { para: 'escola_fachada', spawn: 'saida' } },
+    L: { tile: 'pilar_jardim', solido: true, texto: 'Pelas aberturas entre os pilares dá para ver o gramado lá fora.' },
+    I: { tile: 'pilar_jardim', solido: true },
     G: { tile: 'grama', solido: true },
   },
 
   chao: [
     'TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT', // 0
-    'wEEwwnnwKwnnwwnnwKwnnwwnnwKwnnwwnnwKwnnw', // 1
-    'beebbqbbkbbpbbqbbkbbpbbqbbkbbpbbqbbkbbpb', // 2
-    'ffffffffffffffffffffffffffffffffffffffff', // 3
-    'ffffffffffffffffffffffffffffffffffffffff', // 4
-    'ffffffffffffffffffffffffffffffffffffffff', // 5
-    'ffffffffffffffffffffffffffffffffffffffff', // 6
-    'ffffffffffffffffffffffffffffffffffffffff', // 7
-    'ffffffffffffffffffffffffffffffffffffffff', // 8
-    'ffffffffffffffffffffffffffffffffffffffff', // 9
-    'ffffffffffffffffffffffffffffffffffffffff', // 10
-    'ffffffffffffffffffffffffffffffffffffffff', // 11
-    'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL', // 12
+    'wwKKwwwwwwwwKKwwwwwwwwKKwwwwwwwwKKwRRRww', // 1
+    'bbkkbQQQbbbbkkbQQxbbbbkkbQQQbbbbkkbRRRbb', // 2
+    'cccccccccccccccccccccccccccccccccccccccc', // 3
+    'cccccccccccccccccccccccccccccccccccccccc', // 4
+    'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', // 5
+    'Xvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv', // 6
+    'Xvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv', // 7
+    'Xvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv', // 8
+    'Xvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv', // 9
+    'Xvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv', // 10
+    'Xvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv', // 11
+    'LLLLILLLLLLLILLLLLLLILLLLLLLILLLLLLLILLL', // 12
     'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG', // 13
+    'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG', // 14
   ],
 
   spawns: {
-    entrada: { x: 2, y: 4.6, dir: 'down' },
+    entrada: { x: 1.8, y: 9, dir: 'right' },
   },
 
   objetos: [
-    { tipo: 'mesa', x: 7, y: 8.2 },
-    { tipo: 'mesa', x: 12, y: 8.2 },
-    { tipo: 'mesa', x: 17, y: 8.2 },
-    { tipo: 'mesa', x: 7, y: 11.6 },
-    { tipo: 'mesa', x: 12, y: 11.6 },
-    { tipo: 'mesa', x: 17, y: 11.6, texto: 'Alguém esqueceu um pen drive escrito "SLIDES - NÃO APAGAR!!!" aqui.' },
-    { tipo: 'vaso', x: 4.5, y: 3.6 },
-    { tipo: 'vaso', x: 13, y: 3.6 },
-    { tipo: 'vaso', x: 22, y: 3.6 },
-    { tipo: 'vaso', x: 31, y: 3.6 },
-    { tipo: 'lixeira', x: 38.6, y: 3.7 },
-    { tipo: 'vaso', x: 37.6, y: 11.8 },
+    { tipo: 'banco_concreto', x: 6, y: 6.9, texto: 'Um banco de concreto, geladinho como sempre.' },
+    { tipo: 'banco_concreto', x: 12, y: 6.9 },
+    { tipo: 'banco_concreto', x: 18, y: 6.9 },
+    { tipo: 'banco_concreto', x: 30, y: 6.9 },
+    { tipo: 'banco_concreto', x: 36, y: 6.9 },
+    { tipo: 'lixeira_amarela', x: 9, y: 6.8 },
+    { tipo: 'mesa_longa', x: 8, y: 11.6 },
+    { tipo: 'mesa_longa', x: 15, y: 11.6 },
+    { tipo: 'mesa_longa', x: 22, y: 11.6, texto: 'Alguém esqueceu um pen drive escrito "SLIDES - NÃO APAGAR!!!" aqui.' },
+    { tipo: 'mesa_longa', x: 34, y: 11.6 },
   ],
 
   npcs: [
-    { id: 'ele', x: 28, y: 7.6, dir: 'left', roteiro: 'f1_ele', destaque: true },
-    { id: 'amiga', x: 30.2, y: 7.6, dir: 'left', roteiro: 'f1_amiga' },
-    { id: 'aluno1', x: 9.5, y: 9.5, dir: 'up', roteiro: 'f1_colega_mesa' },
-    { id: 'aluna2', x: 20.5, y: 5, dir: 'down', roteiro: 'f1_colega_corredor', passear: true },
+    { id: 'ele', x: 28, y: 9.2, dir: 'left', roteiro: 'f1_ele', destaque: true },
+    { id: 'amiga', x: 30, y: 9.2, dir: 'left', roteiro: 'f1_amiga' },
   ],
 
   bonus: [
-    { id: 'sebrasse', x: 39, y: 11.4 },
+    { id: 'sebrasse', x: 39, y: 11.5 },
+  ],
+
+  objetivos: [
+    { seNao: 'fase1_concluida', texto: 'Encontre o Gustavo no corredor', alvo: { npc: 'ele' } },
   ],
 
   aoEntrar: { roteiro: 'f1_corredor', flag: 'f1_corredor' },

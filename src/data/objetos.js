@@ -16,4 +16,8 @@ const OBJETOS = {
   lixeira:         { tex: 'trash',       corpo: [10, 6] },
   vaso:            { tex: 'plant',       corpo: [12, 7] },
   placa:           { tex: 'sign',        corpo: [10, 4] },
+  banco_concreto:  { tex: 'benchConcrete', corpo: [32, 8] },
+  mesa_longa:      { tex: 'tableLong',   corpo: [46, 28] },
+  lixeira_amarela: { tex: 'trashYellow', corpo: [10, 6] },
+  muda:            { tex: 'sapling',     corpo: [6, 4] },
 };

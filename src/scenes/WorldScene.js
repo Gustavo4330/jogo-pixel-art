@@ -53,6 +53,9 @@ class WorldScene extends Phaser.Scene {
     this.hint = this.add.image(0, 0, 'bubble').setOrigin(0.5, 1).setDepth(100000).setVisible(false);
     this.tweens.add({ targets: this.hint, scale: { from: 1, to: 1.12 }, duration: 380, yoyo: true, repeat: -1 });
 
+    // Seta guia (mostra para onde ir)
+    this.guide = this.add.image(0, 0, 'arrow').setDepth(100002).setVisible(false);
+
     // Câmera
     this.onResize();
     this.updateCamera(true);
@@ -179,6 +182,43 @@ class WorldScene extends Phaser.Scene {
     this.updateNpcs(time);
     this.player.sync();
     this.updateCamera(false);
+    this.updateGuide(time);
+  }
+
+  /* ---------------- dicas: objetivo + seta ---------------- */
+
+  currentGoal() {
+    return (this.map.objetivos || []).find((o) =>
+      (!o.se || SaveSystem.flag(o.se)) && (!o.seNao || !SaveSystem.flag(o.seNao)));
+  }
+
+  updateGuide(time) {
+    const g = this.leaving ? null : this.currentGoal();
+    UI.hud.goal(g ? g.texto : null);
+    if (!g || this.locked) { this.guide.setVisible(false); return; }
+    let tx, ty;
+    if (g.alvo.npc) {
+      const c = this.npcs[g.alvo.npc];
+      if (!c) { this.guide.setVisible(false); return; }
+      tx = c.x; ty = c.y - (c.bubble ? 47 : 32);
+    } else {
+      tx = g.alvo.x * T; ty = g.alvo.y * T - 10;
+    }
+    const v = this.cameras.main.worldView;
+    const m = 12;
+    const bob = Math.sin(time / 170) * 2.5;
+    this.guide.setVisible(true);
+    if (tx > v.x + m && tx < v.right - m && ty > v.y + m && ty < v.bottom - m) {
+      this.guide.setPosition(Math.round(tx), Math.round(ty + bob)).setRotation(0);
+    } else {
+      // fora da tela: a seta fica na borda apontando na direção certa
+      const cx = v.centerX, cy = v.centerY;
+      const ang = Math.atan2(ty - cy, tx - cx);
+      const hw = v.width / 2 - m, hh = v.height / 2 - m;
+      const k = Math.min(hw / Math.abs(Math.cos(ang) || 1e-6), hh / Math.abs(Math.sin(ang) || 1e-6));
+      const ox = Math.cos(ang) * (k - Math.abs(bob)), oy = Math.sin(ang) * (k - Math.abs(bob));
+      this.guide.setPosition(Math.round(cx + ox), Math.round(cy + oy)).setRotation(ang - Math.PI / 2);
+    }
   }
 
   updateNpcs(time) {

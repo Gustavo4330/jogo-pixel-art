@@ -298,6 +298,245 @@ const TileArt = (() => {
       F(c, x, y + 9, 16, 2, '#cbc2cd');
       F(c, x, y + 15, 16, 1, '#857a8a');
     },
+
+    /* ---------- ESCOLA REAL: FACHADA DE CONCRETO ---------- */
+    telhado_metal(c, x, y, r, n) {
+      const bands = [['#6f7781', 2], ['#9aa3ad', 2], ['#c9d0d8', 2], ['#eef2f5', 3], ['#c3cbd3', 3], ['#98a1ab', 2], ['#5d6570', 2]];
+      let yy = 0;
+      for (const [col, h] of bands) { F(c, x, y + yy, 16, h, col); yy += h; }
+      F(c, x + 7, y + 2, 1, 12, 'rgba(90,98,110,.25)');
+      if (n(-1, 0) !== n(0, 0)) { F(c, x, y, 3, 16, '#4a4f59'); F(c, x + 3, y + 1, 1, 14, '#8a929c'); }
+    },
+
+    parapeito(c, x, y, r) {
+      F(c, x, y, 16, 16, '#b4afa9');
+      F(c, x, y, 16, 2, '#cfcac4');
+      for (let i = 0; i < 3; i++) F(c, x + Math.floor(r() * 15), y + 3, 1, 8 + Math.floor(r() * 5), '#9d9892');
+      F(c, x + 15, y, 1, 16, '#a39e98');
+      F(c, x, y + 15, 16, 1, '#8f8a85');
+    },
+
+    aleta(c, x, y, r, n) {
+      const top = n(0, -1) !== n(0, 0);
+      F(c, x, y, 16, 16, '#bdb8b2');
+      F(c, x + 15, y, 1, 16, '#aaa49e');
+      speckle(c, x, y, r, ['#b2ada7', '#c6c1bb'], 6);
+      const col = Math.floor(x / 16) % 3;
+      if (col === 2) {
+        // janelinha redonda entre as aletas
+        const cy = top ? 16 : 0;
+        for (let py = 0; py < 16; py++) for (let px = 0; px < 16; px++) {
+          const d = Math.hypot(px + 0.5 - 8, py + 0.5 - cy);
+          if (d < 3.2) F(c, x + px, y + py, 1, 1, '#2b2a33');
+          else if (d < 4.2) F(c, x + px, y + py, 1, 1, '#d6d2cd');
+        }
+        return;
+      }
+      const k = col === 0 ? ['#d0393f', '#e9696d', '#9e262c'] : ['#3c66c4', '#6c91e2', '#284a95'];
+      for (let py = 0; py < 16; py++) {
+        const gy = py + (top ? 0 : 16);
+        if (gy < 1 || gy > 30) continue;
+        const half = 4.6 * Math.sin(Math.PI * (gy - 1) / 30);
+        if (half < 0.5) continue;
+        const x0 = Math.round(8 - half), x1 = Math.round(8 + half);
+        F(c, x + x0, y + py, x1 - x0, 1, k[0]);
+        F(c, x + x0, y + py, 1, 1, k[1]);
+        F(c, x + x1 - 1, y + py, 1, 1, k[2]);
+        F(c, x + x1, y + py, 1, 1, 'rgba(60,50,60,.25)');
+      }
+    },
+
+    viga_concreto(c, x, y) {
+      F(c, x, y, 16, 10, '#c4bfb8');
+      F(c, x, y, 16, 1, '#d8d4ce');
+      F(c, x, y + 9, 16, 1, '#a19c96');
+      F(c, x, y + 10, 16, 6, '#3f3c46');
+    },
+
+    pilotis(c, x, y, r, n) {
+      const top = n(0, -1) !== n(0, 0) && !'PDN'.includes(n(0, -1) || '');
+      const isTop = !'PDNd'.includes(n(0, -1) || '');
+      F(c, x, y, 16, 16, isTop ? '#3f3c46' : '#57535e');
+      if (!isTop) {
+        // através do térreo aberto dá para ver o outro lado
+        if (r() < 0.6) F(c, x + 2, y + 2, 12, 6, '#8fa07f');
+        F(c, x, y + 8, 16, 8, '#6c6873');
+        F(c, x, y + 15, 16, 1, '#4a4651');
+      } else {
+        F(c, x, y, 16, 3, '#2f2c36');
+      }
+      const ch = n(0, 0);
+      if (ch === 'P' && Math.floor(x / 16) % 4 === 0) {
+        F(c, x + 5, y, 6, 16, '#bdb8b2'); F(c, x + 5, y, 1, 16, '#d3cec8'); F(c, x + 10, y, 1, 16, '#9a958f');
+      }
+      return top;
+    },
+
+    entrada(c, x, y, r, n) {
+      T.pilotis(c, x, y, r, n);
+      const bottom = n(0, 0) === 'd';
+      if (bottom) { F(c, x, y + 6, 16, 10, '#b5a99a'); speckle(c, x, y + 6, r, ['#a39684', '#c4b9ab'], 8); }
+    },
+
+    faixa_banner(c, x, y, r, n) {
+      T.pilotis(c, x, y, r, n);
+      const right = n(-1, 0) === n(0, 0);
+      F(c, x, y + 2, 16, 9, '#f4f2f0');
+      F(c, x, y + 2, 16, 1, '#2f5fb3'); F(c, x, y + 10, 16, 1, '#2f5fb3');
+      for (let i = 0; i < 4; i++) F(c, x + 2 + i * 3 + (right ? 0 : 1), y + 5, 2, 3, i % 2 ? '#d0393f' : '#2f5fb3');
+      if (!right) F(c, x, y + 2, 1, 9, '#6b6772'); else F(c, x + 15, y + 2, 1, 9, '#6b6772');
+    },
+
+    tijolo(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#c0533f');
+      for (let j = 0; j < 16; j += 4) {
+        F(c, x, y + j + 3, 16, 1, '#a1442f');
+        const off = (j / 4) % 2 ? 4 : 0;
+        for (let i = off; i < 16; i += 8) F(c, x + i, y + j, 1, 3, '#a1442f');
+      }
+      if (n(0, -1) == null || n(0, -1) === 'M') F(c, x, y, 16, 3, '#8c3a2a');
+    },
+
+    tijolo_janela(c, x, y, r, n) {
+      T.tijolo(c, x, y, r, n);
+      F(c, x + 1, y + 3, 14, 10, '#e9e4df');
+      F(c, x + 2, y + 4, 12, 8, '#b9cbd9');
+      F(c, x + 7, y + 4, 1, 8, '#e9e4df'); F(c, x + 2, y + 7, 12, 1, '#e9e4df');
+      F(c, x + 3, y + 5, 2, 1, '#e6f0f8');
+    },
+
+    tijolo_topo(c, x, y) {
+      F(c, x, y, 16, 16, '#9cc8ec');
+      F(c, x, y + 9, 16, 7, '#8c3a2a');
+      F(c, x, y + 9, 16, 1, '#a8604e');
+    },
+
+    calcada_concreto(c, x, y, r) {
+      F(c, x, y, 16, 16, '#c9c4bd');
+      F(c, x + 15, y, 1, 16, '#aea8a1');
+      F(c, x, y, 16, 1, '#d9d5cf');
+      speckle(c, x, y, r, ['#bbb5ae', '#d4cfc9'], 5);
+    },
+
+    cascalho(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#b3a796');
+      speckle(c, x, y, r, ['#9d907e', '#c7bdaf', '#8f8371', '#d5ccc0'], 26);
+      const g = (dx, dy) => { const ch = n(dx, dy); return ch === 'g'; };
+      if (g(-1, 0)) F(c, x, y, 1, 16, '#7aa35e');
+      if (g(1, 0)) F(c, x + 15, y, 1, 16, '#7aa35e');
+      if (g(0, -1)) F(c, x, y, 16, 1, '#7aa35e');
+      if (g(0, 1)) F(c, x, y + 15, 16, 1, '#7aa35e');
+    },
+
+    /* ---------- ESCOLA REAL: CORREDOR ---------- */
+    teto_concreto(c, x, y, r) {
+      F(c, x, y, 16, 16, '#5a5660');
+      for (let i = 0; i < 16; i += 4) F(c, x, y + i, 16, 1, '#4a4650');
+      F(c, x, y + 13, 16, 3, '#77737c');
+      F(c, x, y + 15, 16, 1, '#3e3a44');
+    },
+
+    parede_concreto(c, x, y, r) {
+      F(c, x, y, 16, 16, '#c8c4bf');
+      F(c, x, y, 16, 2, '#a9a5a0');
+      F(c, x, y + 13, 16, 3, '#8a7a5c');
+      F(c, x, y + 13, 16, 1, '#b39c6e');
+      speckle(c, x, y + 2, r, ['#bdb9b4', '#d2cec9'], 4);
+    },
+
+    porta_dupla(c, x, y, r, n) {
+      const ch = n(0, 0);
+      const bottom = ch === ch.toLowerCase();
+      const right = n(-1, 0) === ch;
+      if (bottom) T.rodape_azul(c, x, y, r, n); else T.parede_concreto(c, x, y, r);
+      const top = bottom ? 0 : 3;
+      F(c, x, y + top, 16, 16 - top, '#8a8792');
+      F(c, x + (right ? 0 : 1), y + top + (bottom ? 0 : 1), 15, 16 - top - (bottom ? 1 : 1), '#f4f3f1');
+      F(c, x + (right ? 0 : 15), y + top, 1, 16 - top, '#bdbac2');
+      if (!bottom) {
+        F(c, x + (right ? 3 : 4), y + 6, 9, 5, '#a8c3da'); F(c, x + (right ? 4 : 5), y + 7, 3, 1, '#d8e8f4');
+      } else {
+        F(c, x + (right ? 2 : 12), y + 2, 2, 3, '#7f7c87');
+        F(c, x, y + 15, 16, 1, '#6f6c77');
+      }
+    },
+
+    quadro_mural(c, x, y, r, n) {
+      T.rodape_azul(c, x, y, r, n);
+      const l = n(-1, 0) === n(0, 0), rr = n(1, 0) === n(0, 0);
+      F(c, x + (l ? 0 : 1), y + 1, 16 - (l ? 0 : 1) - (rr ? 0 : 1), 12, '#d9d4cc');
+      F(c, x + (l ? 0 : 2), y + 2, 16 - (l ? 0 : 2) - (rr ? 0 : 2), 10, '#f6f4f0');
+      const papers = ['#ffe28a', '#ffc4de', '#bfe0ff', '#ffffff'];
+      for (let i = 0; i < 3; i++) F(c, x + 2 + Math.floor(r() * 9), y + 3 + Math.floor(r() * 5), 3 + Math.floor(r() * 2), 3, pick(papers, r));
+    },
+
+    parede_vermelha(c, x, y, r, n) {
+      const bottom = n(0, -1) === n(0, 0);
+      F(c, x, y, 16, 16, '#c8373a');
+      F(c, x, y, 16, 1, bottom ? '#c8373a' : '#a92c30');
+      F(c, x + 15, y, 1, 16, '#b23033');
+      if (bottom) F(c, x, y + 13, 16, 3, '#9c2a2d');
+    },
+
+    extintor(c, x, y, r, n) {
+      T.rodape_azul(c, x, y, r, n);
+      F(c, x + 6, y + 3, 4, 8, '#d42b2b'); F(c, x + 6, y + 3, 1, 8, '#f05656');
+      F(c, x + 7, y + 1, 2, 2, '#2d2a30'); F(c, x + 9, y + 2, 2, 1, '#2d2a30');
+    },
+
+    piso_polido(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#b3b9c0');
+      speckle(c, x, y, r, ['#a7adb5', '#bfc4ca'], 7);
+      F(c, x, y + 9, 16, 2, '#bec3c9');
+      if (r() < 0.5) F(c, x + 2, y + 4, 9, 1, '#c8cdd2');
+      const up = n(0, -1);
+      if (up && !'cv'.includes(up)) { c.fillStyle = 'rgba(40,36,48,0.28)'; c.fillRect(x, y, 16, 4); }
+    },
+
+    borda_concreto(c, x, y, r) {
+      F(c, x, y, 16, 8, '#aab0b8');
+      speckle(c, x, y, r, ['#959ca5', '#c3c8ce'], 4);
+      F(c, x, y + 8, 16, 3, '#cfcac3');
+      F(c, x, y + 11, 16, 1, '#8e8880');
+      T._bloquete(c, x, y + 12, 4);
+    },
+
+    _bloquete(c, x, y, h) {
+      // blocos de concreto em padrão "espinha de peixe"
+      for (let py = 0; py < h; py++) for (let px = 0; px < 16; px++) {
+        const gx = x + px, gy = y + py;
+        const cell = (Math.floor(gx / 8) + Math.floor(gy / 8)) % 2;
+        const lx = gx % 8, ly = gy % 8;
+        let col = cell ? '#8e7f73' : '#857669';
+        if (cell ? (ly === 3 || ly === 7) : (lx === 3 || lx === 7)) col = '#665a51';
+        if (cell ? ly === 0 || ly === 4 : lx === 0 || lx === 4) col = cell ? '#9a8b7f' : '#918275';
+        F(c, gx, gy, 1, 1, col);
+      }
+    },
+
+    piso_bloquete(c, x, y, r) {
+      T._bloquete(c, x, y, 16);
+      if (r() < 0.25) F(c, x + Math.floor(r() * 14), y + Math.floor(r() * 14), 2, 1, '#5f544c');
+    },
+
+    pilar_jardim(c, x, y, r, n) {
+      const pillar = n(0, 0) === 'I';
+      T.grama(c, x, y, r);
+      // folhagens (palmeirinhas)
+      for (let i = 0; i < 4; i++) {
+        const cx = x + 2 + r() * 12, cy = y + 4 + r() * 6;
+        for (let a = 0; a < 7; a++) {
+          const ang = -Math.PI / 2 + (a - 3) * 0.45;
+          for (let d = 1; d < 6; d++) F(c, Math.round(cx + Math.cos(ang) * d), Math.round(cy + Math.sin(ang) * d), 1, 1, d > 3 ? '#5aa04a' : '#3d7c37');
+        }
+      }
+      F(c, x, y + 13, 16, 3, '#9d978f');
+      F(c, x, y + 13, 16, 1, '#bdb7af');
+      if (pillar) {
+        F(c, x + 3, y, 10, 16, '#bcb7b0'); F(c, x + 3, y, 2, 16, '#d2cdc6'); F(c, x + 11, y, 2, 16, '#99938c');
+        F(c, x + 7, y, 1, 16, '#2b2830');
+      }
+    },
   };
   return T;
 })();

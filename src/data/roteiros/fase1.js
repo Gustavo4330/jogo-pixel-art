@@ -28,8 +28,9 @@ Object.assign(ROTEIROS, {
       passos: [
         { quem: 'narrador', fala: 'Tudo começou aqui... na escola. ♥' },
         { quem: 'ela', fala: 'Nossa, quantas lembranças esse lugar guarda...', rosto: 'feliz' },
-        { quem: 'narrador', fala: 'Use o direcional para andar e o botão A para conversar e interagir.' },
-        { quem: 'narrador', fala: 'Explore o pátio e entre no prédio. Alguém especial está esperando por você lá dentro.' },
+        { quem: 'narrador', fala: 'Use o direcional para andar e o botão A para conversar e examinar as coisas.' },
+        { quem: 'narrador', fala: 'Dica: siga a setinha rosa! Ela sempre mostra para onde você deve ir.' },
+        { quem: 'narrador', fala: 'Agora suba pelo caminho de cascalho e entre no prédio pela passagem do meio, entre os pilares.' },
         { marcar: 'f1_intro' },
       ],
     },
@@ -40,13 +41,14 @@ Object.assign(ROTEIROS, {
     {
       passos: [
         { quem: 'ela', fala: 'O corredor... parece igualzinho àquele dia.', rosto: 'timido' },
-        { quem: 'ela', fala: 'Ele deve estar por aqui em algum lugar...' },
+        { quem: 'ela', fala: 'O Gustavo deve estar por aqui em algum lugar...' },
+        { quem: 'narrador', fala: 'Dica: ande pelo corredor para a direita. O Gustavo e a Sofia estão perto das mesas.' },
         { marcar: 'f1_corredor' },
       ],
     },
   ],
 
-  /* ---- a amiga ---- */
+  /* ---- a Sofia ---- */
   f1_amiga: [
     {
       se: 'fase1_concluida',
@@ -56,14 +58,14 @@ Object.assign(ROTEIROS, {
     },
     {
       passos: [
-        { quem: 'amiga', fala: 'Ei! Ele está bem ali, olha.', rosto: 'feliz' },
+        { quem: 'amiga', fala: 'Bia! O Gustavo está bem aqui do meu lado, olha.', rosto: 'feliz' },
         { quem: 'amiga', fala: 'Você não ia pedir ajuda com aqueles slides? Vai lá falar com ele!' },
         { marcar: 'f1_falou_amiga' },
       ],
     },
   ],
 
-  /* ---- ELE: a cena principal da fase ---- */
+  /* ---- GUSTAVO: a cena principal da fase ---- */
   f1_ele: [
     {
       se: 'fase1_concluida',
@@ -75,15 +77,15 @@ Object.assign(ROTEIROS, {
       passos: [
         { olhar: 'ele', para: 'jogador' },
         { emocao: 'ele', tipo: 'exclamacao' },
-        { quem: 'ele', fala: 'Ah, oi! Você por aqui?', rosto: 'surpreso' },
-        { quem: 'ela', fala: 'Oi! Lembra deste lugar?', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Ah, oi, Bia! Você por aqui?', rosto: 'surpreso' },
+        { quem: 'ela', fala: 'Oi, Gustavo! Lembra deste lugar?', rosto: 'feliz' },
         { quem: 'ele', fala: 'Como eu ia esquecer? Foi aqui que tudo começou...', rosto: 'feliz' },
-        { quem: 'narrador', fala: 'Naquele dia, ele encontrou você e uma amiga conversando na escola.' },
-        { quem: 'amiga', fala: 'Ela está desesperada com uns slides, sabia?' },
+        { quem: 'narrador', fala: 'Naquele dia, o Gustavo encontrou você e a Sofia conversando na escola.' },
+        { quem: 'amiga', fala: 'Gustavo, a Bia está desesperada com uns slides, sabia?' },
         { quem: 'ela', fala: 'Eu preciso muito de ajuda com uns slides...', rosto: 'timido' },
         { quem: 'ele', fala: 'Eu posso te ajudar! Sou ótimo com slides.', rosto: 'feliz' },
         { quem: 'ela', fala: 'Sério?! Então toma... um presente pra você!', rosto: 'feliz' },
-        { item: 'tortuguita', titulo: 'Tortuguita!', texto: 'Ela colocou uma Tortuguita na boca dele. À força. Sem aviso.' },
+        { item: 'tortuguita', titulo: 'Tortuguita!', texto: 'A Bia colocou uma Tortuguita na boca do Gustavo. À força. Sem aviso.' },
         { quem: 'ele', fala: 'Mmmmf?! ...Isso é chocolate?!', rosto: 'surpreso' },
         { emocao: 'ele', tipo: 'coracao' },
         { quem: 'narrador', fala: 'E foi assim, com uma Tortuguita, que aconteceu o nosso primeiro flerte. ♥' },
@@ -98,13 +100,6 @@ Object.assign(ROTEIROS, {
       ],
     },
   ],
-
-  /* ---- figurantes (falas curtas) ---- */
-  f1_colega_patio: [{ passos: [{ quem: 'aluno1', fala: 'O sinal já vai tocar! Melhor entrar logo.' }] }],
-  f1_colega_polo: [{ passos: [{ quem: 'aluna1', fala: 'Você viu um menino de camiseta polo? Acho que ele entrou no prédio...' }] }],
-  f1_colega_porta: [{ passos: [{ quem: 'aluno2', fala: 'Dizem que esse corredor guarda muitas histórias de amor... ♥' }] }],
-  f1_colega_mesa: [{ passos: [{ quem: 'aluno1', fala: 'Shhh, estou tentando estudar. Mas aquele ali não para de olhar pra porta...' }] }],
-  f1_colega_corredor: [{ passos: [{ quem: 'aluna2', fala: 'Você sabia que tem estrelinhas escondidas pela escola? Dizem que guardam memórias especiais!' }] }],
 });
 
 Object.assign(QUIZZES, {
@@ -125,9 +120,9 @@ Object.assign(QUIZZES, {
       },
       {
         pergunta: 'Quem estava conversando com a gente?',
-        opcoes: ['Uma amiga sua', 'O diretor da escola', 'Ninguém, só nós dois'],
+        opcoes: ['A Sofia', 'O diretor da escola', 'Ninguém, só nós dois'],
         correta: 0,
-        acerto: 'Exatamente! Ela foi testemunha de tudo.',
+        acerto: 'Exatamente! A Sofia foi testemunha de tudo.',
       },
       {
         pergunta: 'E o que você colocou, à força, na minha boca?',

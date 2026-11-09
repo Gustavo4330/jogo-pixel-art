@@ -1,10 +1,8 @@
 # Nossa História — Etapa 1: planejamento visual e técnico
 
-> Observação: até agora recebi **duas imagens de referência** (a cena da escola
-> e a folha de conceito com personagens, interface e cenários). As **fotos reais**
-> (de vocês dois, da fachada e do corredor) ainda não chegaram. Quando chegarem,
-> eu ajusto as cores dos personagens e os mapas para ficarem fiéis aos lugares de
-> verdade. Tudo foi feito para ser fácil de ajustar.
+> Atualização: a Fase 1 foi refeita com base nas **fotos reais** da fachada e do
+> corredor. Personagens da fase: **Bia** (jogadora), **Gustavo** e **Sofia**.
+> A foto de vocês dois ainda pode ser usada para ajustar as cores dos personagens.
 
 ## 1. Direção artística
 
@@ -42,7 +40,10 @@
 
 ## 3. Mapa da Fase 1
 
-**Parte A — Frente da escola (30×26 tiles)**
+**Parte A — Frente da escola (30×26 tiles)** — versão atual: prédio de concreto
+com telhado metálico curvo, aletas vermelhas e azuis, janelinhas redondas, térreo
+aberto sobre pilares (entrada no meio), prédio de tijolos ao lado, gramado com
+caminhos de cascalho, mudas de árvore e postes. *(O esquema abaixo é da primeira versão.)*
 
 ```
  ┌──────────────────────────────────────┐
@@ -59,7 +60,10 @@
  └──────────────────────────────────────┘
 ```
 
-**Parte B — Corredor interno (40×14 tiles)**
+**Parte B — Corredor (40×15 tiles)** — versão atual: corredor aberto de concreto,
+salas com portas duplas brancas, murais na parede azul, extintor, parede vermelha,
+piso polido junto à parede, bloquetes no meio, bancos de concreto, mesas compridas
+com banquinhos e jardim com pilares. *(O esquema abaixo é da primeira versão.)*
 
 ```
  ┌──────────────────────────────────────────────────┐
@@ -72,6 +76,10 @@
  │ jardineira (plantas)                              │
  └──────────────────────────────────────────────────┘
 ```
+
+**Dicas para a jogadora:** o objetivo atual aparece no canto da tela e uma seta
+rosa aponta para onde ir (na borda da tela quando o alvo está longe). Os objetivos
+ficam em `objetivos` dentro de cada mapa.
 
 Fluxo: começa na calçada → explora o pátio → entra pela porta de vidro →
 corredor → encontra ele (balão de coração) → conversa → amiga entra na cena →

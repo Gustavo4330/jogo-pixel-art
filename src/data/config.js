@@ -9,8 +9,8 @@ const CONFIG = {
 
   // Nomes que aparecem nas caixas de diálogo.
   // Dica: coloque os apelidos de vocês (ex.: 'Amor', 'Mozão', o nome dela...).
-  nomeDela: 'Ela',
-  nomeDele: 'Ele',
+  nomeDela: 'Bia',
+  nomeDele: 'Gustavo',
 
   // Velocidade da personagem (pixels por segundo).
   velocidade: 74,

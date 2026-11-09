@@ -280,7 +280,16 @@ const UI = {
       UI.$('#hud').hidden = false;
       UI.$('#hud-phase').innerHTML = `Fase ${faseId}/${FASES.length} ${UI.heart()}`;
     },
-    hide() { UI.$('#hud').hidden = true; },
+    hide() { UI.$('#hud').hidden = true; UI.hud.goal(null); },
+
+    /** Mostra o objetivo atual (dica de para onde ir). */
+    goal(texto) {
+      const el = UI.$('#hud-goal');
+      if (texto === UI.hud._goal) return;
+      UI.hud._goal = texto;
+      el.hidden = !texto;
+      if (texto) el.innerHTML = `<span class="goal-tag">Objetivo:</span>${UI.esc(texto)}`;
+    },
   },
 
   /** Tela cheia (menus). Use data-action nos botões. */

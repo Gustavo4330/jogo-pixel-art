@@ -10,7 +10,7 @@
    ========================================================= */
 
 const PERSONAGENS = {
-  // A personagem que ela controla
+  // A Bia — a personagem que ela controla
   ela: {
     nome: CONFIG.nomeDela,
     visual: {
@@ -26,7 +26,7 @@ const PERSONAGENS = {
     },
   },
 
-  // Você!
+  // O Gustavo (você!)
   ele: {
     nome: CONFIG.nomeDele,
     visual: {
@@ -43,9 +43,9 @@ const PERSONAGENS = {
     },
   },
 
-  // A amiga dela (Fase 1)
+  // A Sofia, amiga dela (Fase 1)
   amiga: {
-    nome: 'Amiga',
+    nome: 'Sofia',
     visual: {
       pele: '#e9c09c',
       cabelo: '#6b3f2a',
@@ -59,23 +59,8 @@ const PERSONAGENS = {
     },
   },
 
-  // Colegas de escola (figurantes)
-  aluno1: {
-    nome: 'Colega',
-    visual: { pele: '#d9a47c', cabelo: '#1f1714', estiloCabelo: 'curto', roupa: '#ffffff', estiloRoupa: 'camiseta', calca: '#6f95c9', tenis: '#f6f2f6' },
-  },
-  aluno2: {
-    nome: 'Colega',
-    visual: { pele: '#b97c58', cabelo: '#271a16', estiloCabelo: 'curto', roupa: '#ffffff', estiloRoupa: 'camiseta', calca: '#4f6fa3', tenis: '#3a3550' },
-  },
-  aluna1: {
-    nome: 'Colega',
-    visual: { pele: '#f0c8a8', cabelo: '#4a2c20', estiloCabelo: 'longo', roupa: '#ffffff', estiloRoupa: 'camiseta', calca: '#6f95c9', tenis: '#f6f2f6' },
-  },
-  aluna2: {
-    nome: 'Colega',
-    visual: { pele: '#a8714e', cabelo: '#17110f', estiloCabelo: 'rabo', laco: '#ffd86b', roupa: '#ffffff', estiloRoupa: 'camiseta', calca: '#6f95c9', tenis: '#f6f2f6' },
-  },
+  // Para adicionar figurantes nas próximas fases, copie um personagem
+  // acima e mude o id (ex.: 'irma', 'mae'), as cores e o nome.
 
   // Narrador (sem retrato)
   narrador: { nome: '', narrador: true },

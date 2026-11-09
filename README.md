@@ -35,6 +35,7 @@ Não precisa instalar nada: o Phaser já está incluído em `lib/`.
 | Nome/data das fases, quais estão disponíveis | `src/data/fases.js` |
 | Memórias bônus (estrelinhas) | `src/data/bonus.js` |
 | Layout dos mapas (onde ficam paredes, objetos, NPCs) | `src/data/maps/*.js` |
+| Dicas / objetivos e a seta rosa | `objetivos` dentro de cada mapa |
 | Música própria (mp3) | `src/systems/AudioSystem.js` → `MUSICA_ARQUIVO` |
 
 ### Como funciona um mapa
