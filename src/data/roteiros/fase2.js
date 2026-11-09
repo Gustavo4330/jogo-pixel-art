@@ -12,14 +12,15 @@
          (troca os personagens de lugar enquanto a tela está coberta)
      { ligacao: 'Felipe' }          (tela de celular chamando)
      { aparecer: 'felipe' }         (personagem escondido entra em cena)
+     { sair: ['ela', 'ele'], para: [x, y] }  (andam até a porta e saem de cena)
    ========================================================= */
 
 Object.assign(ROTEIROS, {
   f2_intro: [
     {
       passos: [
-        { quem: 'ela', fala: 'Ele disse que ia me esperar na escada de incêndio...', rosto: 'timido' },
-        { quem: 'narrador', fala: 'Suba a escada e siga a setinha rosa.' },
+        { quem: 'narrador', fala: 'A escada de incêndio. Só vocês dois lá dentro...' },
+        { quem: 'ela', fala: 'Baby?', rosto: 'timido' },
         { marcar: 'f2_intro' },
       ],
     },
@@ -44,7 +45,7 @@ Object.assign(ROTEIROS, {
         { quem: 'ele', fala: 'Mais um?', rosto: 'feliz' },
         { beijo: 'E mais um... ♥' },
 
-        // gente do lado de fora da porta
+        // gente do lado de fora da única porta
         { quem: 'vozes', fala: '"Bora esperar aqui na porta mesmo!"' },
         { emocao: 'ela', tipo: 'exclamacao' },
         { quem: 'ela', fala: 'Baby... tem gente na porta!', rosto: 'surpreso' },
@@ -53,11 +54,17 @@ Object.assign(ROTEIROS, {
         { quem: 'ele', fala: 'Calma... vou ligar pro Felipe.', rosto: 'normal' },
         { ligacao: 'Felipe' },
         { quem: 'felipe', fala: 'Na escada de incêndio?! Hahaha! Tô indo com a Sofia.', rosto: 'feliz' },
-        { transicao: 'Alguns minutos depois...', posicoes: { felipe: [12.2, 7.2, 'down'], amiga: [14, 7.2, 'down'] } },
+        { transicao: 'Alguns minutos depois...' },
+
+        // a Sofia e o Felipe chegam pela porta...
         { aparecer: 'felipe' },
         { aparecer: 'amiga' },
         { quem: 'amiga', fala: 'Barra limpa! Bora, bora!', rosto: 'feliz' },
         { quem: 'felipe', fala: 'Vocês me devem uma, hein!', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Bora, vida!', rosto: 'feliz' },
+        // ...e vocês dois saem logo em seguida
+        { sair: ['ela', 'ele'], para: [7, 3.3] },
+        { quem: 'narrador', fala: 'E vocês saíram de fininho, de mãos dadas. ♥' },
         { quem: 'ele', fala: 'Vida, lembra de tudo desse dia?', rosto: 'feliz' },
         { quiz: 'f2_quiz' },
         { quem: 'ele', fala: 'Melhor escada de incêndio do mundo. ♥', rosto: 'feliz' },

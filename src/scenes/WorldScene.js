@@ -59,6 +59,11 @@ class WorldScene extends Phaser.Scene {
       this.add.rectangle(0, 0, this.worldW, this.worldH, 0xff7a3d, 0.16).setOrigin(0).setDepth(99000);
     }
 
+    // Ambiente escuro (ex.: escada de incêndio)
+    if (map.luz === 'escuro') {
+      this.add.rectangle(0, 0, this.worldW, this.worldH, 0x0e0a22, 0.34).setOrigin(0).setDepth(99000);
+    }
+
     // Seta guia (mostra para onde ir)
     this.guide = this.add.image(0, 0, 'arrow').setDepth(100002).setVisible(false);
 
@@ -133,6 +138,35 @@ class WorldScene extends Phaser.Scene {
     AudioSystem.play('door');
     c.sprite.setAlpha(0);
     this.tweens.add({ targets: c.sprite, alpha: 1, duration: 300 });
+  }
+
+  /** Personagens andam até um ponto (ex.: a porta) e saem de cena. */
+  exitThrough(ids, [px, py]) {
+    AudioSystem.play('door');
+    return Promise.all(ids.map((id, i) => new Promise((resolve) => {
+      const c = this.charById(id);
+      if (!c) return resolve();
+      if (c.bubble) { c.bubble.destroy(); c.bubble = null; }
+      const tx = px * T + (i - (ids.length - 1) / 2) * 8, ty = py * T;
+      c.sprite.body.enable = false;
+      // primeiro na horizontal, depois para cima até a porta
+      const dx = tx - c.x;
+      const steps = [];
+      if (Math.abs(dx) > 1) steps.push({ x: tx, dir: dx > 0 ? 'right' : 'left', d: Math.abs(dx) });
+      steps.push({ y: ty, dir: 'up', d: Math.abs(ty - c.y) });
+      const next = () => {
+        const s = steps.shift();
+        if (!s) {
+          this.tweens.add({ targets: [c.sprite, c.shadow], alpha: 0, duration: 350, onComplete: resolve });
+          return;
+        }
+        c.dir = s.dir;
+        c.sprite.play(`${c.key}-walk-${s.dir}`);
+        const props = s.x !== undefined ? { x: s.x } : { y: s.y };
+        this.tweens.add({ targets: c.sprite, ...props, duration: (s.d / 40) * 1000 + 1, delay: i * 120, onUpdate: () => c.sync(), onComplete: next });
+      };
+      next();
+    })));
   }
 
   /** Move personagens de lugar de uma vez (usado durante transições). */

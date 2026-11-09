@@ -716,6 +716,90 @@ const TileArt = (() => {
       F(c, x, y, 16, 1, '#a6a3ae');
       speckle(c, x, y + 3, r, ['#66636e', '#77747f'], 5);
     },
+
+    /* ---------- FASE 2 (v2): ESCADA DE INCÊNDIO DE CONCRETO ---------- */
+    concreto_liso(c, x, y, r, n) {
+      // concreto aparente: cinza liso com furinhos da forma
+      F(c, x, y, 16, 16, '#8f8e8b');
+      speckle(c, x, y, r, ['#878683', '#979693'], 6);
+      F(c, x + 3, y + 4, 1, 1, '#76756f'); F(c, x + 12, y + 4, 1, 1, '#76756f');
+      F(c, x + 3, y + 12, 1, 1, '#76756f'); F(c, x + 12, y + 12, 1, 1, '#76756f');
+      if (n(0, -1) === 'T') F(c, x, y, 16, 2, '#6c6b68');
+      const ch = n(0, 0);
+      if (ch === 'u' || ch === 'k' || ch === 'p') { F(c, x, y + 13, 16, 3, '#3d3e42'); F(c, x, y + 13, 16, 1, '#55565b'); }
+    },
+
+    porta_preta(c, x, y, r, n) {
+      const ch = n(0, 0);
+      const bottom = ch === ch.toLowerCase();
+      const right = n(-1, 0) === ch;
+      T.concreto_liso(c, x, y, r, n);
+      const top = bottom ? 0 : 5;
+      F(c, x, y + top, 16, 16 - top, '#2b2c30');
+      F(c, x + (right ? 0 : 1), y + top + (bottom ? 0 : 1), 15, 16 - top, '#1b1c1f');
+      F(c, x + (right ? 0 : 15), y + top, 1, 16 - top, '#3a3b40');
+      if (!bottom) {
+        // placa verde de saída com o bonequinho
+        const sx = right ? x : x + 9;
+        F(c, sx, y, 7, 4, '#1f9a52'); F(c, sx, y, 7, 1, '#5fd08e');
+        F(c, sx + (right ? 1 : 3), y + 1, 2, 2, '#ffffff');
+        F(c, sx + (right ? 4 : 1), y + 2, 2, 1, '#ffffff');
+      } else {
+        // barra antipânico inox
+        F(c, x + (right ? 0 : 3), y + 4, 13, 2, '#c9ced4');
+        F(c, x + (right ? 0 : 3), y + 4, 13, 1, '#eef1f4');
+        F(c, x + (right ? 11 : 3), y + 6, 2, 2, '#9aa0a8');
+        F(c, x, y + 14, 16, 2, '#3d3e42');
+      }
+    },
+
+    cano_laranja(c, x, y, r, n) {
+      T.concreto_liso(c, x, y, r, n);
+      F(c, x + 7, y, 2, 16, '#e8742c'); F(c, x + 7, y, 1, 16, '#ff9a55');
+      if (n(0, 1) !== 'o') { F(c, x + 5, y + 5, 6, 5, '#e8742c'); F(c, x + 5, y + 5, 6, 1, '#ff9a55'); F(c, x + 7, y + 10, 2, 3, '#e8742c'); }
+    },
+
+    botao_verde(c, x, y, r, n) {
+      T.concreto_liso(c, x, y, r, n);
+      F(c, x + 4, y + 4, 5, 5, '#1f9a52'); F(c, x + 5, y + 5, 3, 3, '#e8f3ec'); F(c, x + 6, y + 6, 1, 1, '#1f9a52');
+    },
+
+    piso_escuro(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#5a5b60');
+      speckle(c, x, y, r, ['#54555a', '#606166'], 6);
+      F(c, x + 15, y, 1, 16, '#4c4d52'); F(c, x, y + 15, 16, 1, '#4c4d52');
+      const up = n(0, -1);
+      if (up && up !== 'f') { c.fillStyle = 'rgba(10,10,20,0.35)'; c.fillRect(x, y, 16, 5); }
+      if (n(1, 0) === 'H') F(c, x + 14, y, 2, 16, '#4c4d52');
+    },
+
+    corrimao_inox(c, x, y, r, n) {
+      T.piso_escuro(c, x, y, r, n);
+      F(c, x + 8, y, 6, 16, '#d9d6cf');           // faixa clara na borda da escada
+      F(c, x + 9, y, 1, 16, '#bdb9b1');
+      F(c, x + 4, y, 2, 16, '#c9ced4');           // corrimão de inox
+      F(c, x + 4, y, 1, 16, '#eef1f4');
+      if ((y / 16) % 2 === 0) F(c, x + 3, y + 7, 4, 2, '#9aa0a8');
+    },
+
+    escada_desce(c, x, y, r, n) {
+      // degraus descendo: quanto mais para baixo, mais escuro
+      const k = Math.min(1, (y / 16 - 3) / 8);
+      const shade = (hex) => Pixel.shade(hex, -0.45 * k);
+      for (let s = 0; s < 2; s++) {
+        const yy = y + s * 8;
+        F(c, x, yy, 16, 6, shade('#6d6e73'));
+        F(c, x, yy, 16, 1, shade('#8a8b90'));
+        F(c, x, yy + 6, 16, 2, shade('#3e3f44'));
+      }
+      if (n(1, 0) !== 'S') { F(c, x + 13, y, 3, 16, shade('#c9ced4')); F(c, x + 13, y, 1, 16, shade('#eef1f4')); }
+    },
+
+    parede_lateral(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#6f6e6b');
+      F(c, x + (n(1, 0) ? 13 : 0), y, 3, 16, '#85847f');
+      speckle(c, x, y, r, ['#6a6966', '#757470'], 4);
+    },
   };
   return T;
 })();

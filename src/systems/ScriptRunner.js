@@ -34,6 +34,7 @@ const ScriptRunner = {
       else if (p.transicao) await UI.timeskip(p.transicao, () => p.posicoes && scene.place(p.posicoes));
       else if (p.ligacao) await UI.phoneCall(p.ligacao);
       else if (p.aparecer) scene.appear(p.aparecer);
+      else if (p.sair) await scene.exitThrough(p.sair, p.para);
       else if (p.beijo) await scene.kiss(p.beijo);
       else if (p.concluirFase) await scene.completePhase(p.concluirFase);
       else console.warn('Passo desconhecido no roteiro:', p);
