@@ -537,6 +537,68 @@ const TileArt = (() => {
         F(c, x + 7, y, 1, 16, '#2b2830');
       }
     },
+
+    /* ---------- FASE 2: ESCADARIA AO ENTARDECER ---------- */
+    janela_por_do_sol(c, x, y, r, n) {
+      const ch = n(0, 0);
+      const bottom = ch === 'j';
+      const l = n(-1, 0) === ch, rr = n(1, 0) === ch;
+      T.parede_concreto(c, x, y, r);
+      F(c, x, y + (bottom ? 0 : 2), 16, bottom ? 13 : 14, '#3e3a46');
+      const gx = x + (l ? 0 : 1), gw = 16 - (l ? 0 : 1) - (rr ? 0 : 1);
+      const top = y + (bottom ? 0 : 3), h = bottom ? 12 : 13;
+      const sky = bottom ? ['#ffb46b', '#ffc77e', '#ffd894'] : ['#c75c8a', '#e8728a', '#ff9672'];
+      for (let i = 0; i < h; i++) F(c, gx, top + i, gw, 1, sky[Math.min(2, Math.floor((i / h) * 3))]);
+      if (bottom) {
+        // sol se pondo atrás das árvores (só na janela do meio)
+        if (l && rr) Pixel.blob(c, x + 8, y + 8, 5, '#fff0b3');
+        for (let i = 0; i < 16; i++) F(c, x + i, y + 8 + Math.round(Math.sin((x + i) / 3) * 1.5 + 2), 1, 4, '#7a3f62');
+        F(c, gx, y + 12, gw, 1, '#5c2f4c');
+        F(c, x, y + 12, 16, 4, '#bdb8b1'); F(c, x, y + 12, 16, 1, '#e6d4c0');
+      }
+      if (!rr) F(c, x + 15, y, 1, 16, '#3e3a46');
+      if (!bottom && !rr) F(c, x + 15, y + 2, 1, 14, '#3e3a46');
+      F(c, x + (l ? 0 : 1), y + (bottom ? 5 : 9), gw, 1, '#3e3a46');
+    },
+
+    corrimao(c, x, y, r, n) {
+      T.piso_polido(c, x, y, r, n);
+      F(c, x, y + 5, 16, 11, '#b9b4ad');
+      F(c, x, y + 5, 16, 2, '#d8d3cc');
+      F(c, x, y + 3, 16, 2, '#3a3640');
+      F(c, x + 3, y + 5, 1, 1, '#3a3640'); F(c, x + 12, y + 5, 1, 1, '#3a3640');
+      F(c, x, y + 14, 16, 2, '#8f8a84');
+    },
+
+    escada(c, x, y, r, n) {
+      for (let k = 0; k < 2; k++) {
+        const yy = y + k * 8;
+        F(c, x, yy, 16, 6, '#cbc6bf');
+        F(c, x, yy, 16, 1, '#e8e3dc');
+        F(c, x, yy + 6, 16, 2, '#8e8983');
+      }
+      if (n(-1, 0) !== 'S') F(c, x, y, 1, 16, '#77727c');
+      if (n(1, 0) !== 'S') F(c, x + 15, y, 1, 16, '#77727c');
+      if (r() < 0.3) F(c, x + Math.floor(r() * 12), y + 2, 3, 1, '#d9d4cd');
+    },
+
+    parede_laje(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#a7a29c');
+      for (let i = 3; i < 16; i += 5) F(c, x, y + i, 16, 1, '#97928c');
+      F(c, x + 15, y, 1, 16, '#9a958f');
+      if (n(0, -1) !== n(0, 0)) F(c, x, y, 16, 3, '#7c7781');
+      if (n(0, 1) !== n(0, 0)) { F(c, x, y + 13, 16, 3, '#8a8580'); }
+      speckle(c, x, y, r, ['#9d9892', '#b2ada7'], 4);
+    },
+
+    lateral_escada(c, x, y, r, n) {
+      T.parede_laje(c, x, y, r, n);
+      const right = n(1, 0) === 'S';
+      const ex = right ? x + 11 : x;
+      F(c, ex, y, 5, 16, '#c3beb7');
+      F(c, ex + (right ? 0 : 4), y, 1, 16, '#8e8983');
+      F(c, ex + 2, y, 1, 16, '#3a3640');
+    },
   };
   return T;
 })();

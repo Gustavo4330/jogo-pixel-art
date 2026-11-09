@@ -16,6 +16,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   create() {
+    ArtFactory.currentFase = null;
     UI.hud.hide();
     UI.dialog.hide();
     Controls.setVisible(false);

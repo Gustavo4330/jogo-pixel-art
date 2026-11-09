@@ -38,8 +38,27 @@ const MapBuilder = {
         fn(ctx, x * T, y * T, r, n, def);
       }
     }
+    if (map.luz === 'entardecer') this.sunBeams(ctx, map, w, h);
     scene.textures.addCanvas(key, c);
     return key;
+  },
+
+  /** Raios de sol entrando pelas janelas (luz de fim de tarde). */
+  sunBeams(ctx, map, w, h) {
+    ctx.save();
+    ctx.fillStyle = 'rgba(255, 176, 96, 0.17)';
+    for (let x = 0; x < w; x++) {
+      if (map.chao[1][x] !== 'J' || map.chao[1][x - 1] === 'J') continue;
+      let len = 1;
+      while (map.chao[1][x + len] === 'J') len++;
+      const x0 = x * T, x1 = (x + len) * T;
+      ctx.beginPath();
+      ctx.moveTo(x0, 3 * T); ctx.lineTo(x1, 3 * T);
+      ctx.lineTo(x1 + 4 * T, h * T); ctx.lineTo(x0 + 4 * T, h * T);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
   },
 
   /** Agrupa tiles vizinhos que satisfazem test() em retângulos. */

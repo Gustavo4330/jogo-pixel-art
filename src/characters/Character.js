@@ -12,8 +12,10 @@ class Character {
     this.dir = 'down';
     this.player = player;
 
+    // a roupa depende da fase (veja "roupas" em src/data/fases.js)
+    this.key = ArtFactory.ensureCharacter(scene, id, ArtFactory.currentFase);
     this.shadow = scene.add.image(x, y - 1, 'shadow');
-    this.sprite = scene.physics.add.sprite(x, y, 'char_' + id, 0).setOrigin(0.5, 1);
+    this.sprite = scene.physics.add.sprite(x, y, this.key, 0).setOrigin(0.5, 1);
     this.sprite.body.setSize(10, 6).setOffset(3, 17);
     this.sprite.setCollideWorldBounds(true);
     if (!player) this.sprite.body.setImmovable(true);
@@ -41,7 +43,7 @@ class Character {
     const [vx, vy] = DIR_VEC[dir];
     this.dir = dir;
     this.sprite.setVelocity(vx * speed, vy * speed);
-    const key = `${this.id}-walk-${dir}`;
+    const key = `${this.key}-walk-${dir}`;
     if (this.sprite.anims.currentAnim?.key !== key || !this.sprite.anims.isPlaying) this.sprite.play(key);
   }
 

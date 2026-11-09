@@ -3,8 +3,8 @@
 Um RPG 2D em pixel art, feito para ser jogado no celular pelo navegador,
 contando a nossa história fase por fase até o grande pedido.
 
-**Status:** Fase 1 (Primeiro Flerte) jogável. Fases 2 a 6 aparecem como
-"em breve" / bloqueadas.
+**Status:** Fases 1 (Primeiro Flerte) e 2 (Primeiro Beijo) jogáveis. Fases 3 a 6
+aparecem como "em breve" / bloqueadas.
 
 ## Como jogar / testar
 
@@ -38,6 +38,8 @@ Não precisa instalar nada: o Phaser já está incluído em `lib/`.
 | Cores dos personagens (pele, cabelo, roupa) | `src/data/personagens.js` |
 | Falas e perguntas do quiz da Fase 1 | `src/data/roteiros/fase1.js` |
 | Nome/data das fases, quais estão disponíveis | `src/data/fases.js` |
+| Roupas de cada personagem em cada fase | `roupas` em `src/data/fases.js` |
+| Falas e quiz da Fase 2 | `src/data/roteiros/fase2.js` |
 | Memórias bônus (estrelinhas) | `src/data/bonus.js` |
 | Layout dos mapas (onde ficam paredes, objetos, NPCs) | `src/data/maps/*.js` |
 | Dicas / objetivos e a seta rosa | `objetivos` dentro de cada mapa |

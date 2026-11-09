@@ -30,7 +30,12 @@ const CharacterArt = {
       blush: v.bochecha || S(v.pele, -0.08),
       mouth: S(v.pele, -0.35),
       tie: v.laco || '#ff6fae',
+      detail: v.detalhe || null,     // gola/punhos de outra cor (ex.: camisa de seleção)
+      badge: v.escudo || null,       // escudinho no peito
       hairStyle: v.estiloCabelo, topStyle: v.estiloRoupa,
+      tankLike: ['regata', 'top', 'vestido'].includes(v.estiloRoupa),
+      shorts: v.estiloCalca === 'shorts',
+      dress: v.estiloRoupa === 'vestido',
     };
   },
 
@@ -48,9 +53,32 @@ const CharacterArt = {
     this.head(P, R, L, d, b);
     this.hairFront(P, R, L, d, b);
 
+    // shorts e vestido: as pernas aparecem (cor da pele)
+    if (L.shorts || L.dress) {
+      const from = L.dress ? 19 : 21;
+      for (let y = from; y < 23; y++) for (let x = 0; x < 16; x++) {
+        if (g[y][x] === L.pants) g[y][x] = L.skin;
+        else if (g[y][x] === L.pantsS) g[y][x] = L.skinS;
+      }
+    }
+    if (L.dress) this.skirt(P, R, L, d, b);
+
     let out = Pixel.outline(g, this.OUTLINE);
     if (dir === 'right') out = Pixel.mirror(out);
     return out;
+  },
+
+  skirt(P, R, L, d, b) {
+    const y = 18 + b;
+    if (d === 'left') {
+      R(5, y, 6, 1, L.top); R(4, y + 1, 8, 2, L.top); R(11, y + 1, 1, 2, L.topS);
+      R(4, y + 2, 8, 1, L.topS);
+    } else {
+      R(4, y, 8, 1, L.top); R(3, y + 1, 10, 2, L.top);
+      R(11, y, 1, 3, L.topS); R(12, y + 1, 1, 2, L.topS);
+      R(3, y + 2, 10, 1, L.topS);
+      P(5, y + 1, L.topHi); P(8, y + 1, L.topHi);
+    }
   },
 
   legs(P, R, L, d, f) {
@@ -73,24 +101,29 @@ const CharacterArt = {
 
   torso(P, R, L, d, f, b) {
     const y = 12 + b;
-    const tank = L.topStyle === 'regata';
+    const tank = L.tankLike;
+    const D = L.detail;
     if (d === 'down' || d === 'up') {
       if (tank) {
         R(5, y, 6, 6, L.top); R(10, y, 1, 6, L.topS);
         R(4, y, 1, 2, L.skin); R(11, y, 1, 2, L.skinS);
         R(3, y + 1, 1, 5, L.skin); R(12, y + 1, 1, 5, L.skinS);
         if (d === 'down') { P(7, y, L.skin); P(8, y, L.skin); }
+        if (L.topStyle === 'top') { R(5, y + 5, 6, 1, L.skin); R(10, y + 5, 1, 1, L.skinS); }
       } else {
         R(4, y, 8, 6, L.top); R(11, y, 1, 6, L.topS);
         R(3, y + 1, 1, 2, L.top); R(12, y + 1, 1, 2, L.topS);
         R(3, y + 3, 1, 3, L.skin); R(12, y + 3, 1, 3, L.skinS);
+        if (D) { P(3, y + 2, D); P(12, y + 2, D); }
         if (d === 'down') {
           if (L.topStyle === 'polo') {
-            P(5, y, L.collar); P(6, y, L.collar); P(9, y, L.collar); P(10, y, L.collar);
+            P(5, y, D || L.collar); P(6, y, D || L.collar); P(9, y, D || L.collar); P(10, y, D || L.collar);
             P(7, y, L.skin); P(8, y, L.skin); P(7, y + 1, L.topS); P(7, y + 2, L.topS);
           } else {
             P(7, y, L.skinS); P(8, y, L.skinS);
+            if (D) { P(6, y, D); P(9, y, D); }
           }
+          if (L.badge) P(9, y + 2, L.badge);
         } else if (L.topStyle === 'polo') {
           R(5, y, 6, 1, L.collar);
         }
@@ -99,11 +132,15 @@ const CharacterArt = {
     } else {
       R(5, y, 6, 6, L.top); R(10, y, 1, 6, L.topS); R(5, y, 1, 6, L.topHi);
       if (tank) { P(5, y, L.skin); P(6, y, L.skin); }
-      else if (L.topStyle === 'polo') { P(5, y, L.collar); P(6, y, L.collar); }
+      else if (L.topStyle === 'polo') { P(5, y, D || L.collar); P(6, y, D || L.collar); }
+      if (L.topStyle === 'top') R(5, y + 5, 6, 1, L.skin);
       R(5, y + 6, 6, 1, L.pantsS);
       const ax = f === 1 ? 5 : f === 2 ? 8 : 7;
       if (tank) { R(ax, y, 2, 6, L.skin); R(ax + 1, y, 1, 6, L.skinS); }
-      else { R(ax, y, 2, 2, L.top); R(ax + 1, y, 1, 2, L.topS); R(ax, y + 2, 2, 4, L.skin); R(ax + 1, y + 2, 1, 4, L.skinS); }
+      else {
+        R(ax, y, 2, 2, L.top); R(ax + 1, y, 1, 2, L.topS); R(ax, y + 2, 2, 4, L.skin); R(ax + 1, y + 2, 1, 4, L.skinS);
+        if (D) R(ax, y + 1, 2, 1, D);
+      }
     }
   },
 
@@ -229,19 +266,20 @@ const CharacterArt = {
     if (st === 'rabo') { R(24, 6, 4, 12, L.hair); R(23, 6, 2, 3, L.tie); }
 
     // ombros e roupa
-    if (L.topStyle === 'regata') {
+    if (L.tankLike) {
       R(5, 27, 22, 5, L.skin); R(4, 29, 24, 3, L.skin);
       R(9, 27, 14, 5, L.top); R(10, 25, 2, 3, L.top); R(20, 25, 2, 3, L.top);
       R(21, 27, 2, 5, L.topS);
     } else {
       R(5, 27, 22, 5, L.top); R(4, 29, 24, 3, L.top); R(23, 27, 4, 5, L.topS);
       if (L.topStyle === 'polo') {
-        R(11, 26, 4, 2, L.collar); R(17, 26, 4, 2, L.collar); R(15, 27, 2, 3, L.topS);
-      } else { R(13, 26, 6, 1, L.topS); }
+        R(11, 26, 4, 2, L.detail || L.collar); R(17, 26, 4, 2, L.detail || L.collar); R(15, 27, 2, 3, L.topS);
+      } else { R(13, 26, 6, 1, L.detail || L.topS); if (L.detail) { R(12, 26, 1, 2, L.detail); R(19, 26, 1, 2, L.detail); } }
+      if (L.badge) R(19, 29, 2, 2, L.badge);
     }
     // pescoço
     R(13, 22, 6, 5, L.skinS);
-    if (L.topStyle === 'regata') R(13, 26, 6, 1, L.skin);
+    if (L.tankLike) R(13, 26, 6, 1, L.skin);
 
     // rosto
     R(9, 7, 14, 1, L.skin); R(8, 8, 16, 15, L.skin); R(9, 23, 14, 1, L.skin); R(11, 24, 10, 1, L.skin);

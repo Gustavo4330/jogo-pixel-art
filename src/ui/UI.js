@@ -54,7 +54,7 @@ const UI = {
       el.querySelector('.dlg-name').innerHTML = p.nome ? `${UI.esc(p.nome)} ${UI.heart()}` : '';
       el.querySelector('.dlg-name').hidden = !p.nome;
       const img = el.querySelector('.dlg-portrait img');
-      const urls = ArtFactory.portraits[quem];
+      const urls = ArtFactory.portraitsFor(quem);
       if (urls) img.src = urls[rosto] || urls.normal;
       return el;
     },
@@ -270,6 +270,20 @@ const UI = {
     el.classList.add('out');
     await UI.wait(450);
     el.hidden = true;
+  },
+
+  /** Tela do beijo: coração grande pulsando. */
+  async kiss(texto) {
+    const el = UI.$('#phase-intro');
+    el.innerHTML = `<div class="kiss-heart">${UI.heart()}</div><div class="pi-title">${UI.esc(texto)}</div>`;
+    el.classList.add('kiss');
+    el.hidden = false;
+    el.classList.remove('out');
+    await Promise.race([UI.wait(3600), UI.wait(1200).then(() => UI.waitTap())]);
+    el.classList.add('out');
+    await UI.wait(450);
+    el.hidden = true;
+    el.classList.remove('kiss');
   },
 
   toast(msg) {

@@ -17,6 +17,7 @@ class WorldScene extends Phaser.Scene {
 
   create() {
     const map = (this.map = MAPAS[this.mapId]);
+    ArtFactory.currentFase = map.fase;
     const { w, h } = MapBuilder.size(map);
     this.worldW = w * T;
     this.worldH = h * T;
@@ -52,6 +53,11 @@ class WorldScene extends Phaser.Scene {
     // Balãozinho de "pode interagir"
     this.hint = this.add.image(0, 0, 'bubble').setOrigin(0.5, 1).setDepth(100000).setVisible(false);
     this.tweens.add({ targets: this.hint, scale: { from: 1, to: 1.12 }, duration: 380, yoyo: true, repeat: -1 });
+
+    // Luz de fim de tarde: tudo fica levemente alaranjado
+    if (map.luz === 'entardecer') {
+      this.add.rectangle(0, 0, this.worldW, this.worldH, 0xff7a3d, 0.16).setOrigin(0).setDepth(99000);
+    }
 
     // Seta guia (mostra para onde ir)
     this.guide = this.add.image(0, 0, 'arrow').setDepth(100002).setVisible(false);
@@ -336,7 +342,7 @@ class WorldScene extends Phaser.Scene {
     const d = Math.hypot(tx - c.x, ty - c.y);
     if (d < 1) return Promise.resolve();
     c.dir = Math.abs(tx - c.x) > Math.abs(ty - c.y) ? (tx > c.x ? 'right' : 'left') : (ty > c.y ? 'down' : 'up');
-    c.sprite.play(`${c.id}-walk-${c.dir}`);
+    c.sprite.play(`${c.key}-walk-${c.dir}`);
     return new Promise((resolve) => {
       this.tweens.add({
         targets: c.sprite, x: tx, y: ty, duration: (d / 38) * 1000,
@@ -348,6 +354,17 @@ class WorldScene extends Phaser.Scene {
         },
       });
     });
+  }
+
+  /** Cena do beijo: os dois se aproximam e a tela se enche de corações. */
+  async kiss(texto) {
+    const ele = this.npcs.ele;
+    if (ele) await this.walkTo('ele', 'jogador', 8);
+    this.emote('ela', 'coracao');
+    if (ele) this.emote('ele', 'coracao');
+    await UI.wait(700);
+    AudioSystem.play('victory');
+    await UI.kiss(texto);
   }
 
   emote(quem, tipo) {

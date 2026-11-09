@@ -32,6 +32,7 @@ const ScriptRunner = {
       else if (p.memoria) await UI.memory(p.memoria);
       else if (p.andar) await scene.walkTo(p.andar, p.ate || 'jogador', p.distancia);
       else if (p.transicao) await UI.timeskip(p.transicao);
+      else if (p.beijo) await scene.kiss(p.beijo);
       else if (p.concluirFase) await scene.completePhase(p.concluirFase);
       else console.warn('Passo desconhecido no roteiro:', p);
     }

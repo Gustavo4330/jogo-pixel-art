@@ -396,6 +396,9 @@ body.show-controls #controls { display: block; }
 .pi-num { font-size: clamp(18px, 3vmin, 26px); color: var(--rosa-claro); letter-spacing: .3em; text-transform: uppercase; }
 .pi-title { font-size: clamp(30px, 7vmin, 60px); font-weight: 600; text-shadow: 0 4px 0 var(--rosa-forte); }
 .pi-sub { font-size: clamp(15px, 2.6vmin, 22px); color: #f3cfe4; }
+#phase-intro.kiss { background: radial-gradient(circle at 50% 45%, #ff8fbf 0%, #b23a7a 45%, #2b1430 85%); }
+.kiss-heart { font-size: clamp(90px, 26vmin, 200px); line-height: 1; animation: beat .9s infinite; }
+.kiss-heart .px-heart { fill: #fff; filter: drop-shadow(0 0 18px #ffc2dc); }
 .pi-sub.timeskip { font-size: clamp(20px, 4vmin, 34px); font-style: italic; }
 
 /* ---------- avisos e transições ---------- */
