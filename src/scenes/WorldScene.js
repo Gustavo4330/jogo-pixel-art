@@ -327,6 +327,29 @@ class WorldScene extends Phaser.Scene {
     b.faceTowards(a.x, a.y);
   }
 
+  /** Faz um personagem andar até ficar ao lado de outro. */
+  walkTo(quem, para, dist = 13) {
+    const c = this.charById(quem), t = this.charById(para);
+    if (!c || !t) return Promise.resolve();
+    const side = c.x >= t.x ? 1 : -1;
+    const tx = t.x + side * dist, ty = t.y;
+    const d = Math.hypot(tx - c.x, ty - c.y);
+    if (d < 1) return Promise.resolve();
+    c.dir = Math.abs(tx - c.x) > Math.abs(ty - c.y) ? (tx > c.x ? 'right' : 'left') : (ty > c.y ? 'down' : 'up');
+    c.sprite.play(`${c.id}-walk-${c.dir}`);
+    return new Promise((resolve) => {
+      this.tweens.add({
+        targets: c.sprite, x: tx, y: ty, duration: (d / 38) * 1000,
+        onComplete: () => {
+          c.face(c.dir);
+          c.faceTowards(t.x, t.y);
+          t.faceTowards(c.x, c.y);
+          resolve();
+        },
+      });
+    });
+  }
+
   emote(quem, tipo) {
     const c = this.charById(quem);
     if (!c) return Promise.resolve();

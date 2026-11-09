@@ -13,6 +13,8 @@
      { quem: 'narrador', fala: 'Texto' }
      { item: 'tortuguita', titulo: '...', texto: '...' }
      { emocao: 'ele', tipo: 'coracao' }   (ou 'exclamacao')
+     { andar: 'ele', ate: 'jogador' }     (anda até ficar ao lado)
+     { transicao: 'Alguns minutos depois...' }
      { olhar: 'ele', para: 'jogador' }
      { quiz: 'id_do_quiz' }
      { marcar: 'nome_da_flag' }           (lembra que algo aconteceu)
@@ -77,22 +79,29 @@ Object.assign(ROTEIROS, {
       passos: [
         { olhar: 'ele', para: 'jogador' },
         { emocao: 'ele', tipo: 'exclamacao' },
-        { quem: 'ele', fala: 'Ah, oi, Bia! Você por aqui?', rosto: 'surpreso' },
-        { quem: 'ela', fala: 'Oi, Gustavo! Lembra deste lugar?', rosto: 'feliz' },
-        { quem: 'ele', fala: 'Como eu ia esquecer? Foi aqui que tudo começou...', rosto: 'feliz' },
-        { quem: 'narrador', fala: 'Naquele dia, o Gustavo encontrou você e a Sofia conversando na escola.' },
-        { quem: 'amiga', fala: 'Gustavo, a Bia está desesperada com uns slides, sabia?' },
-        { quem: 'ela', fala: 'Eu preciso muito de ajuda com uns slides...', rosto: 'timido' },
-        { quem: 'ele', fala: 'Eu posso te ajudar! Sou ótimo com slides.', rosto: 'feliz' },
-        { quem: 'ela', fala: 'Sério?! Então toma... um presente pra você!', rosto: 'feliz' },
-        { item: 'tortuguita', titulo: 'Tortuguita!', texto: 'A Bia colocou uma Tortuguita na boca do Gustavo. À força. Sem aviso.' },
-        { quem: 'ele', fala: 'Mmmmf?! ...Isso é chocolate?!', rosto: 'surpreso' },
+        { quem: 'ele', fala: 'Oi, Bia! Tudo bem?', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Oi, Gustavo... Mais ou menos. Estou com problemas para fazer uns slides.', rosto: 'timido' },
+        { quem: 'ela', fala: 'Já tentei de tudo e não consigo deixar do jeito certo...', rosto: 'timido' },
+        { quem: 'amiga', fala: 'Ela está nisso desde cedo, coitada!' },
+        { quem: 'ele', fala: 'Deixa comigo! Eu te ajudo.', rosto: 'feliz' },
+        { andar: 'ele', ate: 'jogador', distancia: 12 },
+        { emocao: 'ela', tipo: 'coracao' },
+        { quem: 'narrador', fala: 'Ele chegou bem pertinho de você... pertinho até demais. ♥' },
+        { quem: 'ela', fala: '(Ele está tão perto...)', rosto: 'timido' },
+        { quem: 'ele', fala: 'Olha, é só arrumar assim... colocar isso aqui... e pronto!', rosto: 'normal' },
+        { transicao: 'Alguns slides depois...' },
+        { quem: 'ela', fala: 'Ficou perfeito! Muito obrigada, Gustavo!', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Toma, uma Tortuguita pra você. Como agradecimento!', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Ah, não precisa não, Bia. Obrigado!', rosto: 'normal' },
+        { quem: 'ela', fala: 'Não precisa? Hmm...', rosto: 'normal' },
+        { emocao: 'ela', tipo: 'exclamacao' },
+        { item: 'tortuguita', titulo: 'Tortuguita!', texto: 'A Bia não aceitou o "não" e enfiou a Tortuguita na boca do Gustavo!' },
+        { quem: 'ele', fala: 'Mmmmf?! ...', rosto: 'surpreso' },
+        { quem: 'amiga', fala: 'HAHAHA, eu não acredito que você fez isso, Bia!', rosto: 'feliz' },
         { emocao: 'ele', tipo: 'coracao' },
-        { quem: 'narrador', fala: 'E foi assim, com uma Tortuguita, que aconteceu o nosso primeiro flerte. ♥' },
-        { quem: 'ele', fala: 'Mas será que você lembra de todos os detalhes daquele dia?', rosto: 'normal' },
-        { quem: 'ele', fala: 'Vamos ver! Responda certinho para concluir a fase.', rosto: 'feliz' },
+        { quem: 'narrador', fala: 'E foi assim, com uma Tortuguita à força, que aconteceu o nosso primeiro flerte. ♥' },
+        { quem: 'ele', fala: 'Agora me responde uma coisa...', rosto: 'feliz' },
         { quiz: 'f1_quiz' },
-        { quem: 'ele', fala: 'Você lembra de tudo... Isso me deixa muito feliz.', rosto: 'feliz' },
         { quem: 'ele', fala: 'Aquela Tortuguita foi o começo da melhor história da minha vida. ♥', rosto: 'timido' },
         { coracoes: true },
         { marcar: 'fase1_concluida' },
@@ -105,31 +114,17 @@ Object.assign(ROTEIROS, {
 Object.assign(QUIZZES, {
   f1_quiz: {
     quem: 'ele',
-    embaralhar: true, // embaralha a ordem das alternativas
-    erro: [
-      'Hmm... acho que não foi bem assim! Tenta de novo ♥',
-      'Errou! Mas eu deixo você tentar outra vez.',
-      'Quase! Pensa mais um pouquinho...',
-    ],
+    embaralhar: false, // mantém as alternativas na ordem escrita
     perguntas: [
       {
-        pergunta: 'Com o que você precisava de ajuda naquele dia?',
-        opcoes: ['Uns slides', 'Uma prova de matemática', 'Um trabalho de artes'],
-        correta: 0, // índice da alternativa certa (0 = primeira)
-        acerto: 'Isso! Os famosos slides. ♥',
-      },
-      {
-        pergunta: 'Quem estava conversando com a gente?',
-        opcoes: ['A Sofia', 'O diretor da escola', 'Ninguém, só nós dois'],
-        correta: 0,
-        acerto: 'Exatamente! A Sofia foi testemunha de tudo.',
-      },
-      {
-        pergunta: 'E o que você colocou, à força, na minha boca?',
-        opcoes: ['Uma Tortuguita', 'Um brigadeiro', 'Uma bala de menta'],
-        correta: 0,
-        acerto: 'A lendária Tortuguita! O nosso primeiro flerte. ♥',
-        erro: ['Não, não! Era de chocolate... e tinha formato de bichinho!', 'Hmm, não. Pensa num chocolate em forma de tartaruga...'],
+        pergunta: 'Quem fez o primeiro flerte?',
+        opcoes: ['Eu', 'Você'],
+        correta: 1, // índice da alternativa certa (0 = primeira, 1 = segunda)
+        acerto: 'Isso mesmo! Foi VOCÊ. E eu adorei. ♥',
+        erro: [
+          'Eu?! Quem enfiou uma Tortuguita na minha boca foi você! Tenta de novo ♥',
+          'Hmm... pensa bem em quem estava segurando a Tortuguita...',
+        ],
       },
     ],
   },

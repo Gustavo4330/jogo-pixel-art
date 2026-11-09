@@ -90,7 +90,7 @@ class MenuScene extends Phaser.Scene {
     UI.screen(`
       <div class="title-screen">
         <div class="title-top">
-          <div class="logo">${UI.heart('big')} <span>${UI.esc(CONFIG.titulo)}</span></div>
+          <div class="logo" data-action="logo">${UI.heart('big')} <span>${UI.esc(CONFIG.titulo)}</span></div>
           <div class="subtitle">${UI.esc(CONFIG.subtitulo)}</div>
         </div>
         <div class="title-bottom">
@@ -108,17 +108,19 @@ class MenuScene extends Phaser.Scene {
   }
 
   showPhases() {
+    const creator = SaveSystem.creatorMode();
     const cards = FASES.map((f) => {
       const done = SaveSystem.isCompleted(f.id);
       const unlocked = SaveSystem.isUnlocked(f.id);
       let state, label;
       if (done) { state = 'done'; label = `${UI.heart()} Concluída`; }
       else if (unlocked && f.disponivel) { state = 'open'; label = '▶ Jogar'; }
-      else if (unlocked) { state = 'soon'; label = 'Em breve'; }
+      else if (unlocked) { state = 'soon'; label = creator ? 'Em construção' : 'Em breve'; }
       else { state = 'locked'; label = LOCK_SVG; }
-      const nome = f.boss && !done ? '???' : (f.boss ? f.nomeReal : f.nome);
-      const sub = f.boss && !done ? 'Uma surpresa te espera...' : [f.local, f.data].filter(Boolean).join(' • ');
-      const playable = (done || unlocked) && f.disponivel;
+      const secret = f.boss && !done && !creator;
+      const nome = secret ? '???' : (f.boss ? f.nomeReal : f.nome);
+      const sub = secret ? 'Uma surpresa te espera...' : [f.local, f.data].filter(Boolean).join(' • ');
+      const playable = done || unlocked;
       return `
         <button class="phase-card ${state} ${f.boss ? 'boss' : ''}" data-action="fase" data-id="${f.id}" ${playable ? '' : 'disabled'}>
           <span class="pc-num">${f.boss ? UI.heart() : f.id}</span>
@@ -132,6 +134,7 @@ class MenuScene extends Phaser.Scene {
           <button class="btn small icon" data-action="titulo" aria-label="Voltar">◀</button>
           <h1>${UI.heart()} Mapa das Memórias</h1>
         </div>
+        ${creator ? `<div class="creator-note">Modo criador: todas as fases liberadas</div>` : ''}
         <div class="phase-list">${cards}</div>
         <div class="screen-foot">
           <button class="btn small" data-action="memorias">${UI.heart()} Memórias bônus</button>
@@ -168,6 +171,20 @@ class MenuScene extends Phaser.Scene {
         this.startPhase(1);
         break;
       case 'continuar': this.show('fases'); break;
+      case 'logo': {
+        // toque 5 vezes seguidas no título para ligar/desligar o modo criador
+        const now = Date.now();
+        this.logoTaps = now - (this.lastLogoTap || 0) < 700 ? (this.logoTaps || 0) + 1 : 1;
+        this.lastLogoTap = now;
+        if (this.logoTaps >= 5) {
+          this.logoTaps = 0;
+          SaveSystem.setOption('modoCriador', !SaveSystem.data.modoCriador);
+          UI.toast(SaveSystem.data.modoCriador
+            ? `${UI.heart()} Modo criador ligado: todas as fases liberadas`
+            : 'Modo criador desligado');
+        }
+        break;
+      }
       case 'titulo': this.show('titulo'); break;
       case 'memorias': this.prev = this.view; this.show('memorias'); break;
       case 'voltar': this.show(this.prev || 'titulo'); break;
@@ -183,7 +200,18 @@ class MenuScene extends Phaser.Scene {
 
   async startPhase(id) {
     const fase = FASES.find((f) => f.id === id);
-    if (!fase || !fase.disponivel) return;
+    if (!fase) return;
+    if (!fase.disponivel) {
+      await UI.card(fase.boss && !SaveSystem.creatorMode() ? 'Fase final' : `Fase ${fase.id}: ${fase.boss ? fase.nomeReal : fase.nome}`,
+        'Esta fase ainda está sendo construída com muito carinho. Volte em breve! ♥', 'Voltar');
+      this.show('fases');
+      return;
+    }
+    // Recomeça a história da fase (mantém a fase como concluída)
+    for (const k of Object.keys(SaveSystem.data.flags)) {
+      if (k.startsWith(`f${id}_`) || k === `fase${id}_concluida`) delete SaveSystem.data.flags[k];
+    }
+    SaveSystem.save();
     UI.hideScreen();
     await UI.phaseIntro(fase);
     await UI.fade(true);

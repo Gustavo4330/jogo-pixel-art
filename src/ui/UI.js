@@ -260,6 +260,18 @@ const UI = {
     el.hidden = true;
   },
 
+  /** Tela rápida de "passagem de tempo" (ex.: "Alguns minutos depois..."). */
+  async timeskip(texto) {
+    const el = UI.$('#phase-intro');
+    el.innerHTML = `<div class="pi-sub timeskip">${UI.esc(texto)}</div>`;
+    el.hidden = false;
+    el.classList.remove('out');
+    await UI.wait(2200);
+    el.classList.add('out');
+    await UI.wait(450);
+    el.hidden = true;
+  },
+
   toast(msg) {
     const t = UI.$('#toast');
     t.innerHTML = msg;

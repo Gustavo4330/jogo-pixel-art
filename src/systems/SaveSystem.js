@@ -26,8 +26,8 @@ const SaveSystem = {
   },
 
   reset() {
-    const { som, musica } = this.data;
-    this.data = Object.assign(this.blank(), { som, musica });
+    const { som, musica, modoCriador } = this.data;
+    this.data = Object.assign(this.blank(), { som, musica, modoCriador });
     this.save();
   },
 
@@ -37,7 +37,10 @@ const SaveSystem = {
 
   isCompleted(id) { return this.data.fasesConcluidas.includes(id); },
 
-  isUnlocked(id) { return id === 1 || this.isCompleted(id - 1); },
+  /** Modo criador: todas as fases liberadas (ativado tocando 5x no título). */
+  creatorMode() { return CONFIG.liberarTodasFases || !!this.data.modoCriador; },
+
+  isUnlocked(id) { return id === 1 || this.creatorMode() || this.isCompleted(id - 1); },
 
   complete(id) {
     if (!this.isCompleted(id)) this.data.fasesConcluidas.push(id);

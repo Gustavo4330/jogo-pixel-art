@@ -15,6 +15,11 @@ contando a nossa história fase por fase até o grande pedido.
     para avançar.
 - O progresso é salvo automaticamente no navegador.
 - Para recomeçar: Mapa das Memórias → "Recomeçar do zero".
+- **Modo criador (só para você):** na tela inicial, toque **5 vezes seguidas** no
+  título "Nossa História". Todas as fases ficam liberadas naquele aparelho e o
+  nome da fase final aparece. Toque 5 vezes de novo para desligar. Para liberar
+  para todo mundo, use `liberarTodasFases: true` em `src/data/config.js`.
+- Ao entrar numa fase pelo mapa, a cena dela recomeça do início.
 
 ## Publicar de graça (GitHub Pages)
 

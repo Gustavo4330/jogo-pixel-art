@@ -295,6 +295,12 @@ body.show-controls #controls { display: block; }
 }
 .screen-head { display: flex; align-items: center; gap: 12px; }
 .screen-head h1 { margin: 0; font-size: clamp(20px, 3.4vmin + 6px, 32px); font-weight: 600; }
+.creator-note {
+  font-size: clamp(13px, 1.6vmin + 6px, 16px);
+  color: #fff; background: var(--roxo-medio);
+  padding: .3em .7em; align-self: flex-start;
+  box-shadow: 0 0 0 2px #e98cc0;
+}
 .screen-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
 .screen-note { margin: 0; color: #e8c3dc; font-size: clamp(13px, 1.8vmin + 6px, 17px); }
 
@@ -390,6 +396,7 @@ body.show-controls #controls { display: block; }
 .pi-num { font-size: clamp(18px, 3vmin, 26px); color: var(--rosa-claro); letter-spacing: .3em; text-transform: uppercase; }
 .pi-title { font-size: clamp(30px, 7vmin, 60px); font-weight: 600; text-shadow: 0 4px 0 var(--rosa-forte); }
 .pi-sub { font-size: clamp(15px, 2.6vmin, 22px); color: #f3cfe4; }
+.pi-sub.timeskip { font-size: clamp(20px, 4vmin, 34px); font-style: italic; }
 
 /* ---------- avisos e transições ---------- */
 #toast {
