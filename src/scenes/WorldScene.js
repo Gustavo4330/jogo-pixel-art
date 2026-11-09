@@ -183,7 +183,11 @@ class WorldScene extends Phaser.Scene {
     let tx = this.player.x - vw / 2;
     let ty = this.player.y - 12 - vh / 2;
     tx = this.worldW <= vw ? (this.worldW - vw) / 2 : Phaser.Math.Clamp(tx, 0, this.worldW - vw);
-    ty = this.worldH <= vh ? (this.worldH - vh) / 2 : Phaser.Math.Clamp(ty, 0, this.worldH - vh);
+    // durante diálogos a câmera pode descer um pouco além do mapa,
+    // para a caixa de diálogo não cobrir os personagens
+    const extra = this.locked && !UI.$('#dialog').hidden ? vh * 0.32 : 0;
+    if (extra) ty += extra * 0.6;
+    ty = this.worldH + extra <= vh ? (this.worldH - vh) / 2 + extra / 2 : Phaser.Math.Clamp(ty, 0, this.worldH - vh + extra);
     const sx = tx - (cam.width - vw) / 2, sy = ty - (cam.height - vh) / 2;
     if (instant) { cam.scrollX = sx; cam.scrollY = sy; }
     else { cam.scrollX += (sx - cam.scrollX) * 0.2; cam.scrollY += (sy - cam.scrollY) * 0.2; }
