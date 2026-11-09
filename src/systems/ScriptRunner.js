@@ -15,7 +15,7 @@ const ScriptRunner = {
     for (const p of passos) {
       if (scene.leaving) return;
 
-      if ('fala' in p) {
+      if ('fala' in p && !p.beijo) {
         await UI.dialog.say(p.quem || 'narrador', p.fala, p.rosto);
         continue;
       }
@@ -34,8 +34,14 @@ const ScriptRunner = {
       else if (p.transicao) await UI.timeskip(p.transicao, () => p.posicoes && scene.place(p.posicoes));
       else if (p.ligacao) await UI.phoneCall(p.ligacao);
       else if (p.aparecer) scene.appear(p.aparecer);
+      else if (p.posicionar) scene.place(p.posicionar);
+      else if (p.mudarMapa) {
+        if (p.texto) await UI.timeskip(p.texto);
+        await scene.goTo({ para: p.mudarMapa, spawn: p.spawn });
+        return;
+      }
       else if (p.sair) await scene.exitThrough(p.sair, p.para);
-      else if (p.beijo) await scene.kiss(p.beijo);
+      else if (p.beijo) await scene.kiss(p.beijo, p.fala);
       else if (p.concluirFase) await scene.completePhase(p.concluirFase);
       else console.warn('Passo desconhecido no roteiro:', p);
     }

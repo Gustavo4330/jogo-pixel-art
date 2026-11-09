@@ -20,4 +20,6 @@ const OBJETOS = {
   mesa_longa:      { tex: 'tableLong',   corpo: [46, 28] },
   lixeira_amarela: { tex: 'trashYellow', corpo: [10, 6] },
   muda:            { tex: 'sapling',     corpo: [6, 4] },
+  poltrona:        { tex: 'seat',        corpo: [14, 5] },
+  poltrona_livre:  { tex: 'seat',        corpo: null },   // dá para sentar (sem colisão)
 };

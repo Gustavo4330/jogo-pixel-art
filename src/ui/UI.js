@@ -301,13 +301,14 @@ const UI = {
   },
 
   /** Tela do beijo: coração grande pulsando. */
-  async kiss(texto) {
+  async kiss(texto, fala) {
     const el = UI.$('#phase-intro');
-    el.innerHTML = `<div class="kiss-heart">${UI.heart()}</div><div class="pi-title">${UI.esc(texto)}</div>`;
+    el.innerHTML = `<div class="kiss-heart">${UI.heart()}</div><div class="pi-title">${UI.esc(texto)}</div>`
+      + (fala ? `<div class="kiss-line">${UI.esc(fala)}</div>` : '');
     el.classList.add('kiss');
     el.hidden = false;
     el.classList.remove('out');
-    await Promise.race([UI.wait(3600), UI.wait(1200).then(() => UI.waitTap())]);
+    await Promise.race([UI.wait(fala ? 5200 : 3600), UI.wait(1200).then(() => UI.waitTap())]);
     el.classList.add('out');
     await UI.wait(450);
     el.hidden = true;

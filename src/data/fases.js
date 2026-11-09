@@ -40,7 +40,9 @@ const FASES = [
     nome: 'Primeiro Date',
     local: 'Shopping e cinema',
     data: '19 de setembro',
-    disponivel: false,
+    mapa: 'shopping_frente',
+    spawn: 'inicio',
+    disponivel: true,
   },
   {
     id: 4,

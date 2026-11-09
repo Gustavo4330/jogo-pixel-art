@@ -800,6 +800,161 @@ const TileArt = (() => {
       F(c, x + (n(1, 0) ? 13 : 0), y, 3, 16, '#85847f');
       speckle(c, x, y, r, ['#6a6966', '#757470'], 4);
     },
+
+    /* ---------- FASE 3: FRENTE DO SHOPPING ---------- */
+    ceu(c, x, y) {
+      for (let i = 0; i < 16; i++) F(c, x, y + i, 16, 1, i < 8 ? '#8ec3ec' : '#a6d2f2');
+    },
+
+    tijolo_shop(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#b8653f');
+      for (let j = 0; j < 16; j += 4) {
+        F(c, x, y + j + 3, 16, 1, '#9a5233');
+        const off = (j / 4) % 2 ? 4 : 0;
+        for (let i = off; i < 16; i += 8) F(c, x + i, y + j, 1, 3, '#9a5233');
+      }
+      speckle(c, x, y, r, ['#c4744c', '#a95b39'], 4);
+      if (n(0, 0) === 'n') { F(c, x, y, 16, 3, '#ece8e2'); F(c, x, y + 3, 16, 1, '#a9a49d'); }
+    },
+
+    frontao(c, x, y, r, n) {
+      const cx = 15 * 16;
+      for (let py = 0; py < 16; py++) for (let px = 0; px < 16; px++) {
+        const gx = x + px + 0.5, gy = y + py;
+        const half = (gy - 1) * 1.7;
+        const d = Math.abs(gx - cx);
+        let col;
+        if (d < half - 4) col = ((Math.floor(gy / 4) + Math.floor((gx + (Math.floor(gy / 4) % 2) * 4) / 8)) % 2) && (gy % 4 !== 3) ? '#b8653f' : (gy % 4 === 3 ? '#9a5233' : '#b46141');
+        else if (d < half) col = '#f2f0ec';
+        else if (d < half + 6 && gy < 34) col = '#c9c7c4';
+        else col = gy < 16 ? (py < 8 ? '#8ec3ec' : '#a6d2f2') : '#b8653f';
+        F(c, x + px, y + py, 1, 1, col);
+      }
+    },
+
+    logo_shop(c, x, y, r, n) {
+      T.frontao(c, x, y, r, n);
+      for (let py = 0; py < 16; py++) for (let px = 0; px < 16; px++) {
+        const gx = x + px + 0.5, gy = y + py + 0.5;
+        const d = Math.hypot(gx - 240, gy - 41);
+        if (d < 9) F(c, x + px, y + py, 1, 1, d > 7.6 ? '#ffffff' : d > 3.5 && d < 5 ? '#ffffff' : '#2a9fa6');
+      }
+    },
+
+    painel_cinza(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#9c9a97');
+      F(c, x, y, 16, 1, '#b5b3b0');
+      if (n(0, 1) !== n(0, 0)) F(c, x, y + 14, 16, 2, '#86847f');
+      if (n(-1, 0) !== n(0, 0)) F(c, x, y, 2, 16, '#86847f');
+    },
+
+    outdoor(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#26262d');
+      const l = n(-1, 0) === n(0, 0), rr = n(1, 0) === n(0, 0);
+      const top = n(0, -1) !== n(0, 0), bottom = n(0, 1) !== n(0, 0);
+      for (let px = 0; px < 16; px++) {
+        const t = (x + px - 9 * 16) / (12 * 16);
+        const col = t < 0.55 ? (t < 0.3 ? '#efe1d6' : '#d9b9a8') : t < 0.6 ? '#ffffff' : '#3f7fc1';
+        F(c, x + px, y + (top ? 2 : 0), 1, 16 - (top ? 2 : 0) - (bottom ? 2 : 0), col);
+      }
+      if (!l) F(c, x, y, 2, 16, '#26262d');
+      if (!rr) F(c, x + 14, y, 2, 16, '#26262d');
+      if (x === 14 * 16 && !top) Pixel.blob(c, x + 4, y + 2, 4, '#c98f74');
+      if (x === 18 * 16 && top) Pixel.blob(c, x + 8, y + 9, 4, '#ffffff');
+    },
+
+    marquise(c, x, y, r, n) {
+      T.tijolo_shop(c, x, y, r, n);
+      F(c, x, y + 4, 16, 6, '#f1efeb');
+      F(c, x, y + 4, 16, 1, '#ffffff');
+      F(c, x, y + 10, 16, 2, '#a9a6a1');
+      F(c, x, y + 12, 16, 4, '#3a3540');
+      if (n(-1, 0) !== 'm') F(c, x, y + 4, 2, 8, '#d7d4cf');
+    },
+
+    pilar_tijolo(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#3a3540');
+      F(c, x + 2, y, 12, 16, '#b8653f');
+      for (let j = 0; j < 16; j += 4) F(c, x + 2, y + j + 3, 12, 1, '#9a5233');
+      F(c, x + 2, y, 1, 16, '#c97a52'); F(c, x + 13, y, 1, 16, '#9a5233');
+    },
+
+    entrada_shop(c, x, y, r, n) {
+      const bottom = n(0, -1) === n(0, 0);
+      F(c, x, y, 16, 16, '#2b2832');
+      F(c, x + 1, y + (bottom ? 0 : 2), 14, 16, '#3c4656');
+      F(c, x + 7, y, 1, 16, '#5b6577');
+      if (!bottom) { F(c, x + 2, y + 4, 4, 2, '#c9d6e3'); F(c, x + 10, y + 6, 3, 2, '#e8c35a'); }
+      else { F(c, x, y + 14, 16, 2, '#7d7884'); if (r() < 0.5) F(c, x + 4, y + 4, 3, 8, '#5a4f6a'); }
+    },
+
+    vitrine(c, x, y, r, n) {
+      const bottom = n(0, -1) === n(0, 0);
+      F(c, x, y, 16, 16, '#2b2832');
+      F(c, x, y + (bottom ? 0 : 3), 16, 16, '#2fa3a0');
+      F(c, x + 1, y + (bottom ? 0 : 4), 14, bottom ? 9 : 12, '#cfe9ef');
+      F(c, x + 3, y + (bottom ? 2 : 6), 3, 4, ['#ff8fbf', '#ffd86b', '#8fd0ff'][Math.floor(x / 16) % 3]);
+      F(c, x + 9, y + (bottom ? 3 : 7), 3, 3, ['#ffd86b', '#8fd0ff', '#ff8fbf'][Math.floor(x / 16) % 3]);
+      if (bottom) { F(c, x, y + 9, 16, 7, '#2fa3a0'); F(c, x, y + 9, 16, 1, '#6ed1cd'); }
+    },
+
+    lanchonete(c, x, y, r, n) {
+      const bottom = n(0, -1) === n(0, 0);
+      F(c, x, y, 16, 16, '#2b2832');
+      if (!bottom) {
+        F(c, x, y + 3, 16, 5, '#d6262f'); F(c, x, y + 3, 16, 1, '#ff6b6b');
+        F(c, x + 2, y + 9, 12, 5, '#ffd86b'); F(c, x + 4, y + 10, 3, 3, '#d6262f'); F(c, x + 9, y + 10, 3, 3, '#ffffff');
+      } else {
+        F(c, x, y + 2, 16, 14, '#e2343c'); F(c, x, y + 2, 16, 2, '#ff6b6b');
+        F(c, x + 3, y + 6, 10, 2, '#ffffff');
+      }
+    },
+
+    piso_entrada(c, x, y, r) {
+      F(c, x, y, 16, 16, '#c9c6c2');
+      F(c, x + 15, y, 1, 16, '#b2afab'); F(c, x, y + 15, 16, 1, '#b2afab');
+      c.fillStyle = 'rgba(40,30,50,0.18)'; c.fillRect(x, y, 16, 5);
+    },
+
+    /* ---------- FASE 3: SALA DE CINEMA ---------- */
+    teto_cinema(c, x, y) {
+      F(c, x, y, 16, 16, '#17121f');
+      F(c, x, y + 14, 16, 2, '#241b2e');
+    },
+
+    parede_cinema(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#2c2036');
+      F(c, x + 1, y + 1, 14, 14, '#352743');
+      F(c, x + 1, y + 1, 14, 1, '#40304f');
+      if (y % 64 === 32) { F(c, x + 5, y + 6, 6, 3, '#ffcf7a'); F(c, x + 6, y + 9, 4, 2, 'rgba(255,207,122,0.4)'); }
+    },
+
+    fundo_tela(c, x, y) { F(c, x, y, 16, 16, '#0b0910'); },
+
+    palco(c, x, y) {
+      F(c, x, y, 16, 16, '#3a2a46');
+      F(c, x, y, 16, 2, '#4d3a5c');
+      F(c, x, y + 13, 16, 3, '#231a2c');
+    },
+
+    carpete(c, x, y, r) {
+      F(c, x, y, 16, 16, '#4a1f30');
+      for (let i = 0; i < 4; i++) F(c, x + 2 + i * 4, y + 2 + (i % 2) * 8, 1, 1, '#5b2a3e');
+      speckle(c, x, y, r, ['#43192a', '#552538'], 4);
+    },
+
+    corredor_cinema(c, x, y, r) {
+      F(c, x, y, 16, 16, '#3d1a28');
+      F(c, x, y + 14, 16, 2, '#2c1220');
+      F(c, x + 1, y + 13, 2, 1, '#ffcc66'); F(c, x + 13, y + 13, 2, 1, '#ffcc66');
+    },
+
+    porta_cinema(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#2c2036');
+      F(c, x + 1, y + 3, 14, 13, '#4b3a58');
+      F(c, x + 2, y + 4, 12, 12, '#5d4a6c');
+      F(c, x + 4, y, 8, 3, '#1f9a52'); F(c, x + 5, y + 1, 6, 1, '#ffffff');
+    },
   };
   return T;
 })();

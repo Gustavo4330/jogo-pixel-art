@@ -59,6 +59,27 @@ class WorldScene extends Phaser.Scene {
       this.add.rectangle(0, 0, this.worldW, this.worldH, 0xff7a3d, 0.16).setOrigin(0).setDepth(99000);
     }
 
+    // Sala de cinema: tudo no escuro, só a tela brilhando
+    if (map.luz === 'cinema') {
+      const dark = this.add.rectangle(0, 0, this.worldW, this.worldH, 0x05030f, 0.42).setOrigin(0).setDepth(99000);
+      this.tweens.add({ targets: dark, alpha: { from: 0.9, to: 1 }, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.inOut' });
+    }
+    if (map.telaCinema) {
+      const t = map.telaCinema;
+      this.add.image(t.x * T, t.y * T, 'movieScreen').setOrigin(0.5, 1).setDepth(99500);
+      // alguém atravessando a cidade pendurado numa teia
+      const sw = this.add.image(0, 0, 'swinger').setDepth(99501);
+      const left = t.x * T - 150, top = t.y * T - 40;
+      const st = { p: 0 };
+      this.tweens.add({
+        targets: st, p: 1, duration: 4200, repeat: -1, repeatDelay: 1500,
+        onUpdate: () => sw.setPosition(Math.round(left + st.p * 300), Math.round(top + 4 + Math.sin(st.p * Math.PI) * 18)),
+      });
+    }
+
+    // Gatilhos: áreas que iniciam um roteiro quando ela pisa
+    this.triggers = (map.gatilhos || []).filter((g) => !SaveSystem.flag(g.flag));
+
     // Ambiente escuro (ex.: escada de incêndio)
     if (map.luz === 'escuro') {
       this.add.rectangle(0, 0, this.worldW, this.worldH, 0x0e0a22, 0.34).setOrigin(0).setDepth(99000);
@@ -220,6 +241,8 @@ class WorldScene extends Phaser.Scene {
     // para a caixa de diálogo não cobrir os personagens
     const extra = this.locked && !UI.$('#dialog').hidden ? vh * 0.32 : 0;
     if (extra) ty += extra * 0.6;
+    // no cinema, durante a cena, a câmera mostra a tela do filme
+    if (this.map.telaCinema && this.locked) ty = 0;
     ty = this.worldH + extra <= vh ? (this.worldH - vh) / 2 + extra / 2 : Phaser.Math.Clamp(ty, 0, this.worldH - vh + extra);
     const sx = tx - (cam.width - vw) / 2, sy = ty - (cam.height - vh) / 2;
     if (instant) { cam.scrollX = sx; cam.scrollY = sy; }
@@ -241,6 +264,15 @@ class WorldScene extends Phaser.Scene {
 
       for (const door of this.doors) {
         if (this.physics.overlap(this.player.sprite, door)) { this.goTo(door.porta); break; }
+      }
+
+      for (const g of this.triggers) {
+        if (!g.done && Phaser.Math.Distance.Between(this.player.x, this.player.y, g.x * T, g.y * T) < (g.raio || 8)) {
+          g.done = true;
+          SaveSystem.setFlag(g.flag);
+          this.runScript(g.roteiro);
+          break;
+        }
       }
 
       for (const s of this.stars) {
@@ -429,14 +461,14 @@ class WorldScene extends Phaser.Scene {
   }
 
   /** Cena do beijo: os dois se aproximam e a tela se enche de corações. */
-  async kiss(texto) {
+  async kiss(texto, fala) {
     const ele = this.npcs.ele;
     if (ele) await this.walkTo('ele', 'jogador', 8);
     this.emote('ela', 'coracao');
     if (ele) this.emote('ele', 'coracao');
     await UI.wait(700);
     AudioSystem.play('victory');
-    await UI.kiss(texto);
+    await UI.kiss(texto, fala);
   }
 
   emote(quem, tipo) {

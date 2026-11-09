@@ -160,6 +160,42 @@ const ObjectArt = (() => {
       F(c, 5, 1, 1, 3, '#ffc2dc');
     }),
 
+    seat: () => make(16, 15, (c) => {
+      F(c, 0, 3, 3, 12, '#2a1d2f'); F(c, 13, 3, 3, 12, '#2a1d2f');
+      F(c, 2, 0, 12, 13, '#a81f30'); F(c, 2, 0, 12, 2, '#d23a48'); F(c, 3, 2, 1, 9, '#c22d3c');
+      F(c, 2, 11, 12, 2, '#7d1522');
+      F(c, 0, 3, 3, 1, '#3d2b44'); F(c, 13, 3, 3, 1, '#3d2b44');
+    }),
+
+    movieScreen: () => make(352, 46, (c, r) => {
+      // tela do cinema: cidade à noite, lua e teias (cena de filme de herói)
+      F(c, 0, 0, 352, 46, '#0b0910');
+      const x0 = 8, y0 = 3, w = 336, h = 40;
+      for (let i = 0; i < h; i++) {
+        const t = i / h;
+        F(c, x0, y0 + i, w, 1, t < 0.4 ? '#1a2a5e' : t < 0.75 ? '#2c3f7c' : '#5a3f7c');
+      }
+      Pixel.blob(c, 270, 14, 7, '#f6edcf');
+      for (let i = 0; i < 40; i++) F(c, x0 + Math.floor(r() * w), y0 + Math.floor(r() * 14), 1, 1, '#d8e2ff');
+      let bx = x0;
+      while (bx < x0 + w) {
+        const bw = 10 + Math.floor(r() * 16), bh = 10 + Math.floor(r() * 22);
+        F(c, bx, y0 + h - bh, bw, bh, '#151a33');
+        for (let wy = y0 + h - bh + 3; wy < y0 + h - 2; wy += 4) for (let wx = bx + 2; wx < bx + bw - 2; wx += 4) if (r() < 0.45) F(c, wx, wy, 2, 2, '#ffd86b');
+        bx += bw + 1;
+      }
+      // teias no canto
+      c.strokeStyle = 'rgba(255,255,255,0.75)'; c.lineWidth = 1;
+      for (let a = 0; a < 6; a++) { c.beginPath(); c.moveTo(x0, y0); c.lineTo(x0 + Math.cos(a * 0.3) * 60, y0 + Math.sin(a * 0.3) * 60); c.stroke(); }
+      for (let k = 1; k < 4; k++) { c.beginPath(); c.arc(x0, y0, k * 14, 0, Math.PI / 2); c.stroke(); }
+      F(c, 0, 0, 352, 3, '#0b0910'); F(c, 0, 43, 352, 3, '#0b0910');
+    }, false),
+
+    swinger: () => make(7, 9, (c) => {
+      F(c, 2, 0, 3, 3, '#d42a2f'); F(c, 1, 3, 5, 3, '#2d58c8'); F(c, 2, 3, 3, 2, '#d42a2f');
+      F(c, 1, 6, 2, 3, '#2d58c8'); F(c, 4, 6, 2, 3, '#d42a2f');
+    }, false),
+
     heart: () => make(9, 8, (c) => {
       Pixel.heart(c, 1, 1, '#ff5fa2');
       F(c, 2, 2, 1, 1, '#ffd0e4');
