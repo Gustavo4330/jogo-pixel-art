@@ -55,6 +55,6 @@ MAPAS.sorveteria = {
   bonus: [],
 
   objetivos: [
-    { seNao: 'fase4_concluida', texto: 'Escolha um sorvete com o seu baby', alvo: { npc: 'ele' } },
+    { seNao: 'fase4_concluida', texto: 'Escolha um sorvete com o seu amor', alvo: { npc: 'ele' } },
   ],
 };

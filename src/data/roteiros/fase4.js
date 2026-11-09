@@ -34,7 +34,7 @@ Object.assign(ROTEIROS, {
         { quem: 'ele', fala: 'Obrigado! Tá com um cheiro incrível.', rosto: 'feliz' },
         { item: 'churrasco', titulo: 'Churrasco!', texto: 'Picanha, linguiça, farofa e pão de alho. Todo mundo junto na mesa.' },
         { quem: 'vo', fala: 'Esse menino come bem, hein! Gostei dele.', rosto: 'feliz' },
-        { quem: 'ela', fala: 'Viu, baby? A vó Raquel já gostou de você!', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Viu, amor? A vó Raquel já gostou de você!', rosto: 'feliz' },
         { emocao: 'ele', tipo: 'coracao' },
         { marcar: 'f4_churrasco' },
       ],
@@ -50,7 +50,7 @@ Object.assign(ROTEIROS, {
     {
       se: 'f4_churrasco',
       passos: [
-        { quem: 'ela', fala: 'Baby, vem cá! Deixa eu tirar uma foto sua com a vó Raquel.', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Amor, vem cá! Deixa eu tirar uma foto sua com a vó Raquel.', rosto: 'feliz' },
         { quem: 'vo', fala: 'Ai, que bom! Vem cá, meu filho.', rosto: 'feliz' },
         { andar: 'ele', ate: 'vo', distancia: 13 },
         { virar: { ele: 'down', vo: 'down' } },
@@ -58,7 +58,7 @@ Object.assign(ROTEIROS, {
         { foto: ['ele', 'vo'], legenda: 'Gustavo e a vó Raquel ♥ — 12/10' },
         { quem: 'vo', fala: 'Ficou linda! Depois me manda essa foto.', rosto: 'feliz' },
         { marcar: 'f4_foto' },
-        { quem: 'ele', fala: 'Vida, bora tomar um sorvete?', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Amor, bora tomar um sorvete?', rosto: 'feliz' },
         { quem: 'ela', fala: 'Bora!', rosto: 'feliz' },
         { mudarMapa: 'sorveteria', spawn: 'entrada', texto: 'Mais tarde, na sorveteria...' },
       ],
@@ -77,10 +77,10 @@ Object.assign(ROTEIROS, {
     {
       passos: [
         { olhar: 'ele', para: 'jogador' },
-        { escolha: 'Qual sabor você vai querer, vida?', quem: 'ele', opcoes: ['Chocolate', 'Morango', 'Ninho com morango'], respostas: ['{opcao}? Boa escolha! Vou querer o mesmo. ♥'] },
+        { escolha: 'Qual sabor você vai querer, amor?', quem: 'ele', opcoes: ['Chocolate', 'Morango', 'Ninho com morango'], respostas: ['{opcao}? Boa escolha! Vou querer o mesmo. ♥'] },
         { item: 'sorvete', titulo: 'Sorvete!', texto: 'Dois sorvetes, uma mesinha e muita conversa.' },
-        { quem: 'ele', fala: 'Sua família é incrível, vida.', rosto: 'feliz' },
-        { quem: 'ela', fala: 'E eles amaram você, baby. ♥', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Sua família é incrível, amor.', rosto: 'feliz' },
+        { quem: 'ela', fala: 'E eles amaram você, amor. ♥', rosto: 'feliz' },
         { quem: 'ele', fala: 'Agora me diz: lembra de tudo desse dia?', rosto: 'feliz' },
         { quiz: 'f4_quiz' },
         { quem: 'ele', fala: 'Foi o dia em que eu ganhei uma segunda família. ♥', rosto: 'timido' },
@@ -95,14 +95,14 @@ Object.assign(ROTEIROS, {
 // Falar com o Gustavo depois do churrasco também começa a cena da foto
 ROTEIROS.f4_ele = [
   ROTEIROS.f4_foto[1],
-  { passos: [{ quem: 'ele', fala: 'Vida, o churrasco já tá saindo lá na bancada!', rosto: 'feliz' }] },
+  { passos: [{ quem: 'ele', fala: 'Amor, o churrasco já tá saindo lá na bancada!', rosto: 'feliz' }] },
 ];
 
 Object.assign(QUIZZES, {
   f4_quiz: {
     quem: 'ele',
     embaralhar: true,
-    erro: ['Hmm... não foi bem assim, vida! Tenta de novo ♥', 'Quase! Lembra daquele dia...'],
+    erro: ['Hmm... não foi bem assim, amor! Tenta de novo ♥', 'Quase! Lembra daquele dia...'],
     perguntas: [
       {
         pergunta: 'Em que dia eu conheci a sua família?',

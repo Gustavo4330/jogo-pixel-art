@@ -4,6 +4,7 @@
    Encontro na frente do shopping, uma voltinha e depois o
    cinema para ver o Homem-Aranha... que vocês quase nem
    viram. Lá aconteceu o primeiro "eu te amo".
+   A partir do cinema, os dois se chamam de "amor".
    Passos novos desta fase:
      { mudarMapa: 'id_do_mapa', spawn: 'id', texto: 'Texto da transição' }
      { posicionar: { ela: [x, y, 'up'] } }
@@ -41,7 +42,7 @@ Object.assign(ROTEIROS, {
         { posicionar: { ela: [13.5, 9.15, 'up'] } },
         { esperar: 1200 },
         { olhar: 'ele', para: 'jogador' },
-        { beijo: 'O nosso primeiro "eu te amo"', fala: 'Gustavo: — Eu te amo.' },
+        { beijo: 'O nosso primeiro "eu te amo"', fala: 'Gustavo: — Eu te amo, amor.' },
         { olhar: 'ela', para: 'ele' },
         { quiz: 'f3_quiz' },
         { coracoes: true },
@@ -56,7 +57,7 @@ Object.assign(QUIZZES, {
   f3_quiz: {
     quem: 'ele',
     embaralhar: true,
-    erro: ['Hmm... não foi bem assim, vida! Tenta de novo ♥', 'Quase! Lembra daquele dia...'],
+    erro: ['Hmm... não foi bem assim, amor! Tenta de novo ♥', 'Quase! Lembra daquele dia...'],
     perguntas: [
       {
         pergunta: 'Que filme a gente foi ver no nosso primeiro date?',

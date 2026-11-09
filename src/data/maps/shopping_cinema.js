@@ -74,6 +74,6 @@ MAPAS.shopping_cinema = {
   bonus: [],
 
   objetivos: [
-    { seNao: 'f3_sentou', texto: 'Sente na poltrona ao lado do seu baby', alvo: { x: 13.5, y: 8.8 } },
+    { seNao: 'f3_sentou', texto: 'Sente na poltrona ao lado do seu amor', alvo: { x: 13.5, y: 8.8 } },
   ],
 };
