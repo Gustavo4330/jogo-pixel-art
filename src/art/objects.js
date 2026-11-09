@@ -235,6 +235,14 @@ const ObjectArt = (() => {
       F(c, 7, 0, 2, 2, '#d6262f'); F(c, 5, 10, 2, 1, '#ffd0e4');
     }),
 
+    roundTable: () => make(44, 34, (c) => {
+      F(c, 20, 24, 4, 8, '#5b5468'); F(c, 14, 31, 16, 3, '#5b5468');
+      Pixel.blob(c, 22, 14, 18, '#7a4a2e'); Pixel.blob(c, 22, 13, 17, '#a8703f'); Pixel.blob(c, 22, 12, 16, '#b8804c');
+      Pixel.blob(c, 22, 12, 6, '#ececec'); F(c, 18, 10, 4, 3, '#a8452f'); F(c, 23, 11, 4, 3, '#8c3a24'); F(c, 19, 14, 7, 2, '#b04a2c');
+      Pixel.blob(c, 10, 9, 3.5, '#ffffff'); Pixel.blob(c, 34, 9, 3.5, '#ffffff'); Pixel.blob(c, 10, 17, 3.5, '#ffffff'); Pixel.blob(c, 34, 17, 3.5, '#ffffff');
+      Pixel.blob(c, 22, 4, 3, '#e8d08a'); F(c, 30, 21, 3, 4, '#7ec7f0'); F(c, 13, 21, 3, 4, '#7ec7f0');
+    }),
+
     heart: () => make(9, 8, (c) => {
       Pixel.heart(c, 1, 1, '#ff5fa2');
       F(c, 2, 2, 1, 1, '#ffd0e4');

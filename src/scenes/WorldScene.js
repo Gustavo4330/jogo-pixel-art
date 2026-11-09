@@ -391,7 +391,7 @@ class WorldScene extends Phaser.Scene {
     }
     const tx = Math.floor(px / T), ty = Math.floor(py / T);
     const def = MapBuilder.defAt(this.map, tx, ty);
-    if (def && def.texto) return { texto: def.texto, x: (tx + 0.5) * T, y: ty * T + 4 };
+    if (def && (def.texto || def.roteiro)) return { texto: def.texto, roteiro: def.roteiro, x: (tx + 0.5) * T, y: ty * T + 4 };
     return null;
   }
 
@@ -412,6 +412,8 @@ class WorldScene extends Phaser.Scene {
     } else if (target.obj) {
       if (target.obj.roteiro) this.runScript(target.obj.roteiro);
       else this.runScript([{ passos: [{ quem: 'narrador', fala: target.obj.texto }] }]);
+    } else if (target.roteiro) {
+      this.runScript(target.roteiro);
     } else if (target.texto) {
       this.runScript([{ passos: [{ quem: 'narrador', fala: target.texto }] }]);
     }

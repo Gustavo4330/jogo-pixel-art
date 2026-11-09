@@ -1082,6 +1082,58 @@ const TileArt = (() => {
       F(c, x + (right ? 0 : 15), y, 1, 16, '#6fb8ad');
       F(c, x + (right ? 2 : 12), y + 7, 2, 4, '#ffffff');
     },
+
+    /* ---------- FASE 4 (v2): ÁREA DA CHURRASQUEIRA ---------- */
+    azulejo(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#eef3f2');
+      for (let i = 0; i < 16; i += 4) { F(c, x + i, y, 1, 16, '#cfdcda'); F(c, x, y + i, 16, 1, '#cfdcda'); }
+      if (n(0, -1) === 'R') F(c, x, y, 16, 2, '#d8b98f');
+    },
+
+    pia(c, x, y, r, n) {
+      // bancada da pia colada na churrasqueira, com cuba e torneira
+      const left = n(-1, 0) !== n(0, 0);
+      F(c, x, y, 16, 16, '#d9d6d0');
+      F(c, x, y, 16, 2, '#f2f0ec');
+      F(c, x, y + 13, 16, 3, '#a9a39b');
+      if (left) {
+        F(c, x + 3, y + 3, 13, 9, '#9aa3ad'); F(c, x + 4, y + 4, 12, 7, '#c3cbd3'); F(c, x + 5, y + 5, 3, 1, '#eef2f5');
+        F(c, x + 9, y + 1, 2, 4, '#7d8590'); F(c, x + 9, y + 1, 4, 1, '#7d8590');
+      } else {
+        F(c, x, y + 3, 10, 9, '#9aa3ad'); F(c, x, y + 4, 9, 7, '#c3cbd3');
+        F(c, x + 11, y + 5, 3, 5, '#ffd86b'); F(c, x + 11, y + 4, 3, 1, '#5aa64d');
+      }
+    },
+
+    bancada_preta(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#1d1c21');
+      speckle(c, x, y, r, ['#2b2a31', '#3a3842', '#141317'], 14);
+      F(c, x, y, 16, 1, '#4a4852');
+      F(c, x, y + 12, 16, 4, '#121115');
+      const left = n(-1, 0) !== n(0, 0), right = n(1, 0) !== n(0, 0);
+      if (left) F(c, x, y, 1, 16, '#4a4852');
+      if (right) F(c, x + 15, y, 1, 16, '#4a4852');
+      const k = Math.floor(x / 16) % 3;
+      if (k === 1) { F(c, x + 2, y + 3, 11, 7, '#b5824f'); F(c, x + 4, y + 4, 4, 3, '#a8452f'); F(c, x + 9, y + 5, 3, 2, '#8c3a24'); }
+      if (k === 2) { Pixel.blob(c, x + 8, y + 6, 4, '#e8e3da'); F(c, x + 6, y + 5, 3, 2, '#d9b16a'); }
+    },
+
+    parede_lado_casa(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#e6c9a0');
+      F(c, x + (n(1, 0) ? 12 : 0), y, 4, 16, '#f2d7b0');
+      speckle(c, x, y, r, ['#ddbf95', '#ecd2ab'], 4);
+    },
+
+    porta_vidro_aberta(c, x, y, r, n) {
+      // porta de vidro de correr, aberta (vê-se a luz de fora)
+      const bottom = n(0, -1) === n(0, 0);
+      F(c, x, y, 16, 16, '#fff1cc');
+      F(c, x + 6, y, 10, 16, '#f7e2b0');
+      F(c, x, y, 3, 16, '#8a8f98');
+      F(c, x + 3, y, 3, 16, 'rgba(160,200,230,0.8)');
+      F(c, x + 3, y, 3, 16, '#bcd8ea'); F(c, x + 4, y + (bottom ? 2 : 4), 1, 6, '#e6f3fb');
+      if (!bottom) F(c, x, y, 16, 1, '#8a8f98'); else F(c, x, y + 15, 16, 1, '#8a8f98');
+    },
   };
   return T;
 })();

@@ -26,4 +26,5 @@ const OBJETOS = {
   cadeira:         { tex: 'plasticChair', corpo: [12, 5] },
   isopor:          { tex: 'cooler',      corpo: [16, 6] },
   mesinha:         { tex: 'cafeTable',   corpo: [28, 8] },
+  mesa_redonda:    { tex: 'roundTable',  corpo: [36, 14] },
 };

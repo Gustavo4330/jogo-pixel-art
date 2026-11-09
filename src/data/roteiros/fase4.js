@@ -16,7 +16,7 @@ Object.assign(ROTEIROS, {
     {
       passos: [
         { quem: 'narrador', fala: '12 de outubro. O dia em que o Gustavo conheceu a sua família. ♥' },
-        { quem: 'ela', fala: 'O cheiro do churrasco já tá no quintal inteiro...', rosto: 'feliz' },
+        { quem: 'ela', fala: 'O cheiro do churrasco já tá na casa inteira...', rosto: 'feliz' },
         { marcar: 'f4_intro' },
       ],
     },
@@ -26,16 +26,15 @@ Object.assign(ROTEIROS, {
   f4_churrasco: [
     {
       se: 'f4_churrasco',
-      passos: [{ quem: 'pai', fala: 'Pode repetir à vontade, Gustavo! Tem carne pra todo mundo.', rosto: 'feliz' }],
+      passos: [{ quem: 'narrador', fala: 'Ainda tem muita carne na bancada. Ninguém vai passar fome hoje!' }],
     },
     {
       passos: [
-        { quem: 'pai', fala: 'Chegou na hora certa! A picanha tá saindo!', rosto: 'feliz' },
         { quem: 'mae', fala: 'Senta, Gustavo, fica à vontade!', rosto: 'feliz' },
         { quem: 'ele', fala: 'Obrigado! Tá com um cheiro incrível.', rosto: 'feliz' },
         { item: 'churrasco', titulo: 'Churrasco!', texto: 'Picanha, linguiça, farofa e pão de alho. Todo mundo junto na mesa.' },
         { quem: 'vo', fala: 'Esse menino come bem, hein! Gostei dele.', rosto: 'feliz' },
-        { quem: 'ela', fala: 'Viu, baby? A vó já gostou de você!', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Viu, baby? A vó Raquel já gostou de você!', rosto: 'feliz' },
         { emocao: 'ele', tipo: 'coracao' },
         { marcar: 'f4_churrasco' },
       ],
@@ -51,12 +50,12 @@ Object.assign(ROTEIROS, {
     {
       se: 'f4_churrasco',
       passos: [
-        { quem: 'ela', fala: 'Baby, vem cá! Deixa eu tirar uma foto sua com a minha vó.', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Baby, vem cá! Deixa eu tirar uma foto sua com a vó Raquel.', rosto: 'feliz' },
         { quem: 'vo', fala: 'Ai, que bom! Vem cá, meu filho.', rosto: 'feliz' },
         { andar: 'ele', ate: 'vo', distancia: 13 },
         { virar: { ele: 'down', vo: 'down' } },
         { quem: 'ela', fala: 'Diz xis!', rosto: 'feliz' },
-        { foto: ['ele', 'vo'], legenda: 'Gustavo e a vó ♥ — 12/10' },
+        { foto: ['ele', 'vo'], legenda: 'Gustavo e a vó Raquel ♥ — 12/10' },
         { quem: 'vo', fala: 'Ficou linda! Depois me manda essa foto.', rosto: 'feliz' },
         { marcar: 'f4_foto' },
         { quem: 'ele', fala: 'Vida, bora tomar um sorvete?', rosto: 'feliz' },
@@ -65,7 +64,7 @@ Object.assign(ROTEIROS, {
       ],
     },
     {
-      passos: [{ quem: 'vo', fala: 'Vai lá ajudar seu pai com o churrasco, minha filha. Tô morrendo de fome!', rosto: 'feliz' }],
+      passos: [{ quem: 'vo', fala: 'Vai lá pegar o churrasco na bancada, minha filha. Tô morrendo de fome!', rosto: 'feliz' }],
     },
   ],
 
@@ -96,7 +95,7 @@ Object.assign(ROTEIROS, {
 // Falar com o Gustavo depois do churrasco também começa a cena da foto
 ROTEIROS.f4_ele = [
   ROTEIROS.f4_foto[1],
-  { passos: [{ quem: 'ele', fala: 'Vida, seu pai tá chamando lá na churrasqueira!', rosto: 'feliz' }] },
+  { passos: [{ quem: 'ele', fala: 'Vida, o churrasco já tá saindo lá na bancada!', rosto: 'feliz' }] },
 ];
 
 Object.assign(QUIZZES, {
@@ -119,9 +118,9 @@ Object.assign(QUIZZES, {
       },
       {
         pergunta: 'Você tirou uma foto minha com quem?',
-        opcoes: ['Com a minha vó', 'Com o meu pai', 'Com a minha mãe'],
+        opcoes: ['Com a vó Raquel', 'Com o meu pai', 'Com a minha mãe'],
         correta: 0,
-        acerto: 'Com a vó! A foto mais fofa. ♥',
+        acerto: 'Com a vó Raquel! A foto mais fofa. ♥',
       },
       {
         pergunta: 'E depois, a gente foi fazer o quê?',
