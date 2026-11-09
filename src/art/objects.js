@@ -196,6 +196,45 @@ const ObjectArt = (() => {
       F(c, 1, 6, 2, 3, '#2d58c8'); F(c, 4, 6, 2, 3, '#d42a2f');
     }, false),
 
+    bbqTable: () => make(68, 30, (c) => {
+      F(c, 2, 4, 64, 20, '#f2f0ec'); F(c, 2, 4, 64, 2, '#ffffff'); F(c, 2, 22, 64, 2, '#c9c4bd');
+      F(c, 6, 24, 2, 6, '#9a958f'); F(c, 60, 24, 2, 6, '#9a958f');
+      // travessa de carne, farofa, vinagrete, pão de alho e copos
+      F(c, 24, 8, 20, 10, '#d9d4cc'); F(c, 26, 10, 6, 3, '#8c3a24'); F(c, 33, 10, 7, 3, '#a8452f'); F(c, 27, 14, 12, 2, '#b04a2c');
+      Pixel.blob(c, 13, 13, 5, '#e8d08a'); F(c, 11, 12, 2, 1, '#c9a75a');
+      Pixel.blob(c, 54, 13, 5, '#e8e3da'); F(c, 52, 12, 2, 2, '#d6262f'); F(c, 55, 14, 2, 1, '#5aa64d');
+      F(c, 46, 7, 3, 5, '#7ec7f0'); F(c, 19, 17, 3, 5, '#7ec7f0'); F(c, 8, 6, 3, 5, '#7ec7f0');
+    }),
+
+    plasticChair: () => make(14, 14, (c) => {
+      F(c, 1, 0, 12, 5, '#f4f4f2'); F(c, 1, 0, 12, 1, '#ffffff');
+      F(c, 2, 5, 10, 6, '#e6e6e2'); F(c, 2, 11, 2, 3, '#c9c9c4'); F(c, 10, 11, 2, 3, '#c9c9c4');
+    }),
+
+    cooler: () => make(18, 14, (c) => {
+      F(c, 1, 2, 16, 12, '#2f7fd0'); F(c, 0, 0, 18, 4, '#f2f2f2'); F(c, 6, 1, 6, 1, '#c9c9c4');
+      F(c, 2, 5, 1, 7, '#5aa0e6');
+    }),
+
+    cafeTable: () => make(30, 22, (c) => {
+      F(c, 0, 4, 6, 8, '#9fd8cf'); F(c, 24, 4, 6, 8, '#9fd8cf'); F(c, 0, 4, 6, 1, '#c4ece5'); F(c, 24, 4, 6, 1, '#c4ece5');
+      Pixel.blob(c, 15, 9, 8, '#ffffff'); Pixel.blob(c, 15, 9, 6.5, '#ffeaf2');
+      F(c, 14, 17, 2, 5, '#b7c3cb');
+    }),
+
+    churrasco: () => make(26, 18, (c) => {
+      Pixel.blob(c, 13, 10, 9, '#ececec'); Pixel.blob(c, 13, 10, 7, '#ffffff');
+      F(c, 3, 3, 22, 1, '#9aa0a8');
+      F(c, 6, 1, 4, 5, '#8c3a24'); F(c, 11, 1, 4, 5, '#a8452f'); F(c, 16, 1, 4, 5, '#7a2f1c');
+      F(c, 7, 8, 7, 4, '#a8452f'); F(c, 8, 8, 5, 1, '#e9b08a'); F(c, 15, 10, 5, 3, '#d9b16a');
+    }),
+
+    sorvete: () => make(16, 26, (c) => {
+      for (let j = 0; j < 12; j++) F(c, 8 - Math.floor((12 - j) / 2.2), 13 + j, Math.max(1, Math.floor((12 - j) / 1.1)), 1, j % 2 ? '#d9a35e' : '#c48c45');
+      Pixel.blob(c, 8, 11, 5.5, '#ff9fc4'); Pixel.blob(c, 8, 6, 4.5, '#7a4a33'); F(c, 6, 4, 2, 1, '#a8704f');
+      F(c, 7, 0, 2, 2, '#d6262f'); F(c, 5, 10, 2, 1, '#ffd0e4');
+    }),
+
     heart: () => make(9, 8, (c) => {
       Pixel.heart(c, 1, 1, '#ff5fa2');
       F(c, 2, 2, 1, 1, '#ffd0e4');

@@ -438,6 +438,19 @@ body.show-controls #controls { display: block; }
 }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; transition: opacity .25s; }
+#flash.on { opacity: 1; transition: none; }
+.polaroid {
+  background: #fffdf8; padding: 12px 12px 6px; transform: rotate(-3deg);
+  box-shadow: 0 6px 18px rgba(60, 20, 50, .35); margin: 6px 0 10px;
+}
+.polaroid-photo {
+  display: flex; justify-content: center; align-items: flex-end; gap: 4px;
+  background: linear-gradient(#9cd3f2, #ffd9b3 70%, #8fca6a 70%);
+  padding: 10px 14px 0; min-width: 220px;
+}
+.polaroid-photo img { width: 96px; height: 96px; }
+.polaroid-caption { font-size: 18px; color: #4a2147; padding: 8px 0 4px; font-style: italic; }
 #fade { position: absolute; inset: 0; background: var(--roxo-noite); opacity: 0; transition: opacity .35s; pointer-events: none; }
 #fade.on { opacity: 1; }
 

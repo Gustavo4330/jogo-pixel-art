@@ -49,7 +49,9 @@ const FASES = [
     nome: 'Conhecendo a sua família',
     local: 'Sua casa',
     data: '12 de outubro',
-    disponivel: false,
+    mapa: 'casa_dela',
+    spawn: 'inicio',
+    disponivel: true,
     roupas: {
       // camisa vermelha da seleção de Portugal
       ele: { roupa: '#c8102e', estiloRoupa: 'camiseta', detalhe: '#0a6b3a', escudo: '#f2c230' },

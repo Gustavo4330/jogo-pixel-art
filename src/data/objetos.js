@@ -22,4 +22,8 @@ const OBJETOS = {
   muda:            { tex: 'sapling',     corpo: [6, 4] },
   poltrona:        { tex: 'seat',        corpo: [14, 5] },
   poltrona_livre:  { tex: 'seat',        corpo: null },   // dá para sentar (sem colisão)
+  mesa_churrasco:  { tex: 'bbqTable',    corpo: [64, 16] },
+  cadeira:         { tex: 'plasticChair', corpo: [12, 5] },
+  isopor:          { tex: 'cooler',      corpo: [16, 6] },
+  mesinha:         { tex: 'cafeTable',   corpo: [28, 8] },
 };

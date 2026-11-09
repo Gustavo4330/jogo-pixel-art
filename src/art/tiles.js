@@ -955,6 +955,133 @@ const TileArt = (() => {
       F(c, x + 2, y + 4, 12, 12, '#5d4a6c');
       F(c, x + 4, y, 8, 3, '#1f9a52'); F(c, x + 5, y + 1, 6, 1, '#ffffff');
     },
+
+    /* ---------- FASE 4: QUINTAL DA CASA DELA ---------- */
+    telhado_telha(c, x, y, r) {
+      F(c, x, y, 16, 16, '#a8452f');
+      for (let j = 0; j < 16; j += 5) {
+        F(c, x, y + j + 4, 16, 1, '#7d2f20');
+        for (let i = (j % 10 ? 3 : 0); i < 16; i += 6) F(c, x + i, y + j, 1, 4, '#c25a3f');
+      }
+      F(c, x, y + 14, 16, 2, '#5e2318');
+    },
+
+    parede_casa(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#f2d7b0');
+      speckle(c, x, y, r, ['#ead0a8', '#f7dfbd'], 5);
+      if (n(0, 1) && !'HJjPp'.includes(n(0, 1))) { F(c, x, y + 13, 16, 3, '#c9a77e'); }
+      if (n(0, -1) === 'R') F(c, x, y, 16, 2, '#d8b98f');
+    },
+
+    janela_casa(c, x, y, r, n) {
+      T.parede_casa(c, x, y, r, n);
+      const ch = n(0, 0); const bottom = ch === 'j';
+      const right = n(-1, 0) === ch;
+      F(c, x + (right ? 0 : 2), y + (bottom ? 0 : 3), right ? 14 : 14, bottom ? 9 : 13, '#ffffff');
+      F(c, x + (right ? 0 : 3), y + (bottom ? 0 : 4), right ? 13 : 13, bottom ? 8 : 12, '#9cc8e6');
+      F(c, x + (right ? 0 : 3), y + (bottom ? 0 : 4), right ? 13 : 13, bottom ? 0 : 3, '#c4e1f3');
+      if (bottom) { F(c, x + (right ? 0 : 1), y + 9, 15, 2, '#e5e0d8'); Pixel.blob(c, x + 8, y + 12, 3, '#5aa64d'); F(c, x + 6, y + 13, 1, 1, '#ff8fbf'); }
+      if (!right) F(c, x + 15, y + (bottom ? 0 : 3), 1, bottom ? 9 : 13, '#ffffff');
+    },
+
+    porta_casa(c, x, y, r, n) {
+      const ch = n(0, 0); const bottom = ch === 'p';
+      const right = n(-1, 0) === ch;
+      T.parede_casa(c, x, y, r, n);
+      F(c, x, y + (bottom ? 0 : 2), 16, 16, '#7a4a2e');
+      F(c, x + (right ? 0 : 2), y + (bottom ? 0 : 4), 14, 16, '#9a6038');
+      F(c, x + (right ? 0 : 15), y, 1, 16, '#5e3822');
+      if (!bottom) F(c, x + (right ? 3 : 5), y + 6, 8, 6, '#c4e1f3');
+      else { F(c, x + (right ? 2 : 12), y + 2, 2, 2, '#e9cc6a'); F(c, x, y + 14, 16, 2, '#c9a77e'); }
+    },
+
+    piso_area(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#e6d3b8');
+      F(c, x + 15, y, 1, 16, '#cdb99c'); F(c, x, y + 15, 16, 1, '#cdb99c');
+      F(c, x + 2, y + 2, 3, 1, '#f1e3cf');
+      const up = n(0, -1);
+      if (up && 'HJjPpRCc'.includes(up)) { c.fillStyle = 'rgba(80,50,30,0.22)'; c.fillRect(x, y, 16, 4); }
+    },
+
+    muro(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#e9e2d6');
+      F(c, x, y, 16, 3, '#f7f2ea');
+      F(c, x, y + 3, 16, 1, '#c9c0b2');
+      speckle(c, x, y + 4, r, ['#ddd5c8', '#f1ebe2'], 5);
+      if (r() < 0.3) { F(c, x + 4, y + 6, 2, 6, '#5aa64d'); F(c, x + 3, y + 8, 1, 2, '#5aa64d'); }
+    },
+
+    churrasqueira(c, x, y, r, n) {
+      const ch = n(0, 0); const bottom = ch === 'c';
+      const left = n(-1, 0) !== ch, right = n(1, 0) !== ch;
+      F(c, x, y, 16, 16, '#b0563c');
+      for (let j = 0; j < 16; j += 4) {
+        F(c, x, y + j + 3, 16, 1, '#8c3f2b');
+        for (let i = (j / 4) % 2 ? 4 : 0; i < 16; i += 8) F(c, x + i, y + j, 1, 3, '#8c3f2b');
+      }
+      if (!bottom) {
+        // chaminé/coifa
+        if (!left && !right) F(c, x, y, 16, 16, '#9a4a33');
+        F(c, x, y + 12, 16, 4, '#5a5560'); F(c, x, y + 12, 16, 1, '#7a7580');
+      } else {
+        // boca da churrasqueira com brasa e espetos
+        F(c, x + (left ? 2 : 0), y, 16 - (left ? 2 : 0) - (right ? 2 : 0), 10, '#2a2228');
+        for (let i = 0; i < 6; i++) F(c, x + 2 + Math.floor(r() * 12), y + 6 + Math.floor(r() * 3), 2, 1, r() < 0.5 ? '#ff7a2c' : '#ffcc4a');
+        F(c, x + (left ? 2 : 0), y + 3, 16 - (left ? 2 : 0) - (right ? 2 : 0), 1, '#9aa0a8');
+        F(c, x + 4, y + 2, 3, 2, '#8c3a24'); F(c, x + 10, y + 2, 3, 2, '#b04a2c');
+        F(c, x, y + 10, 16, 6, '#c9c4bd'); F(c, x, y + 10, 16, 1, '#e5e0d8');
+      }
+    },
+
+    /* ---------- FASE 4: SORVETERIA ---------- */
+    parede_sorveteria(c, x, y, r, n) {
+      for (let i = 0; i < 16; i += 4) F(c, x + i, y, 4, 16, (i / 4) % 2 ? '#ffd3e4' : '#fff4f8');
+      if (n(0, 1) && !'wQ'.includes(n(0, 1))) F(c, x, y + 13, 16, 3, '#9fd8cf');
+    },
+
+    cardapio(c, x, y, r, n) {
+      T.parede_sorveteria(c, x, y, r, n);
+      const l = n(-1, 0) === 'Q', rr = n(1, 0) === 'Q';
+      F(c, x + (l ? 0 : 1), y + 2, 16 - (l ? 0 : 1) - (rr ? 0 : 1), 11, '#8a5a3c');
+      F(c, x + (l ? 0 : 2), y + 3, 16 - (l ? 0 : 2) - (rr ? 0 : 2), 9, '#2f3a33');
+      for (let j = 0; j < 3; j++) F(c, x + 3, y + 4 + j * 3, 6 + Math.floor(r() * 4), 1, '#f2efe6');
+      F(c, x + 11, y + 4, 2, 2, ['#ff8fbf', '#ffd86b', '#8fd0ff'][Math.floor(x / 16) % 3]);
+    },
+
+    freezer(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#dfe7ec');
+      F(c, x, y, 16, 2, '#ffffff');
+      F(c, x + 1, y + 3, 14, 12, '#bfe3f0');
+      const cores = ['#ff9fc4', '#f6e3b0', '#7a4a33', '#9be3b9', '#ffd86b', '#c9a0f0'];
+      for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) {
+        F(c, x + 2 + i * 7, y + 4 + j * 6, 5, 4, cores[(Math.floor(x / 16) * 2 + i + j * 3) % cores.length]);
+        F(c, x + 2 + i * 7, y + 4 + j * 6, 5, 1, '#ffffff');
+      }
+      F(c, x + 15, y, 1, 16, '#b7c3cb');
+    },
+
+    balcao(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#ffffff');
+      for (let i = 0; i < 16; i += 4) F(c, x + i, y + 3, 2, 13, '#ff8fbf');
+      F(c, x, y, 16, 3, '#9fd8cf'); F(c, x, y + 14, 16, 2, '#d47aa0');
+    },
+
+    piso_xadrez(c, x, y, r, n) {
+      for (const sy of [0, 8]) for (const sx of [0, 8]) {
+        const dark = ((x + sx) / 8 + (y + sy) / 8) % 2 === 0;
+        F(c, x + sx, y + sy, 8, 8, dark ? '#e7b7cc' : '#fff6fa');
+      }
+      const up = n(0, -1);
+      if (up && 'wQFf'.includes(up)) { c.fillStyle = 'rgba(80,40,60,0.15)'; c.fillRect(x, y, 16, 4); }
+    },
+
+    porta_loja(c, x, y, r, n) {
+      const right = n(-1, 0) === n(0, 0);
+      F(c, x, y, 16, 16, '#9fd8cf');
+      F(c, x + (right ? 0 : 2), y + 2, 14, 14, '#d9f0f6');
+      F(c, x + (right ? 0 : 15), y, 1, 16, '#6fb8ad');
+      F(c, x + (right ? 2 : 12), y + 7, 2, 4, '#ffffff');
+    },
   };
   return T;
 })();

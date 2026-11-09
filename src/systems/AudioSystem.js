@@ -66,6 +66,7 @@ const AudioSystem = {
       star: () => [988, 1319, 1568, 1976].forEach((f, i) => this.tone(f, 0.1, { vol: 0.05, when: i * 0.05 })),
       heart: () => { this.tone(784, 0.1, { vol: 0.06, type: 'triangle' }); this.tone(1175, 0.18, { vol: 0.06, type: 'triangle', when: 0.09 }); },
       item: () => [659, 784, 988, 1319].forEach((f, i) => this.tone(f, 0.12, { vol: 0.06, when: i * 0.07, type: 'triangle' })),
+      camera: () => { this.tone(1800, 0.03, { vol: 0.08 }); this.tone(400, 0.08, { vol: 0.08, type: 'sawtooth', when: 0.04 }); },
       victory: () => {
         const notes = [523, 659, 784, 1047, 784, 1047, 1319];
         notes.forEach((f, i) => this.tone(f, 0.22, { vol: 0.07, when: i * 0.12, type: 'triangle' }));

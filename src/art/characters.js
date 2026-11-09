@@ -183,6 +183,11 @@ const CharacterArt = {
     const H = L.hair, Hi = L.hairHi, Hs = L.hairS;
     const st = L.hairStyle;
     const wavy = st === 'ondulado';
+    if (st === 'coque') {
+      // coque no alto da cabeça (vovó)
+      if (d === 'left') { R(8, 0 + y, 4, 2, H); P(9, 0 + y, Hi); }
+      else { R(6, 0 + y, 4, 2, H); P(7, 0 + y, Hi); }
+    }
 
     if (wavy) {
       // cachinhos por cima da cabeça (todas as direções)
@@ -343,6 +348,7 @@ const CharacterArt = {
       R(9, 10, 3, 2, L.hair); R(13, 10, 3, 1, L.hair); R(17, 10, 4, 2, L.hair); R(21, 10, 2, 1, L.hair);
       R(11, 5, 5, 1, L.hairHi); R(9, 7, 2, 1, L.hairHi); R(19, 5, 2, 1, L.hairHi);
       if (st === 'rabo') { R(22, 5, 2, 2, L.tie); }
+      if (st === 'coque') { R(12, 0, 8, 4, L.hair); R(14, 0, 3, 1, L.hairHi); R(9, 3, 14, 2, L.hair); }
       if (st === 'ondulado') {
         // cachos
         R(9, 2, 3, 2, L.hair); R(14, 1, 4, 3, L.hair); R(20, 2, 3, 2, L.hair);

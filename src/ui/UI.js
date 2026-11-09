@@ -279,6 +279,36 @@ const UI = {
     el.hidden = true;
   },
 
+  /** Tira uma foto: flash + polaroid com os personagens. */
+  async photo(ids, legenda) {
+    const fl = UI.$('#flash');
+    AudioSystem.play('camera');
+    fl.classList.add('on');
+    await UI.wait(120);
+    fl.classList.remove('on');
+    await UI.wait(300);
+    const faces = ids.map((id) => {
+      const urls = ArtFactory.portraitsFor(id);
+      return urls ? `<img class="px" src="${urls.feliz}" alt="">` : '';
+    }).join('');
+    return UI.modal(`
+      <div class="polaroid">
+        <div class="polaroid-photo">${faces}</div>
+        <div class="polaroid-caption">${UI.esc(legenda || '')}</div>
+      </div>`, { botao: 'Que foto linda! ♥', classe: 'photo' });
+  },
+
+  /** Escolha sem resposta certa (ex.: sabor do sorvete). */
+  async choice({ quem = 'ele', escolha, opcoes, respostas = [] }) {
+    UI.dialog.open(quem, 'feliz');
+    await UI.dialog.type(escolha);
+    const i = await UI.quiz.choose(opcoes);
+    AudioSystem.play('confirm');
+    const resp = respostas[i] || respostas[0];
+    if (resp) await UI.dialog.say(quem, resp.replace('{opcao}', opcoes[i]), 'feliz');
+    return i;
+  },
+
   /** Tela de ligação no celular. */
   async phoneCall(nome) {
     const el = UI.$('#phase-intro');

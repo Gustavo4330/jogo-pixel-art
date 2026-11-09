@@ -35,6 +35,9 @@ const ScriptRunner = {
       else if (p.ligacao) await UI.phoneCall(p.ligacao);
       else if (p.aparecer) scene.appear(p.aparecer);
       else if (p.posicionar) scene.place(p.posicionar);
+      else if (p.virar) { for (const [id, dir] of Object.entries(p.virar)) { const c = scene.charById(id); if (c) c.face(dir); } }
+      else if (p.foto) await UI.photo(p.foto, p.legenda);
+      else if (p.escolha) await UI.choice(p);
       else if (p.mudarMapa) {
         if (p.texto) await UI.timeskip(p.texto);
         await scene.goTo({ para: p.mudarMapa, spawn: p.spawn });

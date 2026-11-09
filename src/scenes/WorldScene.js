@@ -77,6 +77,17 @@ class WorldScene extends Phaser.Scene {
       });
     }
 
+    // Fumacinha (ex.: churrasqueira)
+    if (map.fumaca) {
+      const f = map.fumaca;
+      this.time.addEvent({
+        delay: 380, loop: true, callback: () => {
+          const p = this.add.image(f.x * T + Phaser.Math.Between(-6, 6), f.y * T, 'pixel').setDepth(98000).setScale(2).setAlpha(0.7).setTint(0xdddddd);
+          this.tweens.add({ targets: p, y: p.y - 30, x: p.x + Phaser.Math.Between(-8, 8), alpha: 0, scale: 4, duration: 1800, onComplete: () => p.destroy() });
+        },
+      });
+    }
+
     // Gatilhos: áreas que iniciam um roteiro quando ela pisa
     this.triggers = (map.gatilhos || []).filter((g) => !SaveSystem.flag(g.flag));
 
@@ -372,7 +383,7 @@ class WorldScene extends Phaser.Scene {
     const inRect = (b, pad) => px >= b.x - pad && px <= b.right + pad && py >= b.y - pad && py <= b.bottom + pad;
 
     for (const c of Object.values(this.npcs)) {
-      if (!c.hidden && c.data.roteiro && inRect(c.sprite.body, 6)) return { npc: c, x: c.x, y: c.y - 25 };
+      if (!c.hidden && c.data.roteiro && inRect(c.sprite.body, 9)) return { npc: c, x: c.x, y: c.y - 25 };
     }
     for (const it of this.interactables) {
       const b = it.zone.body;
