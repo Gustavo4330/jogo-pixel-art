@@ -261,15 +261,38 @@ const UI = {
   },
 
   /** Tela rápida de "passagem de tempo" (ex.: "Alguns minutos depois..."). */
-  async timeskip(texto) {
+  async timeskip(texto, enquantoCoberto) {
     const el = UI.$('#phase-intro');
     el.innerHTML = `<div class="pi-sub timeskip">${UI.esc(texto)}</div>`;
     el.hidden = false;
     el.classList.remove('out');
-    await UI.wait(2200);
+    await UI.wait(500);
+    if (enquantoCoberto) enquantoCoberto();
+    await UI.wait(1700);
     el.classList.add('out');
     await UI.wait(450);
     el.hidden = true;
+  },
+
+  /** Tela de ligação no celular. */
+  async phoneCall(nome) {
+    const el = UI.$('#phase-intro');
+    el.innerHTML = `<div class="phone"><div class="phone-screen">
+        <div class="phone-avatar">${UI.esc(nome[0])}</div>
+        <div class="phone-name">${UI.esc(nome)}</div>
+        <div class="phone-status">chamando<span class="dots"></span></div>
+      </div></div>`;
+    el.classList.add('call');
+    el.hidden = false;
+    el.classList.remove('out');
+    for (let i = 0; i < 3; i++) { AudioSystem.play('select'); await UI.wait(650); }
+    el.querySelector('.phone-status').textContent = 'chamada conectada';
+    AudioSystem.play('confirm');
+    await UI.wait(900);
+    el.classList.add('out');
+    await UI.wait(450);
+    el.hidden = true;
+    el.classList.remove('call');
   },
 
   /** Tela do beijo: coração grande pulsando. */

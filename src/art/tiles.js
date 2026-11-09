@@ -599,6 +599,123 @@ const TileArt = (() => {
       F(c, ex + (right ? 0 : 4), y, 1, 16, '#8e8983');
       F(c, ex + 2, y, 1, 16, '#3a3640');
     },
+
+    /* ---------- FASE 2: ESCADA DE INCÊNDIO ---------- */
+    parede_incendio(c, x, y, r) {
+      F(c, x, y, 16, 16, '#b9b6b2');
+      F(c, x, y, 16, 2, '#9a9792');
+      F(c, x, y + 10, 16, 6, '#8d8a95');
+      F(c, x, y + 10, 16, 1, '#c9a227');
+      F(c, x, y + 11, 16, 1, '#6e6b76');
+      speckle(c, x, y + 2, r, ['#aeaba7', '#c4c1bd'], 4);
+    },
+
+    porta_emergencia(c, x, y, r, n) {
+      const ch = n(0, 0);
+      const bottom = ch === ch.toLowerCase();
+      const right = n(-1, 0) === ch;
+      T.parede_incendio(c, x, y, r);
+      const top = bottom ? 0 : 4;
+      F(c, x, y + top, 16, 16 - top, '#5c5866');
+      F(c, x + (right ? 0 : 1), y + top + (bottom ? 0 : 1), 15, 16 - top - 1, '#8d96a3');
+      F(c, x + (right ? 0 : 1), y + top + (bottom ? 0 : 1), 1, 16 - top - 1, '#a9b2be');
+      F(c, x + (right ? 0 : 15), y + top, 1, 16 - top, '#4a4654');
+      if (!bottom) {
+        // placa verde "SAÍDA" acima da porta
+        F(c, x + (right ? 0 : 6), y, right ? 10 : 10, 4, '#1f9a52');
+        F(c, x + (right ? 0 : 6), y, right ? 10 : 10, 1, '#5fd08e');
+        if (!right) { F(c, x + 8, y + 1, 3, 2, '#ffffff'); F(c, x + 12, y + 1, 1, 2, '#ffffff'); F(c, x + 14, y + 1, 2, 2, '#ffffff'); }
+        else { F(c, x + 1, y + 1, 2, 2, '#ffffff'); F(c, x + 4, y + 2, 4, 1, '#ffffff'); F(c, x + 7, y + 1, 1, 3, '#ffffff'); }
+        F(c, x + (right ? 3 : 5), y + 8, 7, 3, '#c9d6e3');
+      } else {
+        // barra antipânico
+        F(c, x + (right ? 0 : 3), y + 3, right ? 13 : 13, 2, '#d8dde3');
+        F(c, x + (right ? 0 : 3), y + 5, right ? 13 : 13, 1, '#4a4654');
+        F(c, x, y + 14, 16, 2, '#6e6b76');
+      }
+    },
+
+    hidrante(c, x, y, r, n) {
+      T.parede_incendio(c, x, y, r);
+      F(c, x + 2, y + 1, 12, 12, '#a3151b');
+      F(c, x + 3, y + 2, 10, 10, '#d42a2f');
+      F(c, x + 4, y + 3, 8, 6, '#e8eef4');
+      Pixel.blob(c, x + 8, y + 6, 2.6, '#c9202a');
+      F(c, x + 7, y + 6, 2, 1, '#e8eef4');
+    },
+
+    numero_andar(c, x, y, r, n) {
+      T.parede_incendio(c, x, y, r);
+      const rows = ['####', '...#', '####', '#...', '####'];
+      rows.forEach((row, j) => [...row].forEach((ch, i) => { if (ch === '#') F(c, x + 4 + i * 2, y + 1 + j * 2 - 1 + 2, 2, 2, '#e0b528'); }));
+    },
+
+    luz_emergencia(c, x, y, r, n) {
+      T.parede_incendio(c, x, y, r);
+      F(c, x + 3, y + 3, 10, 5, '#f2f2ee'); F(c, x + 3, y + 7, 10, 1, '#bdbab4');
+      F(c, x + 4, y + 4, 3, 2, '#fff7c2'); F(c, x + 9, y + 4, 3, 2, '#fff7c2');
+      F(c, x + 7, y + 5, 2, 1, '#e84040');
+    },
+
+    janelinha(c, x, y, r, n) {
+      T.parede_incendio(c, x, y, r);
+      F(c, x + 3, y + 2, 10, 7, '#3e3a46');
+      F(c, x + 4, y + 3, 8, 2, '#e8728a'); F(c, x + 4, y + 5, 8, 3, '#ffb46b');
+      F(c, x + 7, y + 3, 1, 5, '#3e3a46');
+    },
+
+    escada_incendio(c, x, y, r, n) {
+      for (let k = 0; k < 2; k++) {
+        const yy = y + k * 8;
+        F(c, x, yy, 16, 6, '#a9a6a1');
+        F(c, x, yy, 16, 2, '#e0b528');
+        F(c, x, yy + 2, 16, 1, '#bfbcb7');
+        F(c, x, yy + 6, 16, 2, '#6f6c69');
+      }
+      if (n(-1, 0) !== n(0, 0)) F(c, x, y, 1, 16, '#5c5866');
+      if (n(1, 0) !== n(0, 0)) F(c, x + 15, y, 1, 16, '#5c5866');
+    },
+
+    piso_incendio(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#9e9b97');
+      speckle(c, x, y, r, ['#8f8c88', '#adaaa6'], 8);
+      F(c, x + 15, y, 1, 16, '#928f8b'); F(c, x, y + 15, 16, 1, '#928f8b');
+      const up = n(0, -1);
+      if (up && !'cfS'.includes(up)) { c.fillStyle = 'rgba(30,26,40,0.3)'; c.fillRect(x, y, 16, 4); }
+    },
+
+    guarda_corpo(c, x, y, r, n) {
+      T.piso_incendio(c, x, y, r, n);
+      F(c, x, y + 6, 16, 10, '#8d8a95');
+      F(c, x, y + 6, 16, 2, '#b2afba');
+      F(c, x, y + 3, 16, 2, '#d23a2c');
+      F(c, x, y + 3, 16, 1, '#f06a5a');
+      F(c, x + 3, y + 5, 1, 1, '#d23a2c'); F(c, x + 12, y + 5, 1, 1, '#d23a2c');
+      F(c, x, y + 14, 16, 2, '#6e6b76');
+    },
+
+    laje_incendio(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#7f7c88');
+      for (let i = 4; i < 16; i += 6) F(c, x, y + i, 16, 1, '#74717c');
+      if (n(0, -1) !== n(0, 0)) F(c, x, y, 16, 3, '#5f5c68');
+      speckle(c, x, y, r, ['#77747f', '#8a8793'], 4);
+    },
+
+    lateral_incendio(c, x, y, r, n) {
+      T.laje_incendio(c, x, y, r, n);
+      const right = n(1, 0) === 'S';
+      const ex = right ? x + 10 : x;
+      F(c, ex, y, 6, 16, '#a3a0ab');
+      F(c, ex + 2, y, 2, 16, '#d23a2c');
+      F(c, ex + 2, y, 1, 16, '#f06a5a');
+    },
+
+    parede_fundo(c, x, y, r) {
+      F(c, x, y, 16, 16, '#6e6b76');
+      F(c, x, y, 16, 3, '#8d8a95');
+      F(c, x, y, 16, 1, '#a6a3ae');
+      speckle(c, x, y + 3, r, ['#66636e', '#77747f'], 5);
+    },
   };
   return T;
 })();

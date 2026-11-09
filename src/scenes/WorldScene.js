@@ -111,11 +111,43 @@ class WorldScene extends Phaser.Scene {
     this.physics.add.collider(c.sprite, this.solids);
     this.physics.add.collider(c.sprite, this.objBodies);
     for (const other of Object.values(this.npcs)) this.physics.add.collider(c.sprite, other.sprite);
+    if (n.oculto) this.setHidden(c, true);
     if (n.destaque && !SaveSystem.flag(`fase${this.map.fase}_concluida`)) {
       c.bubble = this.add.image(c.x, c.y - 25, 'bubbleHeart').setOrigin(0.5, 1).setDepth(99999);
       this.tweens.add({ targets: c.bubble, y: '-=3', duration: 600, yoyo: true, repeat: -1, ease: 'Sine.inOut' });
     }
     this.npcs[n.id] = c;
+  }
+
+  setHidden(c, hidden) {
+    c.hidden = hidden;
+    c.sprite.setVisible(!hidden);
+    c.shadow.setVisible(!hidden);
+    c.sprite.body.enable = !hidden;
+  }
+
+  /** Faz um personagem escondido aparecer (ex.: amigos chegando). */
+  appear(id) {
+    const c = this.npcs[id];
+    if (!c) return;
+    this.setHidden(c, false);
+    AudioSystem.play('door');
+    c.sprite.setAlpha(0);
+    this.tweens.add({ targets: c.sprite, alpha: 1, duration: 300 });
+  }
+
+  /** Move personagens de lugar de uma vez (usado durante transições). */
+  place(posicoes) {
+    for (const [id, [x, y, dir]] of Object.entries(posicoes)) {
+      const c = this.charById(id);
+      if (!c) continue;
+      c.sprite.setPosition(x * T, y * T);
+      c.sprite.body.reset(x * T, y * T);
+      if (dir) c.face(dir);
+      c.sync();
+      if (c.bubble) { c.bubble.destroy(); c.bubble = null; }
+    }
+    this.updateCamera(true);
   }
 
   addStar(b) {
@@ -268,7 +300,7 @@ class WorldScene extends Phaser.Scene {
     const inRect = (b, pad) => px >= b.x - pad && px <= b.right + pad && py >= b.y - pad && py <= b.bottom + pad;
 
     for (const c of Object.values(this.npcs)) {
-      if (c.data.roteiro && inRect(c.sprite.body, 6)) return { npc: c, x: c.x, y: c.y - 25 };
+      if (!c.hidden && c.data.roteiro && inRect(c.sprite.body, 6)) return { npc: c, x: c.x, y: c.y - 25 };
     }
     for (const it of this.interactables) {
       const b = it.zone.body;

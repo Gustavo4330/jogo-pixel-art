@@ -59,6 +59,23 @@ const PERSONAGENS = {
     },
   },
 
+  // O Felipe, amigo de vocês (Fase 2)
+  felipe: {
+    nome: 'Felipe',
+    visual: {
+      pele: '#d7a27a',
+      cabelo: '#1d1512',
+      estiloCabelo: 'curto',
+      roupa: '#4a6fa8',
+      estiloRoupa: 'camiseta',
+      calca: '#3d3f52',
+      tenis: '#f6f2f6',
+    },
+  },
+
+  // Vozes do lado de fora (aparece só o nome, sem retrato)
+  vozes: { nome: 'Vozes lá fora' },
+
   // Para adicionar figurantes nas próximas fases, copie um personagem
   // acima e mude o id (ex.: 'irma', 'mae'), as cores e o nome.
 

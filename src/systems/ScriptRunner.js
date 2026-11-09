@@ -31,7 +31,9 @@ const ScriptRunner = {
       else if (p.som) AudioSystem.play(p.som);
       else if (p.memoria) await UI.memory(p.memoria);
       else if (p.andar) await scene.walkTo(p.andar, p.ate || 'jogador', p.distancia);
-      else if (p.transicao) await UI.timeskip(p.transicao);
+      else if (p.transicao) await UI.timeskip(p.transicao, () => p.posicoes && scene.place(p.posicoes));
+      else if (p.ligacao) await UI.phoneCall(p.ligacao);
+      else if (p.aparecer) scene.appear(p.aparecer);
       else if (p.beijo) await scene.kiss(p.beijo);
       else if (p.concluirFase) await scene.completePhase(p.concluirFase);
       else console.warn('Passo desconhecido no roteiro:', p);

@@ -1,77 +1,75 @@
 /* =========================================================
-   MAPA: ESCADARIA DA ESCOLA — FIM DE TARDE (Fase 2)
+   MAPA: ESCADA DE INCÊNDIO DA ESCOLA (Fase 2)
    ---------------------------------------------------------
-   O mesmo prédio de concreto da Fase 1, já no fim do dia:
-   a escola quase vazia, o sol entrando pelas janelas e
-   deixando tudo laranja. Ela começa no térreo, sobe a
-   escadaria e encontra o Gustavo no patamar de cima.
+   Escada de incêndio fechada: paredes de concreto, degraus
+   com faixa amarela antiderrapante, corrimão vermelho, porta
+   de emergência com barra antipânico e placa de SAÍDA,
+   hidrante, luz de emergência e o número do andar.
+   Ela entra pela porta lá em cima e desce até o Gustavo.
    ========================================================= */
 
 MAPAS.escola_escadaria = {
   id: 'escola_escadaria',
   fase: 2,
-  nome: 'Escadaria da escola',
-  luz: 'entardecer', // raios de sol + tom alaranjado
+  nome: 'Escada de incêndio',
+  luz: 'entardecer', // raio de sol pela janelinha + tom alaranjado
 
   legenda: {
     T: { tile: 'teto_concreto', solido: true },
-    w: { tile: 'parede_concreto', solido: true },
-    J: { tile: 'janela_por_do_sol', solido: true, texto: 'O sol está se pondo atrás das árvores. O céu está todo rosa e laranja...' },
-    j: { tile: 'janela_por_do_sol', solido: true, texto: 'Que fim de tarde bonito.' },
-    u: { tile: 'parede_concreto', solido: true },
-    c: { tile: 'piso_polido' },
-    H: { tile: 'corrimao', solido: true, texto: 'Lá de cima dá para ver o térreo inteiro, quase vazio.' },
-    S: { tile: 'escada' },
-    Z: { tile: 'parede_laje', solido: true },
-    Y: { tile: 'lateral_escada', solido: true },
-    f: { tile: 'piso_polido' },
-    L: { tile: 'pilar_jardim', solido: true, texto: 'Lá fora, o gramado já está ficando na sombra.' },
-    I: { tile: 'pilar_jardim', solido: true },
-    G: { tile: 'grama', solido: true },
+    w: { tile: 'parede_incendio', solido: true },
+    u: { tile: 'parede_incendio', solido: true },
+    E: { tile: 'porta_emergencia', solido: true },
+    e: { tile: 'porta_emergencia', solido: true, texto: 'A porta de emergência. Do outro lado fica o corredor da escola.' },
+    Q: { tile: 'luz_emergencia', solido: true, texto: 'Luz de emergência. Ainda bem que ninguém acendeu...' },
+    J: { tile: 'janelinha', solido: true, texto: 'Pela janelinha dá para ver o céu ficando laranja.' },
+    x: { tile: 'hidrante', solido: true, texto: 'Hidrante. "Em caso de incêndio, quebre o vidro." Melhor não!' },
+    N: { tile: 'numero_andar', solido: true, texto: 'Segundo andar.' },
+    c: { tile: 'piso_incendio' },
+    H: { tile: 'guarda_corpo', solido: true },
+    S: { tile: 'escada_incendio' },
+    Z: { tile: 'laje_incendio', solido: true },
+    Y: { tile: 'lateral_incendio', solido: true },
+    f: { tile: 'piso_incendio' },
+    B: { tile: 'parede_fundo', solido: true },
   },
 
   chao: [
-    'TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT', // 0
-    'wwJJJwwwwwwJJJJJJJJwwwwwwJJJww', // 1
-    'wwjjjwwwwwwjjjjjjjjwwwwwwjjjww', // 2
-    'uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu', // 3
-    'cccccccccccccccccccccccccccccc', // 4  patamar de cima
-    'cccccccccccccccccccccccccccccc', // 5
-    'HHHHHHHHHHSSSSSSSSSSHHHHHHHHHH', // 6  corrimão + topo da escada
-    'ZZZZZZZZZYSSSSSSSSSSYZZZZZZZZZ', // 7
-    'ZZZZZZZZZYSSSSSSSSSSYZZZZZZZZZ', // 8
-    'ZZZZZZZZZYSSSSSSSSSSYZZZZZZZZZ', // 9
-    'ZZZZZZZZZYSSSSSSSSSSYZZZZZZZZZ', // 10
-    'ZZZZZZZZZYSSSSSSSSSSYZZZZZZZZZ', // 11
-    'ffffffffffffffffffffffffffffff', // 12 térreo
-    'ffffffffffffffffffffffffffffff', // 13
-    'ffffffffffffffffffffffffffffff', // 14
-    'ffffffffffffffffffffffffffffff', // 15
-    'ffffffffffffffffffffffffffffff', // 16
-    'LLLLILLLLLLLILLLLLLLILLLLLLLIL', // 17
-    'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG', // 18
+    'TTTTTTTTTTTTTTTTTTTTTTTTTT', // 0
+    'wwEEwwQwwwwwwwwwwJwwwQwwww', // 1
+    'uueeuuuuxuuuuuuNuuuuuuuuuu', // 2
+    'cccccccccccccccccccccccccc', // 3  patamar de cima (porta)
+    'cccccccccccccccccccccccccc', // 4
+    'cccccccccccccccccccccccccc', // 5
+    'HHHHHHHHSSSSSSSSSSHHHHHHHH', // 6
+    'ZZZZZZZYSSSSSSSSSSYZZZZZZZ', // 7
+    'ZZZZZZZYSSSSSSSSSSYZZZZZZZ', // 8
+    'ZZZZZZZYSSSSSSSSSSYZZZZZZZ', // 9
+    'ZZZZZZZYSSSSSSSSSSYZZZZZZZ', // 10
+    'ZZZZZZZYSSSSSSSSSSYZZZZZZZ', // 11
+    'ffffffffffffffffffffffffff', // 12 patamar de baixo (escondidinho)
+    'ffffffffffffffffffffffffff', // 13
+    'ffffffffffffffffffffffffff', // 14
+    'ffffffffffffffffffffffffff', // 15
+    'BBBBBBBBBBBBBBBBBBBBBBBBBB', // 16
   ],
 
   spawns: {
-    inicio: { x: 3, y: 15.6, dir: 'right' },
+    inicio: { x: 4, y: 4.4, dir: 'down' },
   },
 
-  objetos: [
-    { tipo: 'banco_concreto', x: 4, y: 13.2, texto: 'O banco onde todo mundo esperava o ônibus. Agora está vazio.' },
-    { tipo: 'banco_concreto', x: 26, y: 13.2 },
-    { tipo: 'lixeira_amarela', x: 7.6, y: 13 },
-    { tipo: 'vaso', x: 1.2, y: 5.6 },
-    { tipo: 'vaso', x: 28.8, y: 5.6 },
-  ],
+  objetos: [],
 
   npcs: [
-    { id: 'ele', x: 15, y: 5.4, dir: 'down', roteiro: 'f2_ele', destaque: true },
+    { id: 'ele', x: 20, y: 14.2, dir: 'left', roteiro: 'f2_ele', destaque: true },
+    // aparecem só no final (passo "aparecer" do roteiro)
+    { id: 'felipe', x: 3.5, y: 3.7, dir: 'down', oculto: true, roteiro: 'f2_felipe' },
+    { id: 'amiga', x: 4.5, y: 3.7, dir: 'down', oculto: true, roteiro: 'f2_amiga' },
   ],
 
   bonus: [],
 
   objetivos: [
-    { seNao: 'fase2_concluida', texto: 'Suba a escadaria e encontre o Gustavo', alvo: { npc: 'ele' } },
+    { seNao: 'f2_beijou', texto: 'Desça a escada de incêndio e encontre o seu baby', alvo: { npc: 'ele' } },
   ],
 
   aoEntrar: { roteiro: 'f2_intro', flag: 'f2_intro' },

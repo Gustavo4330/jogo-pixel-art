@@ -1,20 +1,26 @@
 /* =========================================================
    FASE 2 — PRIMEIRO BEIJO: diálogos e quiz
    ---------------------------------------------------------
-   Escadaria da escola, no fim do dia. Os dois muito tímidos.
+   Na escada de incêndio da escola. Os dois se beijam, mas
+   não conseguem sair porque tem gente do lado de fora...
+   e precisam ligar para o Felipe e a Sofia irem resgatar.
+
    Os tipos de passo estão explicados em roteiros/fase1.js.
-   Novo passo desta fase:
+   Passos novos desta fase:
      { beijo: 'Texto que aparece na tela' }
+     { transicao: 'Texto', posicoes: { ela: [x, y, 'up'], ele: [x, y, 'up'] } }
+         (troca os personagens de lugar enquanto a tela está coberta)
+     { ligacao: 'Felipe' }          (tela de celular chamando)
+     { aparecer: 'felipe' }         (personagem escondido entra em cena)
    ========================================================= */
 
 Object.assign(ROTEIROS, {
   f2_intro: [
     {
       passos: [
-        { quem: 'narrador', fala: 'Fim de tarde. A escola já estava quase vazia...' },
-        { quem: 'ela', fala: 'O Gustavo disse que ia me esperar na escadaria...', rosto: 'timido' },
-        { quem: 'ela', fala: 'Por que meu coração está batendo tão rápido?', rosto: 'timido' },
-        { quem: 'narrador', fala: 'Siga a setinha rosa e suba a escada.' },
+        { quem: 'narrador', fala: 'Fim de aula. A escada de incêndio estava vazia e silenciosa...' },
+        { quem: 'ela', fala: 'Ele disse que ia me esperar lá embaixo...', rosto: 'timido' },
+        { quem: 'narrador', fala: 'Desça a escada e siga a setinha rosa.' },
         { marcar: 'f2_intro' },
       ],
     },
@@ -24,38 +30,59 @@ Object.assign(ROTEIROS, {
     {
       se: 'fase2_concluida',
       passos: [
-        { quem: 'ele', fala: 'Toda vez que eu passo por essa escada, eu lembro de você. ♥', rosto: 'timido' },
+        { quem: 'ele', fala: 'Toda vez que eu vejo uma escada de incêndio, eu lembro de você, vida. ♥', rosto: 'timido' },
       ],
     },
     {
       passos: [
         { olhar: 'ele', para: 'jogador' },
-        { quem: 'ele', fala: 'Bia... você veio.', rosto: 'timido' },
-        { quem: 'ela', fala: 'Eu disse que vinha, né?', rosto: 'timido' },
-        { quem: 'narrador', fala: 'O sol entrava pelas janelas e deixava tudo cor de laranja.' },
-        { quem: 'ele', fala: 'Então... é...', rosto: 'timido' },
-        { quem: 'ela', fala: '...', rosto: 'timido' },
-        { quem: 'narrador', fala: 'Vocês dois estavam muito tímidos. Ninguém sabia direito o que dizer.' },
-        { quem: 'ele', fala: 'Posso... te falar uma coisa?', rosto: 'timido' },
-        { quem: 'ela', fala: 'Pode...', rosto: 'timido' },
-        { quem: 'ele', fala: 'Eu gosto muito de ficar com você.', rosto: 'timido' },
-        { emocao: 'ela', tipo: 'coracao' },
-        { quem: 'ela', fala: 'Eu também, Gustavo...', rosto: 'timido' },
+        { quem: 'ele', fala: 'Achei que você não vinha, vida.', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Claro que eu vinha, baby.', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Vem cá...', rosto: 'timido' },
         { andar: 'ele', ate: 'jogador', distancia: 11 },
-        { quem: 'narrador', fala: 'Ele foi chegando mais perto... devagarinho...' },
+        { quem: 'ela', fala: 'Aqui ninguém vê a gente...', rosto: 'timido' },
+        { quem: 'ele', fala: 'Essa é a ideia.', rosto: 'feliz' },
         { beijo: 'O nosso primeiro beijo' },
-        { quem: 'ele', fala: '...', rosto: 'timido' },
-        { quem: 'ela', fala: '...', rosto: 'feliz' },
-        { quem: 'ele', fala: 'Eu nunca vou esquecer este fim de tarde.', rosto: 'feliz' },
-        { quem: 'ele', fala: 'E você? Será que lembra de tudo desse dia?', rosto: 'feliz' },
+        { marcar: 'f2_beijou' },
+        { quem: 'ela', fala: 'Uau...', rosto: 'timido' },
+        { quem: 'ele', fala: 'Pois é...', rosto: 'timido' },
+        { quem: 'ela', fala: 'Faz de novo?', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Quantas vezes você quiser, vida.', rosto: 'feliz' },
+        { beijo: 'E de novo... e de novo...' },
+
+        // tentando ir embora
+        { transicao: 'Um bom tempo depois...', posicoes: { ela: [3.6, 5.6, 'up'], ele: [5.2, 5.6, 'up'] } },
+        { quem: 'ele', fala: 'Bora, vida? Já tá tarde.', rosto: 'normal' },
+        { quem: 'vozes', fala: '"...e aí, vocês vão pra onde depois da aula?" "Sei lá, vamos esperar aqui mesmo!"' },
+        { emocao: 'ela', tipo: 'exclamacao' },
+        { quem: 'ela', fala: 'Baby, tem gente bem na frente da porta!', rosto: 'surpreso' },
+        { quem: 'ele', fala: 'Se a gente sair agora, todo mundo vai ver...', rosto: 'surpreso' },
+        { quem: 'ela', fala: 'E agora?!', rosto: 'surpreso' },
+        { quem: 'ele', fala: 'Calma, vida. Já sei: vou ligar pro Felipe.', rosto: 'normal' },
+        { ligacao: 'Felipe' },
+        { quem: 'felipe', fala: 'Alô? Vocês tão ONDE?! Na escada de incêndio?! Hahaha!', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Fala baixo! Tem gente na porta e a gente não consegue sair.', rosto: 'timido' },
+        { quem: 'felipe', fala: 'Tá bom, tá bom. Vou chamar a Sofia e a gente tira vocês daí.', rosto: 'normal' },
+        { transicao: 'Alguns minutos depois...' },
+        { aparecer: 'felipe' },
+        { aparecer: 'amiga' },
+        { quem: 'amiga', fala: 'Pronto, barra limpa! A gente levou todo mundo lá pra fora.', rosto: 'feliz' },
+        { quem: 'felipe', fala: 'Vocês me devem uma, hein!', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Obrigada, gente! ♥', rosto: 'feliz' },
+        { quem: 'narrador', fala: 'E foi assim que o Felipe e a Sofia salvaram o nosso primeiro beijo.' },
+        { quem: 'ele', fala: 'Vida, será que você lembra de tudo desse dia?', rosto: 'feliz' },
         { quiz: 'f2_quiz' },
-        { quem: 'ele', fala: 'Foi o melhor fim de tarde da minha vida. ♥', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Melhor escada de incêndio do mundo. ♥', rosto: 'feliz' },
         { coracoes: true },
         { marcar: 'fase2_concluida' },
         { concluirFase: 2 },
       ],
     },
   ],
+
+  // Falas se ela conversar com eles depois que aparecerem
+  f2_felipe: [{ passos: [{ quem: 'felipe', fala: 'Da próxima vez escolham um lugar com duas saídas, por favor! Hahaha' }] }],
+  f2_amiga: [{ passos: [{ quem: 'amiga', fala: 'Eu não acredito que vocês ficaram presos na escada de incêndio! ♥', rosto: 'feliz' }] }],
 });
 
 Object.assign(QUIZZES, {
@@ -63,27 +90,27 @@ Object.assign(QUIZZES, {
     quem: 'ele',
     embaralhar: true,
     erro: [
-      'Hmm... não foi bem assim! Tenta de novo ♥',
-      'Quase! Pensa naquele fim de tarde...',
+      'Hmm... não foi bem assim, vida! Tenta de novo ♥',
+      'Quase! Pensa naquele dia...',
     ],
     perguntas: [
       {
         pergunta: 'Onde foi o nosso primeiro beijo?',
-        opcoes: ['Na escadaria da escola', 'No pátio, perto das mesas', 'Na porta da sala'],
+        opcoes: ['Na escada de incêndio', 'No pátio da escola', 'Na porta da sala'],
         correta: 0,
-        acerto: 'Isso! Na nossa escadaria. ♥',
+        acerto: 'Isso! Na nossa escada de incêndio. ♥',
       },
       {
-        pergunta: 'Em que hora do dia foi?',
-        opcoes: ['No final do dia', 'Logo de manhã', 'Na hora do intervalo'],
+        pergunta: 'Por que a gente não conseguia sair de lá?',
+        opcoes: ['Tinha gente do lado de fora', 'A porta estava trancada', 'A gente se perdeu'],
         correta: 0,
-        acerto: 'Isso mesmo, com o sol se pondo.',
+        acerto: 'Exatamente! Ficamos presos, hahaha.',
       },
       {
-        pergunta: 'E como a gente estava?',
-        opcoes: ['Muito tímidos', 'Super confiantes', 'Morrendo de sono'],
+        pergunta: 'Quem foi tirar a gente de lá?',
+        opcoes: ['O Felipe e a Sofia', 'O diretor da escola', 'Ninguém, fugimos sozinhos'],
         correta: 0,
-        acerto: 'Muito, muito tímidos! Hahaha ♥',
+        acerto: 'Isso! Nossos salvadores. ♥',
       },
     ],
   },
