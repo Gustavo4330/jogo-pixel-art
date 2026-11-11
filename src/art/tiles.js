@@ -1248,6 +1248,23 @@ const TileArt = (() => {
       if (bottom && Math.floor(x / 16) % 3 === 1) { F(c, x + 3, y + 2, 10, 8, '#f08a24'); }
       if (bottom) F(c, x, y + 14, 16, 2, '#4d1659');
     },
+
+    /* ---------- FASE 4: FLORESTA ATRÁS DA CALÇADA ---------- */
+    floresta(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#2a5f30');
+      const k = ['#24552a', '#3c7f3f', '#4f9446', '#2f6a34'];
+      for (let i = 0; i < 7; i++) Pixel.blob(c, x + r() * 16, y + r() * 16, 3 + r() * 3, k[i % 4]);
+      for (let i = 0; i < 5; i++) F(c, x + Math.floor(r() * 15), y + Math.floor(r() * 15), 1, 1, '#6db25a');
+    },
+
+    floresta_borda(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#5f9e4f');
+      T.floresta(c, x, y - 6, r, n);
+      F(c, x, y, 16, 2, '#24552a');
+      for (let i = 0; i < 2; i++) { const tx = x + 3 + i * 8 + Math.floor(r() * 3); F(c, tx, y + 4, 2, 8, '#5b3d2d'); F(c, tx, y + 4, 1, 8, '#7a5540'); }
+      for (let i = 0; i < 4; i++) Pixel.blob(c, x + r() * 16, y + 11 + r() * 3, 2.5, '#3c7f3f');
+      F(c, x, y + 14, 16, 2, '#4a8a3c');
+    },
   };
   return T;
 })();

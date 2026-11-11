@@ -36,6 +36,7 @@ const CharacterArt = {
       tankLike: ['regata', 'top', 'vestido'].includes(v.estiloRoupa),
       shorts: v.estiloCalca === 'shorts',
       dress: v.estiloRoupa === 'vestido',
+      stain: v.mancha || null,       // mancha na roupa (ex.: sorvete que caiu)
     };
   },
 
@@ -62,6 +63,7 @@ const CharacterArt = {
       }
     }
     if (L.dress) this.skirt(P, R, L, d, b);
+    if (L.stain && d === 'down') { P(6, 19, L.stain); P(7, 19, L.stain); P(6, 20, L.stain); P(9, 19, L.stain); }
 
     let out = Pixel.outline(g, this.OUTLINE);
     if (dir === 'right') out = Pixel.mirror(out);
@@ -274,6 +276,7 @@ const CharacterArt = {
     const leg = L.dress ? L.skin : L.pants, legS = L.dress ? L.skinS : L.pantsS;
     R(4, 20, 8, 2, leg); R(4, 21, 8, 1, legS);
     if (L.shorts) { R(4, 21, 8, 1, L.skinS); }
+    if (L.stain) { R(5, 20, 5, 1, L.stain); R(6, 21, 3, 1, L.stain); P(10, 20, L.stain); P(4, 21, Pixel.shade(L.stain, 0.2)); }
     R(4, 22, 3, 1, L.shoes); R(9, 22, 3, 1, L.shoes);
     this.head(P, R, L, 'down', b);
     this.hairFront(P, R, L, 'down', b);

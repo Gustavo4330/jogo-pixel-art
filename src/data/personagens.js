@@ -74,13 +74,13 @@ const PERSONAGENS = {
     },
   },
 
-  // A família da Bia (Fase 4)
+  // A família da Bia (Fase 4): pai, mãe (Ana) e vó (Raquel)
   pai: {
     nome: 'Pai',
     visual: { pele: '#c48a62', cabelo: '#241914', estiloCabelo: 'curto', roupa: '#3b6e4f', estiloRoupa: 'camiseta', calca: '#c9b48a', estiloCalca: 'shorts', tenis: '#3a3550' },
   },
   mae: {
-    nome: 'Mãe',
+    nome: 'Ana',
     visual: { pele: '#c98f69', cabelo: '#3d241b', estiloCabelo: 'longo', roupa: '#e07a5f', estiloRoupa: 'camiseta', calca: '#3d4f8a', tenis: '#f6f2f6', bochecha: '#e0727f' },
   },
   vo: {

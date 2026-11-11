@@ -44,6 +44,21 @@ const ArtFactory = {
     return key;
   },
 
+  /** Variação da roupa no meio da cena (ex.: mancha de sorvete). */
+  ensureVariant(scene, id, faseId, sufixo, extra) {
+    const key = this.textureKey(id, faseId) + '_' + sufixo;
+    const visual = Object.assign({}, this.visualFor(id, faseId), extra);
+    if (!scene.textures.exists(key)) {
+      const t = scene.textures.addCanvas(key, CharacterArt.sheet(visual));
+      for (let i = 0; i < 13; i++) t.add(i, 0, (i % 3) * 16, Math.floor(i / 3) * 24, 16, 24);
+    }
+    CharacterArt.DIRS.forEach((dir, row) => {
+      const ak = `${key}-walk-${dir}`;
+      if (!scene.anims.exists(ak)) scene.anims.create({ key: ak, frames: [1, 0, 2, 0].map((c) => ({ key, frame: row * 3 + c })), frameRate: 8, repeat: -1 });
+    });
+    return key;
+  },
+
   /** Retratos do personagem com a roupa da fase atual. */
   portraitsFor(id) {
     if (!PERSONAGENS[id] || !PERSONAGENS[id].visual) return null;

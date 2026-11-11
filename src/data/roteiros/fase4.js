@@ -10,6 +10,7 @@
      { virar: { ele: 'down', vo: 'down' } }
      { escolha: 'Pergunta', opcoes: [...], respostas: ['Resposta ({opcao})'] }
      { colo: [x, y] }               (ela sentada no colo dele)
+     { mancha: 'ela' }              (sorvete caindo e manchando a roupa)
    ========================================================= */
 
 Object.assign(ROTEIROS, {
@@ -95,14 +96,18 @@ Object.assign(ROTEIROS, {
   f4_calcada: [
     {
       passos: [
-        { colo: [10, 5.75] },
+        { colo: [10, 6.8] },
         { esperar: 600 },
         { quem: 'ela', fala: 'Hmm... esse chocolate tá perfeito.', rosto: 'feliz' },
-        { quem: 'ele', fala: 'Quer provar meu skimo, amor?', rosto: 'feliz' },
-        { quem: 'ela', fala: 'Quero!', rosto: 'feliz' },
+        { mancha: 'ela' },
+        { emocao: 'ela', tipo: 'exclamacao' },
+        { quem: 'narrador', fala: 'Ploft! Um pedaço do sorvete de chocolate caiu bem no shorts branco dela.' },
+        { quem: 'ela', fala: 'Nãooo! Meu shorts branco!', rosto: 'surpreso' },
+        { quem: 'ele', fala: 'Hahaha! Calma, amor, deixa eu te ajudar a limpar.', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Não ri! Ficou todo manchado de chocolate!', rosto: 'surpreso' },
+        { quem: 'ele', fala: 'Relaxa, você continua linda. Até com shorts de chocolate.', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Bobo... ♥', rosto: 'timido' },
         { emocao: 'ela', tipo: 'coracao' },
-        { quem: 'ele', fala: 'Sua família é incrível, amor.', rosto: 'feliz' },
-        { quem: 'ela', fala: 'E eles amaram você. ♥', rosto: 'timido' },
         { quem: 'ele', fala: 'Agora me diz: lembra de tudo desse dia?', rosto: 'feliz' },
         { quiz: 'f4_quiz' },
         { quem: 'ele', fala: 'Foi o dia em que eu ganhei uma segunda família. ♥', rosto: 'timido' },
@@ -143,6 +148,12 @@ Object.assign(QUIZZES, {
         opcoes: ['Skimo pra mim e chocolate pra você', 'Morango pra mim e flocos pra você', 'Os dois de baunilha'],
         correta: 0,
         acerto: 'Isso! Skimo e chocolate.',
+      },
+      {
+        pergunta: 'E o que aconteceu com o seu sorvete de chocolate?',
+        opcoes: ['Caiu no meu shorts branco', 'Derreteu inteiro na mão', 'Você roubou de mim'],
+        correta: 0,
+        acerto: 'Hahaha! Shorts de chocolate. ♥',
       },
       {
         pergunta: 'E onde a gente tomou o sorvete?',

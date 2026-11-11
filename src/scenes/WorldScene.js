@@ -206,6 +206,20 @@ class WorldScene extends Phaser.Scene {
     })));
   }
 
+  /** Troca a roupa de um personagem por uma variação (ex.: suja de sorvete). */
+  stain(id) {
+    const c = this.charById(id);
+    if (!c) return;
+    const frame = c.sprite.frame.name;
+    c.key = ArtFactory.ensureVariant(this, id, this.map.fase, 'mancha', { mancha: '#4a2a1c' });
+    c.sprite.setTexture(c.key, frame);
+    // pinguinhos de chocolate caindo
+    for (let i = 0; i < 6; i++) {
+      const d = this.add.image(c.x + Phaser.Math.Between(-4, 4), c.y - 14, 'pixel').setTint(0x4a2a1c).setDepth(c.sprite.depth + 1);
+      this.tweens.add({ targets: d, y: c.y - 3, duration: 250 + i * 60, onComplete: () => d.destroy() });
+    }
+  }
+
   /** Ela sentada no colo dele (os dois de frente para a tela). */
   lapPose([x, y]) {
     const ele = this.npcs.ele, ela = this.player;
