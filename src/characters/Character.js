@@ -53,9 +53,18 @@ class Character {
   }
 
   /** Mantém sombra e profundidade (quem está mais embaixo aparece na frente). */
+  /** Senta (de frente para a tela). */
+  sit() {
+    this.sprite.setVelocity(0, 0);
+    this.sprite.anims.stop();
+    this.sprite.setFrame(12);
+    this.dir = 'down';
+  }
+
   sync() {
+    const bonus = this.depthBonus || 0; // ex.: ela sentada no colo dele fica na frente
     this.shadow.setPosition(this.sprite.x, this.sprite.y - 1);
-    this.sprite.setDepth(this.sprite.y);
+    this.sprite.setDepth(this.sprite.y + bonus);
     this.shadow.setDepth(this.sprite.y - 0.5);
   }
 

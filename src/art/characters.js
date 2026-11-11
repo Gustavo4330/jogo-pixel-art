@@ -262,13 +262,33 @@ const CharacterArt = {
   },
 
   /** Monta a folha de sprites inteira num canvas (48x96). */
+  /** Pose sentada, de frente (quadro 12 da folha). */
+  sitFrame(visual) {
+    const g = Pixel.grid(16, 24);
+    const { P, R } = Pixel.painter(g);
+    const L = this.colors(visual);
+    const b = 2; // o corpo fica mais baixo
+    this.hairBack(P, R, L, 'down', b);
+    this.torso(P, R, L, 'down', 0, b);
+    // pernas dobradas para a frente
+    const leg = L.dress ? L.skin : L.pants, legS = L.dress ? L.skinS : L.pantsS;
+    R(4, 20, 8, 2, leg); R(4, 21, 8, 1, legS);
+    if (L.shorts) { R(4, 21, 8, 1, L.skinS); }
+    R(4, 22, 3, 1, L.shoes); R(9, 22, 3, 1, L.shoes);
+    this.head(P, R, L, 'down', b);
+    this.hairFront(P, R, L, 'down', b);
+    if (L.dress) { R(3, 19, 10, 2, L.top); R(3, 20, 10, 1, L.topS); }
+    return Pixel.outline(g, this.OUTLINE);
+  },
+
   sheet(visual) {
-    const { c, ctx } = Pixel.canvas(this.FW * 3, this.FH * 4);
+    const { c, ctx } = Pixel.canvas(this.FW * 3, this.FH * 5);
     this.DIRS.forEach((dir, row) => {
       for (let col = 0; col < 3; col++) {
         Pixel.drawGrid(ctx, this.frame(visual, dir, col), col * this.FW, row * this.FH);
       }
     });
+    Pixel.drawGrid(ctx, this.sitFrame(visual), 0, this.FH * 4);
     return c;
   },
 

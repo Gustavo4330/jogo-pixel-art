@@ -9,6 +9,7 @@
      { foto: ['ele', 'vo'], legenda: 'Texto da polaroid' }
      { virar: { ele: 'down', vo: 'down' } }
      { escolha: 'Pergunta', opcoes: [...], respostas: ['Resposta ({opcao})'] }
+     { colo: [x, y] }               (ela sentada no colo dele)
    ========================================================= */
 
 Object.assign(ROTEIROS, {
@@ -33,7 +34,9 @@ Object.assign(ROTEIROS, {
         { quem: 'mae', fala: 'Senta, Gustavo, fica à vontade!', rosto: 'feliz' },
         { quem: 'ele', fala: 'Obrigado! Tá com um cheiro incrível.', rosto: 'feliz' },
         { item: 'churrasco', titulo: 'Churrasco!', texto: 'Picanha, linguiça, farofa e pão de alho. Todo mundo junto na mesa.' },
-        { quem: 'vo', fala: 'Esse menino come bem, hein! Gostei dele.', rosto: 'feliz' },
+        { quem: 'vo', fala: 'Ah, meu filho... eu não ouço tão bem, tá bom?', rosto: 'normal' },
+        { quem: 'ele', fala: 'Sem problema nenhum, Raquel! Eu repito pertinho de você se precisar.', rosto: 'feliz' },
+        { emocao: 'vo', tipo: 'coracao' },
         { quem: 'ela', fala: 'Viu, amor? A vó Raquel já gostou de você!', rosto: 'feliz' },
         { emocao: 'ele', tipo: 'coracao' },
         { marcar: 'f4_churrasco' },
@@ -77,10 +80,29 @@ Object.assign(ROTEIROS, {
     {
       passos: [
         { olhar: 'ele', para: 'jogador' },
-        { escolha: 'Qual sabor você vai querer, amor?', quem: 'ele', opcoes: ['Chocolate', 'Morango', 'Ninho com morango'], respostas: ['{opcao}? Boa escolha! Vou querer o mesmo. ♥'] },
-        { item: 'sorvete', titulo: 'Sorvete!', texto: 'Dois sorvetes, uma mesinha e muita conversa.' },
+        { quem: 'ele', fala: 'Vou de skimo! E você, amor?', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Chocolate, claro!', rosto: 'feliz' },
+        { item: 'sorvetes', titulo: 'Sorvete!', texto: 'Um skimo pra ele e um de chocolate pra ela.' },
+        { marcar: 'f4_sorvete' },
+        { quem: 'ele', fala: 'Bora comer lá fora?', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Bora!', rosto: 'feliz' },
+        { mudarMapa: 'calcada_sorvete', spawn: 'inicio', texto: 'Lá fora, sentados na calçada...' },
+      ],
+    },
+  ],
+
+  /* ---- na calçada: ela no colo dele ---- */
+  f4_calcada: [
+    {
+      passos: [
+        { colo: [10, 5.75] },
+        { esperar: 600 },
+        { quem: 'ela', fala: 'Hmm... esse chocolate tá perfeito.', rosto: 'feliz' },
+        { quem: 'ele', fala: 'Quer provar meu skimo, amor?', rosto: 'feliz' },
+        { quem: 'ela', fala: 'Quero!', rosto: 'feliz' },
+        { emocao: 'ela', tipo: 'coracao' },
         { quem: 'ele', fala: 'Sua família é incrível, amor.', rosto: 'feliz' },
-        { quem: 'ela', fala: 'E eles amaram você, amor. ♥', rosto: 'feliz' },
+        { quem: 'ela', fala: 'E eles amaram você. ♥', rosto: 'timido' },
         { quem: 'ele', fala: 'Agora me diz: lembra de tudo desse dia?', rosto: 'feliz' },
         { quiz: 'f4_quiz' },
         { quem: 'ele', fala: 'Foi o dia em que eu ganhei uma segunda família. ♥', rosto: 'timido' },
@@ -111,22 +133,22 @@ Object.assign(QUIZZES, {
         acerto: 'Isso! 12 de outubro. ♥',
       },
       {
-        pergunta: 'O que a gente comeu na sua casa?',
-        opcoes: ['Churrasco', 'Pizza', 'Lasanha'],
-        correta: 0,
-        acerto: 'Aquele churrasco estava perfeito!',
-      },
-      {
         pergunta: 'Você tirou uma foto minha com quem?',
         opcoes: ['Com a vó Raquel', 'Com o meu pai', 'Com a minha mãe'],
         correta: 0,
         acerto: 'Com a vó Raquel! A foto mais fofa. ♥',
       },
       {
-        pergunta: 'E depois, a gente foi fazer o quê?',
-        opcoes: ['Tomar sorvete', 'Ir ao cinema', 'Jogar videogame'],
+        pergunta: 'Qual sorvete cada um pediu?',
+        opcoes: ['Skimo pra mim e chocolate pra você', 'Morango pra mim e flocos pra você', 'Os dois de baunilha'],
         correta: 0,
-        acerto: 'Sorvete! Fechou o dia com chave de ouro.',
+        acerto: 'Isso! Skimo e chocolate.',
+      },
+      {
+        pergunta: 'E onde a gente tomou o sorvete?',
+        opcoes: ['Sentados na calçada, você no meu colo', 'Numa mesinha lá dentro', 'Andando pelo shopping'],
+        correta: 0,
+        acerto: 'Na calçada, juntinhos. ♥',
       },
     ],
   },

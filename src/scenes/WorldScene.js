@@ -91,6 +91,11 @@ class WorldScene extends Phaser.Scene {
     // Gatilhos: áreas que iniciam um roteiro quando ela pisa
     this.triggers = (map.gatilhos || []).filter((g) => !SaveSystem.flag(g.flag));
 
+    // Noite na rua
+    if (map.luz === 'noite') {
+      this.add.rectangle(0, 0, this.worldW, this.worldH, 0x101040, 0.32).setOrigin(0).setDepth(99000);
+    }
+
     // Ambiente escuro (ex.: escada de incêndio)
     if (map.luz === 'escuro') {
       this.add.rectangle(0, 0, this.worldW, this.worldH, 0x0e0a22, 0.34).setOrigin(0).setDepth(99000);
@@ -199,6 +204,17 @@ class WorldScene extends Phaser.Scene {
       };
       next();
     })));
+  }
+
+  /** Ela sentada no colo dele (os dois de frente para a tela). */
+  lapPose([x, y]) {
+    const ele = this.npcs.ele, ela = this.player;
+    for (const c of [ele, ela]) { c.sprite.body.enable = false; if (c.bubble) { c.bubble.destroy(); c.bubble = null; } }
+    ele.sprite.setPosition(x * T, y * T); ele.sit(); ele.sync();
+    ela.sprite.setPosition(x * T + 7, y * T + 4); ela.sit();
+    ela.depthBonus = 12; ela.sync();
+    ela.shadow.setVisible(false);
+    this.updateCamera(true);
   }
 
   /** Move personagens de lugar de uma vez (usado durante transições). */

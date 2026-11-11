@@ -37,6 +37,7 @@ const ScriptRunner = {
       else if (p.posicionar) scene.place(p.posicionar);
       else if (p.virar) { for (const [id, dir] of Object.entries(p.virar)) { const c = scene.charById(id); if (c) c.face(dir); } }
       else if (p.foto) await UI.photo(p.foto, p.legenda);
+      else if (p.colo) scene.lapPose(p.colo);
       else if (p.escolha) await UI.choice(p);
       else if (p.mudarMapa) {
         if (p.texto) await UI.timeskip(p.texto);

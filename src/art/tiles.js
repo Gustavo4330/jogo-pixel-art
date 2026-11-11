@@ -1134,6 +1134,120 @@ const TileArt = (() => {
       F(c, x + 3, y, 3, 16, '#bcd8ea'); F(c, x + 4, y + (bottom ? 2 : 4), 1, 6, '#e6f3fb');
       if (!bottom) F(c, x, y, 16, 1, '#8a8f98'); else F(c, x, y + 15, 16, 1, '#8a8f98');
     },
+
+    /* ---------- FASE 4 (v2): SORVETERIA ROXA E LARANJA ---------- */
+    teto_branco(c, x, y, r) {
+      F(c, x, y, 16, 16, '#efeeec');
+      F(c, x + 3, y + 3, 10, 4, '#ffffff'); F(c, x + 3, y + 7, 10, 1, '#d9d7d3');
+      for (let i = 0; i < 16; i += 3) F(c, x + i, y + 11 + (i % 2), 2, 2, i % 6 ? '#b9bcc4' : '#8e3aa0'); // guirlanda
+      F(c, x, y + 14, 16, 2, '#d9d7d3');
+    },
+
+    parede_roxa(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#6e2580');
+      F(c, x, y, 16, 2, '#5a1d69');
+      speckle(c, x, y, r, ['#762a88', '#68227a'], 3);
+      if (n(0, 1) && !'wQS'.includes(n(0, 1))) F(c, x, y + 14, 16, 2, '#4d1659');
+    },
+
+    placa_cone(c, x, y, r, n) {
+      T.parede_roxa(c, x, y, r, n);
+      const right = n(-1, 0) === 'S';
+      F(c, x + (right ? 0 : 2), y + 3, right ? 14 : 14, 10, '#ffffff');
+      if (!right) {
+        // casquinha de sorvete (sem marca)
+        for (let j = 0; j < 5; j++) F(c, x + 11 + Math.floor(j / 2), y + 8 + j, 4 - j * 0.8 | 0 || 1, 1, '#e0a14a');
+        Pixel.blob(c, x + 13, y + 7, 2.6, '#ff8fbf');
+      } else {
+        Pixel.blob(c, x + 3, y + 7, 2.6, '#8e3aa0');
+        for (let i = 0; i < 3; i++) F(c, x + 6 + i * 3, y + 7, 2, 2, '#8e3aa0');
+      }
+    },
+
+    tela_menu(c, x, y, r, n) {
+      T.parede_roxa(c, x, y, r, n);
+      const right = n(-1, 0) === n(0, 0);
+      F(c, x + (right ? 0 : 2), y + 3, 14, 9, '#1d1c22');
+      F(c, x + (right ? 1 : 3), y + 4, 12, 7, right ? '#ff9a3c' : '#4fc3f7');
+      F(c, x + (right ? 3 : 5), y + 6, 6, 1, '#ffffff'); F(c, x + (right ? 3 : 5), y + 8, 4, 1, '#ffffff');
+    },
+
+    balcao_laranja(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#f08a24');
+      F(c, x, y, 16, 4, '#ffa64a'); F(c, x, y, 16, 1, '#ffc27a');
+      F(c, x, y + 4, 16, 1, '#c96d16');
+      if (n(-1, 0) !== n(0, 0)) F(c, x, y, 1, 16, '#c96d16');
+      if (n(1, 0) !== n(0, 0)) F(c, x + 15, y, 1, 16, '#c96d16');
+      if (Math.floor(x / 16) % 3 === 1) { F(c, x + 4, y + 8, 8, 3, '#ffffff'); }
+      F(c, x, y + 14, 16, 2, '#b85f12');
+    },
+
+    freezer_ilha(c, x, y, r, n) {
+      const ch = n(0, 0);
+      const l = n(-1, 0) === ch, rr = n(1, 0) === ch, u = n(0, -1) === ch, d = n(0, 1) === ch;
+      F(c, x, y, 16, 16, '#c4268a');
+      F(c, x + (l ? 0 : 2), y + (u ? 0 : 2), 16 - (l ? 0 : 2) - (rr ? 0 : 2), 16 - (u ? 0 : 2) - (d ? 0 : 3), '#d9e6ee');
+      const cores = ['#ff9fc4', '#7a4a33', '#f6e3b0', '#9be3b9', '#ffd86b', '#c9a0f0'];
+      for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) {
+        const px = x + (l ? 1 : 3) + i * 6, py = y + (u ? 1 : 3) + j * 6;
+        F(c, px, py, 5, 5, cores[(Math.floor(x / 16) + Math.floor(y / 16) * 2 + i + j * 2) % cores.length]);
+        F(c, px, py, 5, 1, '#ffffff');
+      }
+      if (!d) { F(c, x, y + 13, 16, 3, '#9a1c6c'); }
+      if (!l) F(c, x, y, 2, 16, '#a81f76');
+    },
+
+    piso_branco(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#ecebe8');
+      F(c, x + 15, y, 1, 16, '#d6d4d0'); F(c, x, y + 15, 16, 1, '#d6d4d0');
+      if (r() < 0.4) F(c, x + 3, y + 3, 4, 1, '#ffffff');
+      const up = n(0, -1);
+      if (up && 'wQSO'.includes(up)) { c.fillStyle = 'rgba(60,20,70,0.16)'; c.fillRect(x, y, 16, 4); }
+    },
+
+    parede_deco(c, x, y, r, n) {
+      // paredes laterais brancas com adesivos coloridos
+      F(c, x, y, 16, 16, '#f6f5f2');
+      const right = !n(1, 0);
+      const k = Math.floor(y / 16) % 4;
+      const cols = ['#ff6fae', '#ffd86b', '#8e3aa0', '#4fc3f7', '#f08a24'];
+      if (k === 0) { for (let i = 0; i < 4; i++) Pixel.blob(c, x + (right ? 4 : 12), y + 16, 11 - i * 2.5, cols[i]); }
+      if (k === 2) { Pixel.blob(c, x + 8, y + 6, 3, '#ff8fbf'); for (let j = 0; j < 5; j++) F(c, x + 6 + Math.floor(j / 2), y + 9 + j, Math.max(1, 4 - j), 1, '#e0a14a'); }
+      if (k === 3) for (let i = 0; i < 5; i++) F(c, x + 2 + i * 3, y + 4, 2, 8, cols[i]);
+      F(c, x + (right ? 0 : 14), y, 2, 16, '#d9d7d3');
+    },
+
+    vitrine_frente(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#d6e7ef');
+      F(c, x, y, 16, 2, '#9aa3ad');
+      if (Math.floor(x / 16) % 4 === 1) { Pixel.blob(c, x + 8, y + 9, 4, '#ff6fae'); Pixel.blob(c, x + 8, y + 9, 2, '#ffd86b'); }
+      F(c, x + 3, y + 4, 1, 8, '#ffffff');
+    },
+
+    tapete_laranja(c, x, y, r, n) {
+      T.piso_branco(c, x, y, r, n);
+      F(c, x, y + 2, 16, 12, '#f07a1c');
+      F(c, x, y + 2, 16, 1, '#ff9a4a');
+      if (n(-1, 0) === 'm') F(c, x, y + 7, 6, 2, '#ffffff'); else F(c, x + 8, y + 7, 8, 2, '#ffffff');
+    },
+
+    /* ---------- FASE 4: CALÇADA EM FRENTE À SORVETERIA ---------- */
+    fachada_roxa(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#5a1d69');
+      F(c, x, y + 12, 16, 4, '#6e2580');
+      F(c, x, y + 12, 16, 1, '#8e3aa0');
+      for (let i = 0; i < 16; i += 4) F(c, x + i + 1, y + 13, 2, 2, '#ffd86b'); // luzinhas
+    },
+
+    vitrine_acesa(c, x, y, r, n) {
+      const bottom = n(0, -1) === n(0, 0);
+      F(c, x, y, 16, 16, '#3a1442');
+      F(c, x + 1, y + (bottom ? 0 : 1), 14, 16 - (bottom ? 2 : 1), '#ffe2a8');
+      F(c, x + 1, y + (bottom ? 0 : 1), 14, 3, '#fff3cf');
+      if (!bottom && Math.floor(x / 16) % 3 === 0) { F(c, x + 4, y + 6, 8, 6, '#c4268a'); F(c, x + 5, y + 7, 6, 2, '#d9e6ee'); }
+      if (bottom && Math.floor(x / 16) % 3 === 1) { F(c, x + 3, y + 2, 10, 8, '#f08a24'); }
+      if (bottom) F(c, x, y + 14, 16, 2, '#4d1659');
+    },
   };
   return T;
 })();

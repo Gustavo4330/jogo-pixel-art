@@ -1,9 +1,12 @@
 /* =========================================================
    MAPA: SORVETERIA (Fase 4 — parte 2)
    ---------------------------------------------------------
-   Sorveteria em tons pastel: parede listrada, cardápio de
-   giz, freezer com os potes de sorvete coloridos, balcão
-   listrado, piso xadrez e mesinhas redondas.
+   Inspirada na foto (sem marca): parede do fundo roxa com
+   placa de casquinha e telinhas de cardápio, balcões laranja
+   no fundo, ilhas de freezer rosa-pink dos dois lados, piso
+   branco, paredes laterais com adesivos coloridos, teto
+   branco com luzes e guirlandas, e o tapete laranja na
+   entrada de vidro.
    ========================================================= */
 
 MAPAS.sorveteria = {
@@ -12,49 +15,46 @@ MAPAS.sorveteria = {
   nome: 'Sorveteria',
 
   legenda: {
-    w: { tile: 'parede_sorveteria', solido: true },
-    Q: { tile: 'cardapio', solido: true, texto: 'O cardápio: chocolate, morango, flocos, ninho, pistache... difícil escolher!' },
-    F: { tile: 'freezer', solido: true, texto: 'Um monte de sabores coloridos no freezer.' },
-    f: { tile: 'balcao', solido: true },
-    x: { tile: 'piso_xadrez' },
-    B: { tile: 'muro', solido: true },
-    P: { tile: 'porta_loja', solido: true },
+    T: { tile: 'teto_branco', solido: true },
+    w: { tile: 'parede_roxa', solido: true },
+    Q: { tile: 'tela_menu', solido: true, texto: 'As telinhas com o cardápio de sabores.' },
+    S: { tile: 'placa_cone', solido: true },
+    O: { tile: 'balcao_laranja', solido: true, texto: 'O balcão laranja do caixa.' },
+    F: { tile: 'freezer_ilha', solido: true, texto: 'Um freezer cheio de sabores: chocolate, morango, flocos, ninho...' },
+    x: { tile: 'piso_branco' },
+    L: { tile: 'parede_deco', solido: true },
+    G: { tile: 'vitrine_frente', solido: true },
+    m: { tile: 'tapete_laranja' },
   },
 
   chao: [
-    'wwwwwwwwwwwwwwwwwwww', // 0
-    'wwwwQQQQwwwwQQQQwwww', // 1  cardápios
-    'wwwwwwwwwwwwwwwwwwww', // 2
-    'xxFFFFFFFFFFFFxxxxxx', // 3  freezer
-    'xxffffffffffffxxxxxx', // 4  balcão
-    'xxxxxxxxxxxxxxxxxxxx', // 5
-    'xxxxxxxxxxxxxxxxxxxx', // 6
-    'xxxxxxxxxxxxxxxxxxxx', // 7
-    'xxxxxxxxxxxxxxxxxxxx', // 8
-    'xxxxxxxxxxxxxxxxxxxx', // 9
-    'xxxxxxxxxxxxxxxxxxxx', // 10
-    'xxxxxxxxxxxxxxxxxxxx', // 11
-    'BBBBBBBBPPBBBBBBBBBB', // 12 porta
+    'TTTTTTTTTTTTTTTTTTTT', // 0
+    'LwwwwQQwSSwQQwwwwwwL', // 1
+    'LwwwwOOOOOOOOOOwwwwL', // 2
+    'LxxxxxxxxxxxxxxxxxxL', // 3
+    'LxFFxxxxxxxxxxxxFFxL', // 4
+    'LxFFxxxxxxxxxxxxFFxL', // 5
+    'LxFFxxxxxxxxxxxxFFxL', // 6
+    'LxFFxxxxxxxxxxxxFFxL', // 7
+    'LxFFxxxxxxxxxxxxFFxL', // 8
+    'LxFFxxxxxxxxxxxxFFxL', // 9
+    'LxxxxxxxxxxxxxxxxxxL', // 10
+    'GGGGGGGGGmmGGGGGGGGG', // 11
   ],
 
   spawns: {
-    entrada: { x: 9, y: 11.6, dir: 'up' },
+    entrada: { x: 10, y: 10.7, dir: 'up' },
   },
 
-  objetos: [
-    { tipo: 'mesinha', x: 4, y: 8.6 },
-    { tipo: 'mesinha', x: 16, y: 7.6 },
-    { tipo: 'mesinha', x: 15, y: 11.2 },
-    { tipo: 'vaso', x: 18.6, y: 4.2 },
-  ],
+  objetos: [],
 
   npcs: [
-    { id: 'ele', x: 8.5, y: 5.8, dir: 'up', roteiro: 'f4_sorvete', destaque: true },
+    { id: 'ele', x: 9.5, y: 3.7, dir: 'up', roteiro: 'f4_sorvete', destaque: true },
   ],
 
   bonus: [],
 
   objetivos: [
-    { seNao: 'fase4_concluida', texto: 'Escolha um sorvete com o seu amor', alvo: { npc: 'ele' } },
+    { seNao: 'f4_sorvete', texto: 'Vá até o balcão pedir o sorvete com o seu amor', alvo: { npc: 'ele' } },
   ],
 };

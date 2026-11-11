@@ -30,7 +30,7 @@ const ArtFactory = {
     const visual = this.visualFor(id, faseId);
     if (!scene.textures.exists(key)) {
       const t = scene.textures.addCanvas(key, CharacterArt.sheet(visual));
-      for (let i = 0; i < 12; i++) t.add(i, 0, (i % 3) * 16, Math.floor(i / 3) * 24, 16, 24);
+      for (let i = 0; i < 13; i++) t.add(i, 0, (i % 3) * 16, Math.floor(i / 3) * 24, 16, 24); // 12 = sentado
     }
     CharacterArt.DIRS.forEach((dir, row) => {
       const ak = `${key}-walk-${dir}`;

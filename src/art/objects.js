@@ -243,6 +243,15 @@ const ObjectArt = (() => {
       Pixel.blob(c, 22, 4, 3, '#e8d08a'); F(c, 30, 21, 3, 4, '#7ec7f0'); F(c, 13, 21, 3, 4, '#7ec7f0');
     }),
 
+    sorvetes: () => make(36, 30, (c) => {
+      // skimo (picolé coberto de chocolate) + casquinha de chocolate
+      F(c, 9, 20, 3, 10, '#e2c08a'); F(c, 9, 20, 1, 10, '#f2d8a8');
+      F(c, 4, 2, 13, 19, '#4a2a1c'); F(c, 5, 2, 2, 17, '#6b3f2a'); F(c, 4, 2, 13, 2, '#5c3524');
+      F(c, 13, 2, 4, 4, 'rgba(0,0,0,0)'); c.clearRect(14, 2, 3, 3); F(c, 13, 5, 1, 1, '#f6efe2'); // mordidinha
+      for (let j = 0; j < 12; j++) F(c, 27 - Math.floor((12 - j) / 2.2), 17 + j, Math.max(1, Math.floor((12 - j) / 1.1)), 1, j % 2 ? '#d9a35e' : '#c48c45');
+      Pixel.blob(c, 27, 14, 6, '#6b3f2a'); Pixel.blob(c, 27, 9, 4.5, '#7a4a33'); F(c, 25, 7, 2, 1, '#a8704f');
+    }),
+
     heart: () => make(9, 8, (c) => {
       Pixel.heart(c, 1, 1, '#ff5fa2');
       F(c, 2, 2, 1, 1, '#ffd0e4');
