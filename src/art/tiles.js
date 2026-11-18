@@ -1346,6 +1346,23 @@ const TileArt = (() => {
       for (let i = 0; i < 16; i += 8) F(c, x + i, y + 4, 1, 12, '#c2baad');
       if (r() < 0.25) { Pixel.blob(c, x + 8, y + 8, 3, '#3c7f3f'); }
     },
+
+    /* ---------- FASE 5 (v2): CONDOMÍNIO DA FOTO ---------- */
+    rua_faixa_amarela(c, x, y, r, n) {
+      T.rua_livre(c, x, y, r, n);
+      F(c, x, y + 5, 16, 2, '#e8c33a'); F(c, x, y + 9, 16, 2, '#e8c33a');
+    },
+
+    jardim_frente(c, x, y, r, n) {
+      T.grama(c, x, y, r);
+      if (r() < 0.35) { Pixel.blob(c, x + 4 + r() * 8, y + 8, 3, '#3c7f3f'); }
+    },
+
+    calcada_clara(c, x, y, r) {
+      F(c, x, y, 16, 16, '#d9d6cf');
+      F(c, x + 15, y, 1, 16, '#c2beb5'); F(c, x, y + 15, 16, 1, '#c2beb5');
+      speckle(c, x, y, r, ['#cfcbc3', '#e3e0da'], 4);
+    },
   };
   return T;
 })();

@@ -34,6 +34,10 @@ const OBJETOS = {
   banqueta:        { tex: 'stool',       corpo: [8, 4] },
   mesa_jantar:     { tex: 'diningTable', corpo: [56, 16] },
   casa:            { tex: 'house',       corpo: [56, 18] },
+  casa_moderna:    { tex: 'modernHouse', corpo: [64, 18] },
+  casa_moderna2:   { tex: 'modernHouse2', corpo: [64, 18] },
+  poste_concreto:  { tex: 'concretePole', corpo: [4, 4] },
+  obra:            { tex: 'construction', corpo: [48, 12] },
   abobora:         { tex: 'pumpkin',     corpo: [10, 4] },
   moto:            { tex: 'moto',        corpo: null },
 };

@@ -5,7 +5,7 @@
    (Paula, Everton, Gabriela e a vó). Só o Gustavo, a Bia e a
    Paula conversam: já já vão para o Halloween.
    Parte 2: de moto elétrica pelo condomínio, ela fantasiada
-   de monstro. Na casa dos doces vem a pergunta... e o tapa!
+   de corta-vento. Na casa dos doces vem a pergunta... e o tapa!
    Passos novos desta fase:
      { descer: { ela: [x, y, 'up'], ele: [x, y, 'up'] } }  (descem da moto)
      { tapa: true }                                         (ela bate nele)
@@ -35,9 +35,9 @@ Object.assign(ROTEIROS, {
         { quem: 'ela', fala: 'Obrigada, Paula! Tá com uma cara ótima.', rosto: 'feliz' },
         { item: 'churrasco', titulo: 'Churrasco em família!', texto: 'Todo mundo reunido na sala, com o Everton na churrasqueira.' },
         { quem: 'ele', fala: 'Mãe, daqui a pouco a gente vai pro Halloween, tá?', rosto: 'feliz' },
-        { quem: 'paula', fala: 'Ah é, hoje é Halloween! Vão fantasiados?', rosto: 'surpreso' },
-        { quem: 'ela', fala: 'Eu vou de monstro! Tenho uma máscara bem assustadora.', rosto: 'feliz' },
-        { quem: 'paula', fala: 'Hahaha, quero ver! Juízo, hein? E tragam uns docinhos pra mim.', rosto: 'feliz' },
+        { quem: 'paula', fala: 'Ah é, hoje é Halloween! Vão pegar muitos doces?', rosto: 'surpreso' },
+        { quem: 'ela', fala: 'Vamos sim! Vou encher o saquinho de doce.', rosto: 'feliz' },
+        { quem: 'paula', fala: 'Hahaha, juízo, hein? E tragam uns docinhos pra mim.', rosto: 'feliz' },
         { quem: 'ele', fala: 'Pode deixar! Bora, amor?', rosto: 'feliz' },
         { quem: 'ela', fala: 'Bora!', rosto: 'feliz' },
         { marcar: 'f5_churrasco' },
@@ -54,7 +54,7 @@ Object.assign(ROTEIROS, {
   f5_halloween: [
     {
       passos: [
-        { quem: 'narrador', fala: 'Halloween! Vocês dois de moto elétrica pelo condomínio.' },
+        { quem: 'narrador', fala: 'Fim de tarde de Halloween. Vocês dois de moto elétrica pelo condomínio.' },
         { quem: 'narrador', fala: 'Use o direcional para pilotar e siga a setinha até a casa que está dando doces.' },
         { marcar: 'f5_halloween' },
       ],
@@ -66,7 +66,7 @@ Object.assign(ROTEIROS, {
       passos: [
         { quem: 'ele', fala: 'Olha ali, amor! Aquela casa tá dando doce!', rosto: 'feliz' },
         { quiz: 'f5_quiz' },
-        { descer: { ela: [40.8, 8.6, 'up'], ele: [39.2, 8.6, 'up'] } },
+        { descer: { ela: [40.8, 10.2, 'up'], ele: [39.2, 10.2, 'up'] } },
         { olhar: 'ele', para: 'moca' },
         { quem: 'ele', fala: 'Moça, ela é muito vergonhosa, viu? Nem queria vir pedir doce!', rosto: 'feliz' },
         { quem: 'moca', fala: 'Ownn, que fofa! Pode pegar quantos quiser.', rosto: 'feliz' },
@@ -97,7 +97,7 @@ Object.assign(QUIZZES, {
         opcoes: [
           'Fez eu ir pedir o doce e falou que eu tinha vergonha',
           'Comeu todos os meus doces',
-          'Me deu um susto com a máscara',
+          'Me deu um susto no meio da rua',
         ],
         correta: 0,
         acerto: 'Hahaha, isso mesmo! Olha só...',

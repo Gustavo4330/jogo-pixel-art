@@ -4,7 +4,7 @@
    ========================================================= */
 
 // Moto elétrica vista de lado (virada para a direita). Com o casal: Gustavo
-// pilotando (regata preta) e a Bia na garupa com a máscara de monstro.
+// pilotando (regata preta) e a Bia na garupa de corta-vento.
 function CharArtMoto(c, comCasal) {
   const F = Pixel.F, B = Pixel.blob;
   const oy = comCasal ? 12 : 0;
@@ -15,9 +15,9 @@ function CharArtMoto(c, comCasal) {
   F(c, 31, oy + 7, 4, 3, '#ffe28a'); F(c, 30, oy + 13, 3, 2, '#55535f');     // farol
   F(c, 12, oy + 11, 10, 2, '#4fc3f7');                                       // faixa (elétrica)
   if (!comCasal) return;
-  // Bia na garupa: corta-vento bege e preto, máscara branca, cabelo preto longo
-  F(c, 9, 4, 7, 9, '#141014'); F(c, 12, 1, 6, 7, '#f2f0ec'); F(c, 11, 0, 7, 2, '#141014');
-  F(c, 14, 3, 1, 2, '#111111'); F(c, 16, 3, 1, 2, '#111111'); F(c, 14, 6, 3, 1, '#2a2a2a');
+  // Bia na garupa: corta-vento bege e preto, cabelo longo
+  F(c, 9, 4, 7, 9, '#3a231d'); F(c, 12, 1, 6, 7, '#c88a62'); F(c, 11, 0, 7, 2, '#3a231d'); F(c, 11, 2, 2, 4, '#3a231d');
+  F(c, 16, 3, 1, 2, '#2a1a22'); F(c, 16, 5, 1, 1, '#e0727f'); F(c, 17, 6, 1, 1, '#a86e4c');
   F(c, 11, 8, 7, 8, '#d9c7a3'); F(c, 11, 8, 1, 8, '#1d1b22'); F(c, 16, 9, 2, 6, '#1d1b22');
   F(c, 12, 15, 6, 3, '#83a9d8');
   // Gustavo pilotando: regata preta
@@ -352,6 +352,40 @@ const ObjectArt = (() => {
       // símbolo de raiva
       F(c, 3, 3, 2, 2, '#e8343c'); F(c, 8, 3, 2, 2, '#e8343c'); F(c, 3, 6, 2, 2, '#e8343c'); F(c, 8, 6, 2, 2, '#e8343c');
       F(c, 5, 4, 3, 3, '#ffffff');
+    }),
+
+    modernHouse: () => make(68, 56, (c) => {
+      // casa moderna de telhado reto: bloco branco + bloco mostarda
+      F(c, 2, 20, 40, 36, '#f1efea'); F(c, 2, 16, 44, 5, '#e6e3dc'); F(c, 2, 16, 44, 1, '#ffffff');
+      F(c, 40, 6, 26, 50, '#d8a548'); F(c, 40, 4, 28, 3, '#c49236');
+      F(c, 44, 12, 18, 10, '#c9d6e3'); F(c, 44, 20, 18, 2, '#efede9'); F(c, 45, 13, 6, 2, '#e6f0f8');   // sacada de vidro
+      F(c, 8, 28, 14, 24, '#3a3f4a'); F(c, 9, 29, 12, 22, '#9fb4c8'); F(c, 14, 29, 1, 22, '#3a3f4a'); // janelão
+      F(c, 28, 30, 8, 26, '#b07a4c'); F(c, 29, 31, 6, 24, '#c48a5a'); F(c, 34, 42, 1, 2, '#2b2a30'); // porta de madeira
+      F(c, 44, 34, 18, 22, '#6b6f78'); for (let i = 36; i < 56; i += 3) F(c, 44, i, 18, 1, '#5a5e67');  // garagem
+      F(c, 0, 54, 68, 2, '#c9c5bd');
+    }),
+
+    modernHouse2: () => make(68, 56, (c) => {
+      F(c, 4, 14, 60, 42, '#ece4d6'); F(c, 2, 10, 64, 5, '#d9d3c7'); F(c, 2, 10, 64, 1, '#ffffff');
+      F(c, 8, 22, 22, 14, '#3a3f4a'); F(c, 9, 23, 20, 12, '#9fb4c8'); F(c, 19, 23, 1, 12, '#3a3f4a');
+      F(c, 38, 24, 10, 32, '#8a6a4a'); F(c, 39, 25, 8, 30, '#a07a52');
+      F(c, 52, 22, 8, 10, '#9fb4c8');
+      F(c, 4, 40, 30, 4, '#b8b2a6');
+      F(c, 0, 54, 68, 2, '#c9c5bd');
+    }),
+
+    concretePole: () => make(16, 52, (c) => {
+      F(c, 7, 6, 3, 46, '#a9a6a0'); F(c, 7, 6, 1, 46, '#c9c6c0');
+      F(c, 9, 6, 7, 2, '#8f8c86'); F(c, 13, 7, 3, 2, '#e9e6c8');
+      F(c, 2, 12, 12, 1, '#5a5866'); F(c, 0, 14, 16, 1, '#5a5866');
+    }),
+
+    construction: () => make(52, 34, (c) => {
+      for (let j = 0; j < 30; j += 4) for (let i = (j / 4) % 2 ? 0 : 4; i < 48; i += 8) F(c, 2 + i, 4 + j, 7, 3, '#c0533f');
+      F(c, 2, 4, 48, 30, 'rgba(0,0,0,0)');
+      for (let j = 0; j < 30; j += 4) F(c, 2, 7 + j, 48, 1, '#d9c9b8');
+      F(c, 18, 14, 10, 20, '#5a4a40'); F(c, 34, 12, 8, 8, '#5a4a40');
+      F(c, 2, 2, 48, 2, '#9a958f');
     }),
 
     heart: () => make(9, 8, (c) => {
