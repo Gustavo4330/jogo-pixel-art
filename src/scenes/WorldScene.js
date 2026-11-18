@@ -163,6 +163,7 @@ class WorldScene extends Phaser.Scene {
     this.physics.add.collider(c.sprite, this.objBodies);
     for (const other of Object.values(this.npcs)) this.physics.add.collider(c.sprite, other.sprite);
     if (n.escala) { c.sprite.setScale(n.escala); c.shadow.setScale(n.escala); } // ex.: pessoa baixinha
+    if (n.sentado) { c.sit(); c.shadow.setVisible(false); }
     if (n.oculto) this.setHidden(c, true);
     if (n.destaque && !SaveSystem.flag(`fase${this.map.fase}_concluida`)) {
       c.bubble = this.add.image(c.x, c.y - 25, 'bubbleHeart').setOrigin(0.5, 1).setDepth(99999);
@@ -250,6 +251,20 @@ class WorldScene extends Phaser.Scene {
     this.cameras.main.shake(260, 0.012);
     if (b) this.tweens.add({ targets: b.sprite, x: b.x + (b.x > a.x ? 4 : -4), duration: 80, yoyo: true });
     await this.emote(quem, 'raiva');
+  }
+
+  /** Senta personagens em lugares (ex.: no banco da mesa do piquenique). */
+  sitPlace(posicoes) {
+    for (const [id, [x, y]] of Object.entries(posicoes)) {
+      const c = this.charById(id);
+      if (!c) continue;
+      c.sprite.body.enable = false;
+      c.sprite.setPosition(x * T, y * T);
+      c.sit();
+      c.shadow.setVisible(false);
+      c.sync();
+    }
+    this.updateCamera(true);
   }
 
   /** Ela sentada no colo dele (os dois de frente para a tela). */
@@ -615,6 +630,14 @@ class WorldScene extends Phaser.Scene {
     SaveSystem.complete(id);
     this.leaving = true;
     Controls.setVisible(false);
+    if (FASES.find((f) => f.id === id)?.boss) {
+      // fim do jogo 💖
+      UI.hud.hide();
+      await UI.ending();
+      await UI.fade(true);
+      this.scene.start('Menu', { view: 'titulo' });
+      return;
+    }
     const next = FASES.find((f) => f.id === id + 1);
     const nextTxt = next
       ? (next.disponivel

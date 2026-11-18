@@ -330,6 +330,152 @@ const UI = {
     el.classList.remove('call');
   },
 
+  /* ====================== O PEDIDO ====================== */
+
+  /** "Quer namorar comigo?" — o "Não" foge 😜 */
+  proposal() {
+    const el = UI.$('#special');
+    el.className = 'proposal';
+    el.hidden = false;
+    el.innerHTML = `
+      <div class="prop-ring"><img class="px" src="${ArtFactory.icons.ring}" alt=""></div>
+      <div class="prop-q">Quer namorar comigo?</div>
+      <div class="prop-sub">— Gustavo 💍</div>
+      <div class="prop-btns">
+        <button class="btn primary prop-yes">Sim! 💖</button>
+        <button class="btn prop-no">Não</button>
+      </div>`;
+    AudioSystem.play('heart');
+    return new Promise((resolve) => {
+      const no = el.querySelector('.prop-no');
+      const sub = el.querySelector('.prop-sub');
+      const msgs = ['Tem certeza? 🥺', 'Pensa de novo...', 'Resposta errada 😜', 'Não aceito "não" como resposta! 💘'];
+      let tries = 0;
+      const yes = () => {
+        Controls.off('action', yes);
+        AudioSystem.play('victory');
+        el.hidden = true;
+        el.innerHTML = '';
+        resolve();
+      };
+      const dodge = (e) => {
+        e.preventDefault();
+        tries++;
+        AudioSystem.play('wrong');
+        sub.textContent = msgs[Math.min(tries, msgs.length) - 1];
+        if (tries >= msgs.length) {
+          no.removeEventListener('pointerdown', dodge);
+          no.style.transform = '';
+          no.textContent = 'Sim! 💖';
+          no.classList.add('primary');
+          no.onclick = yes;
+          return;
+        }
+        const dx = (Math.random() * 2 - 1) * Math.min(150, window.innerWidth * 0.32);
+        const dy = (Math.random() * 2 - 1) * Math.min(90, window.innerHeight * 0.18);
+        no.style.transform = `translate(${dx.toFixed(0)}px, ${dy.toFixed(0)}px)`;
+      };
+      no.addEventListener('pointerdown', dodge);
+      el.querySelector('.prop-yes').onclick = yes;
+      setTimeout(() => Controls.on('action', yes), 400);
+    });
+  },
+
+  /** O presente que se abre com a carta. */
+  async gift() {
+    const el = UI.$('#special');
+    el.className = 'gift';
+    el.hidden = false;
+    el.innerHTML = `
+      <div class="gift-title">Um presente pra você 🎁</div>
+      <button class="gift-box" aria-label="Abrir o presente">
+        <span class="gift-lid"></span><span class="gift-body"></span><span class="gift-ribbon"></span>
+        <span class="gift-letter">💌</span>
+      </button>
+      <div class="gift-hint">Toque no presente para abrir</div>`;
+    await new Promise((r) => {
+      const open = () => { Controls.off('action', open); r(); };
+      el.querySelector('.gift-box').onclick = open;
+      setTimeout(() => Controls.on('action', open), 300);
+    });
+    el.classList.add('open');
+    AudioSystem.play('item');
+    await UI.wait(1300);
+    await UI.letter();
+  },
+
+  /** A carta (dados em src/data/carta.js) com o botão do vídeo. */
+  letter() {
+    const el = UI.$('#special');
+    el.className = 'letter-view';
+    el.hidden = false;
+    el.innerHTML = `
+      <div class="letter">
+        <div class="letter-stamp">💌</div>
+        <h2>${UI.esc(CARTA.titulo)}</h2>
+        ${CARTA.paragrafos.map((p) => `<p>${UI.esc(p)}</p>`).join('')}
+        <p class="letter-final">${UI.esc(CARTA.final)}</p>
+        <p class="letter-sign">${UI.esc(CARTA.assinatura)}</p>
+        <div class="letter-btns">
+          <button class="btn primary l-video">🎬 Assistir ao vídeo</button>
+          <button class="btn l-next">Continuar 💖</button>
+        </div>
+      </div>`;
+    el.scrollTop = 0;
+    return new Promise((resolve) => {
+      el.querySelector('.l-video').onclick = () => UI.video();
+      el.querySelector('.l-next').onclick = () => { el.hidden = true; el.innerHTML = ''; resolve(); };
+    });
+  },
+
+  /** O vídeo do Gustavo (arquivo em CONFIG.videoPedido). */
+  video() {
+    const v = UI.$('#video');
+    v.hidden = false;
+    v.innerHTML = `
+      <div class="video-box">
+        <video src="${UI.esc(CONFIG.videoPedido)}" controls playsinline autoplay></video>
+        <p class="video-miss" hidden>O vídeo ainda está chegando... 🎬💌</p>
+        <button class="btn primary v-close">Fechar</button>
+      </div>`;
+    const vid = v.querySelector('video');
+    const music = SaveSystem.data.musica;
+    AudioSystem.stopMusic();
+    vid.onerror = () => { vid.hidden = true; v.querySelector('.video-miss').hidden = false; };
+    v.querySelector('.v-close').onclick = () => {
+      vid.pause();
+      v.hidden = true;
+      v.innerHTML = '';
+      if (music) AudioSystem.startMusic();
+    };
+  },
+
+  /** Tela final do jogo. */
+  ending() {
+    const el = UI.$('#special');
+    const render = () => {
+      el.className = 'ending';
+      el.hidden = false;
+      el.innerHTML = `
+        <div class="end-heart">${UI.heart()}</div>
+        <p class="end-1">Nossa primeira aventura juntos terminou.</p>
+        <p class="end-2">Mas nossa história está só começando. ♥</p>
+        <div class="end-btns">
+          <button class="btn e-letter">💌 Ler a carta de novo</button>
+          <button class="btn primary e-home">Voltar ao início</button>
+        </div>`;
+    };
+    render();
+    AudioSystem.play('victory');
+    return new Promise((resolve) => {
+      const handler = async (e) => {
+        if (e.target.closest('.e-letter')) { await UI.letter(); render(); }
+        else if (e.target.closest('.e-home')) { el.removeEventListener('click', handler); el.hidden = true; el.innerHTML = ''; resolve(); }
+      };
+      el.addEventListener('click', handler);
+    });
+  },
+
   /** Tela do beijo: coração grande pulsando. */
   async kiss(texto, fala) {
     const el = UI.$('#phase-intro');

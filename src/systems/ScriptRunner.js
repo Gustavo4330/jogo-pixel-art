@@ -40,6 +40,9 @@ const ScriptRunner = {
       else if (p.colo) scene.lapPose(p.colo);
       else if (p.mancha) scene.stain(p.mancha);
       else if (p.descer) scene.dismount(p.descer);
+      else if (p.sentar) scene.sitPlace(p.sentar);
+      else if (p.pedido) await UI.proposal();
+      else if (p.presente) await UI.gift();
       else if (p.tapa) await scene.slap(p.quem, p.alvo);
       else if (p.escolha) await UI.choice(p);
       else if (p.mudarMapa) {

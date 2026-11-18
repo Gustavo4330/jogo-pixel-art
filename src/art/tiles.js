@@ -1363,6 +1363,48 @@ const TileArt = (() => {
       F(c, x + 15, y, 1, 16, '#c2beb5'); F(c, x, y + 15, 16, 1, '#c2beb5');
       speckle(c, x, y, r, ['#cfcbc3', '#e3e0da'], 4);
     },
+
+    /* ---------- FASE 6: O PEDIDO (piquenique) ---------- */
+    quadra(c, x, y, r, n) {
+      // quadra de futsal: piso azul com linhas brancas
+      F(c, x, y, 16, 16, '#3f78b8');
+      F(c, x, y + 8, 16, 8, '#3a70ae');
+      const ch = n(0, 0);
+      if (n(-1, 0) !== ch) F(c, x, y, 2, 16, '#ffffff');
+      if (n(1, 0) !== ch) F(c, x + 14, y, 2, 16, '#ffffff');
+      if (n(0, -1) !== ch) F(c, x, y, 16, 2, '#ffffff');
+      if (n(0, 1) !== ch) F(c, x, y + 14, 16, 2, '#ffffff');
+      // linha do meio e círculo central (a quadra vai de x=0 até x=8 tiles)
+      if (x === 4 * 16) F(c, x + 7, y, 2, 16, '#ffffff');
+      for (let py = 0; py < 16; py++) for (let px = 0; px < 16; px++) {
+        const d = Math.hypot(x + px + 0.5 - 4.5 * 16, y + py + 0.5 - 3 * 16);
+        if (d > 18 && d < 19.6) F(c, x + px, y + py, 1, 1, '#ffffff');
+      }
+    },
+
+    alambrado(c, x, y, r, n) {
+      T.grama(c, x, y, r);
+      for (let i = -16; i < 16; i += 4) for (let k = 0; k < 16; k++) {
+        if (i + k >= 0 && i + k < 16) F(c, x + i + k, y + k, 1, 1, '#9aa0a8');
+        if (i + 16 - k >= 0 && i + 16 - k < 16) F(c, x + i + 16 - k, y + k, 1, 1, '#9aa0a8');
+      }
+      F(c, x, y, 16, 1, '#6b6f78'); F(c, x + 15, y, 1, 16, '#6b6f78');
+    },
+
+    escada_lateral(c, x, y, r, n) {
+      for (let k = 0; k < 16; k += 4) {
+        F(c, x, y + k, 16, 3, '#b9b6b0'); F(c, x, y + k, 16, 1, '#d6d3cd'); F(c, x, y + k + 3, 16, 1, '#7d7a75');
+      }
+      if (n(1, 0) !== n(0, 0)) { F(c, x + 13, y, 3, 16, '#8f8c86'); F(c, x + 14, y, 1, 16, '#c9c6c0'); }
+    },
+
+    caminho_cimento(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#c9c5bd');
+      speckle(c, x, y, r, ['#bdb9b1', '#d6d2cb'], 6);
+      const g = (dx, dy) => n(dx, dy) === 'g';
+      if (g(0, -1)) F(c, x, y, 16, 1, '#7aa35e');
+      if (g(0, 1)) F(c, x, y + 15, 16, 1, '#7aa35e');
+    },
   };
   return T;
 })();

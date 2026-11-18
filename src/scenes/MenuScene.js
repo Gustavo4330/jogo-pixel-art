@@ -140,6 +140,7 @@ class MenuScene extends Phaser.Scene {
         <div class="phase-list">${cards}</div>
         <div class="screen-foot">
           <button class="btn small" data-action="memorias">${UI.heart()} Memórias bônus</button>
+          ${SaveSystem.isCompleted(6) ? '<button class="btn small" data-action="carta">💌 A carta</button>' : ''}
           <button class="btn small ghost" data-action="reset">Recomeçar do zero</button>
         </div>
       </div>`, (a, ds) => this.onAction(a, ds));
@@ -173,6 +174,7 @@ class MenuScene extends Phaser.Scene {
         this.startPhase(1);
         break;
       case 'continuar': this.show('fases'); break;
+      case 'carta': await UI.letter(); break;
       case 'logo': {
         // toque 5 vezes seguidas no título para ligar/desligar o modo criador
         const now = Date.now();

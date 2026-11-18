@@ -388,6 +388,39 @@ const ObjectArt = (() => {
       F(c, 2, 2, 48, 2, '#9a958f');
     }),
 
+    picnicTable: () => make(56, 30, (c) => {
+      // mesa de concreto revestida de madeira, com o piquenique em cima
+      F(c, 6, 20, 8, 10, '#9a968f'); F(c, 42, 20, 8, 10, '#9a968f'); F(c, 6, 20, 1, 10, '#b9b5ae');
+      F(c, 1, 6, 54, 15, '#8a5a3b');
+      for (let j = 6; j < 21; j += 4) { F(c, 1, j, 54, 1, '#6e4630'); F(c, 1, j + 1, 54, 1, '#a8744d'); }
+      F(c, 1, 19, 54, 2, '#5a3a28');
+      // piquenique: cesta, frutas, sanduíches, suco e bolo
+      F(c, 6, 2, 12, 8, '#c49a5c'); F(c, 6, 2, 12, 1, '#e2bd88'); F(c, 8, 0, 8, 2, '#8a5a3b'); F(c, 6, 5, 12, 1, '#a87c42');
+      Pixel.blob(c, 24, 9, 2.5, '#d6262f'); Pixel.blob(c, 28, 9, 2.5, '#5aa64d'); Pixel.blob(c, 26, 7, 2.2, '#ffd86b');
+      F(c, 32, 8, 7, 4, '#f2e2b0'); F(c, 32, 10, 7, 1, '#7a4a33'); F(c, 33, 9, 5, 1, '#5aa64d');
+      F(c, 42, 4, 3, 7, '#ff9a3c'); F(c, 42, 4, 3, 1, '#ffffff');
+      F(c, 46, 7, 7, 5, '#ffd3e4'); F(c, 46, 7, 7, 1, '#ffffff'); F(c, 49, 5, 1, 2, '#ffd86b');
+    }),
+
+    picnicBench: () => make(56, 12, (c) => {
+      F(c, 6, 6, 6, 6, '#9a968f'); F(c, 44, 6, 6, 6, '#9a968f');
+      F(c, 2, 0, 52, 7, '#8a5a3b'); F(c, 2, 0, 52, 1, '#a8744d'); F(c, 2, 3, 52, 1, '#6e4630'); F(c, 2, 6, 52, 1, '#5a3a28');
+    }),
+
+    picnicBlanket: () => make(40, 26, (c) => {
+      for (let j = 0; j < 26; j += 4) for (let i = 0; i < 40; i += 4) F(c, i, j, 4, 4, ((i + j) / 4) % 2 ? '#d6263f' : '#fff4f4');
+      F(c, 4, 4, 10, 8, '#c49a5c'); F(c, 4, 4, 10, 1, '#e2bd88'); F(c, 6, 2, 6, 2, '#8a5a3b');
+      Pixel.blob(c, 26, 14, 3, '#ffffff'); Pixel.blob(c, 34, 18, 3, '#ffffff'); F(c, 25, 13, 2, 2, '#d6262f');
+    }, false),
+
+    ring: () => make(26, 24, (c) => {
+      Pixel.blob(c, 13, 15, 8.5, '#e8b64a'); Pixel.blob(c, 13, 15, 6, 'rgba(0,0,0,0)');
+      c.globalCompositeOperation = 'destination-out'; Pixel.blob(c, 13, 15, 6, '#000'); c.globalCompositeOperation = 'source-over';
+      F(c, 6, 11, 2, 3, '#ffe28a'); F(c, 18, 19, 2, 1, '#b8862a');
+      F(c, 10, 3, 6, 4, '#e8f6ff'); F(c, 11, 2, 4, 1, '#ffffff'); F(c, 12, 7, 2, 1, '#b8d8ee'); F(c, 11, 3, 1, 1, '#ffffff');
+      F(c, 2, 2, 1, 3, '#ffffff'); F(c, 1, 3, 3, 1, '#ffffff'); F(c, 22, 5, 1, 3, '#ffffff'); F(c, 21, 6, 3, 1, '#ffffff');
+    }),
+
     heart: () => make(9, 8, (c) => {
       Pixel.heart(c, 1, 1, '#ff5fa2');
       F(c, 2, 2, 1, 1, '#ffd0e4');

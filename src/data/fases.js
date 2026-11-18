@@ -77,7 +77,14 @@ const FASES = [
     nome: '???',          // o nome fica escondido para não estragar a surpresa!
     nomeReal: 'O Pedido',
     local: '???',
+    data: '19 de novembro',
     boss: true,
-    disponivel: false,
+    mapa: 'piquenique',
+    spawn: 'inicio',
+    disponivel: true,
+    roupas: {
+      // Gustavo com a mesma roupa do shopping (polo clara = roupa padrão)
+      ela: { roupa: '#6b1730', estiloRoupa: 'vestido' }, // vestido vermelho vinho
+    },
   },
 ];

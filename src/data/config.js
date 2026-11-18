@@ -5,7 +5,7 @@
 
 const CONFIG = {
   titulo: 'Nossa História',
-  versao: '17', // aparece pequenininho na tela inicial (para conferir se o jogo atualizou)
+  versao: '18', // aparece pequenininho na tela inicial (para conferir se o jogo atualizou)
   subtitulo: 'Uma aventura a dois',
 
   // Nomes que aparecem nas caixas de diálogo.
@@ -28,6 +28,9 @@ const CONFIG = {
   // toque 5 vezes seguidas no título "Nossa História". Ele libera todas
   // as fases só no aparelho em que você ativou (toque 5x de novo para desligar).
   liberarTodasFases: false,
+
+  // Vídeo do pedido (aparece depois da carta). Coloque o arquivo aqui.
+  videoPedido: 'assets/videos/pedido.mp4',
 
   // true = mostra as caixas de colisão (útil para ajustar mapas).
   debug: false,

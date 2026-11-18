@@ -40,4 +40,7 @@ const OBJETOS = {
   obra:            { tex: 'construction', corpo: [48, 12] },
   abobora:         { tex: 'pumpkin',     corpo: [10, 4] },
   moto:            { tex: 'moto',        corpo: null },
+  mesa_piquenique: { tex: 'picnicTable', corpo: [52, 14] },
+  banco_piquenique:{ tex: 'picnicBench', corpo: [52, 6] },
+  toalha:          { tex: 'picnicBlanket', corpo: null },
 };

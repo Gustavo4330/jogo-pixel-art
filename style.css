@@ -460,3 +460,80 @@ body.show-controls #controls { display: block; }
   color: var(--rosa-claro); font-size: 20px; pointer-events: none;
 }
 body.ready #loading { display: none; }
+
+/* =========================================================
+   O PEDIDO (Fase 6): pergunta, presente, carta, vídeo, final
+   ========================================================= */
+#special {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  text-align: center;
+  animation: fadein .5s;
+  background: radial-gradient(circle at 50% 40%, #ff9fc8 0%, #c2457f 45%, #3a1440 100%);
+}
+#special.proposal .prop-ring img { width: clamp(70px, 18vmin, 120px); animation: beat 1s infinite; filter: drop-shadow(0 0 14px #fff3b0); }
+#special .prop-q { font-size: clamp(30px, 7vmin, 60px); font-weight: 600; color: #fff; text-shadow: 0 4px 0 var(--rosa-forte), 0 8px 0 var(--roxo-escuro); }
+#special .prop-sub { font-size: clamp(16px, 3vmin, 24px); color: #ffe2f0; min-height: 1.4em; }
+#special .prop-btns { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+#special .prop-btns .btn { font-size: clamp(20px, 4vmin, 30px); min-width: 140px; transition: transform .25s ease-out; }
+
+/* presente */
+#special.gift .gift-title { margin-bottom: clamp(40px, 10vmin, 90px); font-size: clamp(24px, 5vmin, 40px); color: #fff; font-weight: 600; text-shadow: 0 3px 0 var(--roxo-escuro); }
+#special .gift-hint { color: #ffe2f0; font-size: clamp(14px, 2.6vmin, 20px); animation: bob .8s infinite alternate; }
+.gift-box {
+  position: relative; width: clamp(130px, 30vmin, 190px); aspect-ratio: 1;
+  background: none; border: 0; cursor: pointer; padding: 0;
+  animation: wiggle 1.2s infinite alternate;
+}
+.gift-body { position: absolute; left: 8%; right: 8%; bottom: 0; height: 64%; background: #ff5fa2; box-shadow: inset -10px 0 0 #d6347c, 0 0 0 4px var(--roxo-escuro); }
+.gift-lid { position: absolute; left: 0; right: 0; top: 18%; height: 22%; background: #ff7fb6; box-shadow: inset -10px 0 0 #e2468f, 0 0 0 4px var(--roxo-escuro); transition: transform .7s cubic-bezier(.2,1.6,.4,1); z-index: 2; }
+.gift-ribbon { position: absolute; left: 44%; width: 12%; top: 18%; bottom: 0; background: #ffd86b; z-index: 3; transition: transform .7s cubic-bezier(.2,1.6,.4,1); }
+.gift-letter { position: absolute; left: 50%; top: 40%; transform: translate(-50%, 0) scale(.4); opacity: 0; font-size: clamp(50px, 12vmin, 80px); z-index: 1; transition: all .8s .3s ease-out; }
+#special.gift.open .gift-box { animation: none; }
+#special.gift.open .gift-lid, #special.gift.open .gift-ribbon { transform: translateY(-120%) rotate(-18deg); }
+#special.gift.open .gift-letter { opacity: 1; transform: translate(-50%, -110%) scale(1); }
+
+/* carta */
+#special.letter-view { justify-content: flex-start; overflow-y: auto; touch-action: pan-y; -webkit-overflow-scrolling: touch; }
+.letter {
+  position: relative;
+  width: min(620px, 100%);
+  margin: 12px auto 24px;
+  background:
+    repeating-linear-gradient(#fff9fc 0 31px, #f6d4e4 31px 32px);
+  color: #5a1d48;
+  padding: 34px clamp(18px, 5vw, 44px) 26px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 4px #fff, 0 0 0 8px var(--rosa-forte), 0 14px 40px rgba(40, 0, 30, .45);
+  text-align: left;
+  font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+  font-size: clamp(18px, 2.4vmin + 10px, 23px);
+  line-height: 32px;
+  animation: pop .6s ease-out;
+}
+.letter h2 { font-family: var(--font); color: var(--rosa-forte); text-align: center; margin: 0 0 16px; font-size: clamp(26px, 4vmin + 10px, 36px); line-height: 1.2; }
+.letter p { margin: 0 0 16px; text-indent: 1.2em; }
+.letter .letter-final { text-indent: 0; text-align: center; font-size: 1.15em; color: #c2236a; margin-top: 22px; }
+.letter .letter-sign { text-indent: 0; text-align: right; }
+.letter-stamp { position: absolute; top: -18px; right: 18px; font-size: 40px; transform: rotate(12deg); }
+.letter-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 10px; font-family: var(--font); }
+
+/* vídeo */
+#video {
+  position: absolute; inset: 0; z-index: 4;
+  display: grid; place-items: center;
+  background: rgba(10, 4, 14, .97);
+  padding: 16px;
+}
+.video-box { display: flex; flex-direction: column; align-items: center; gap: 14px; width: min(860px, 100%); }
+.video-box video { width: 100%; max-height: 74vh; background: #000; box-shadow: 0 0 0 4px var(--rosa-forte); }
+.video-miss { font-size: clamp(18px, 3vmin, 26px); color: #ffe2f0; text-align: center; }
+
+/* final */
+#special.ending { background: radial-gradient(circle at 50% 40%, #6e2d6e 0%, #2b1430 75%); }
+#special .end-heart { font-size: clamp(70px, 18vmin, 140px); line-height: 1; animation: beat .9s infinite; }
+#special .end-heart .px-heart { fill: var(--rosa); filter: drop-shadow(0 0 16px #ff9fcf); }
+#special .end-1 { font-size: clamp(20px, 4vmin, 34px); color: #ffe2f0; margin: 0; }
+#special .end-2 { font-size: clamp(26px, 5.4vmin, 46px); color: #fff; font-weight: 600; margin: 0; text-shadow: 0 4px 0 var(--rosa-forte); }
+#special .end-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
