@@ -5,7 +5,7 @@
 
 const CONFIG = {
   titulo: 'Nossa História',
-  versao: '15', // aparece pequenininho na tela inicial (para conferir se o jogo atualizou)
+  versao: '16', // aparece pequenininho na tela inicial (para conferir se o jogo atualizou)
   subtitulo: 'Uma aventura a dois',
 
   // Nomes que aparecem nas caixas de diálogo.

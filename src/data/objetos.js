@@ -27,4 +27,13 @@ const OBJETOS = {
   isopor:          { tex: 'cooler',      corpo: [16, 6] },
   mesinha:         { tex: 'cafeTable',   corpo: [28, 8] },
   mesa_redonda:    { tex: 'roundTable',  corpo: [36, 14] },
+  poltrona_branca: { tex: 'armchair',    corpo: [20, 8] },
+  cachorro_branco: { tex: 'dogWhite',    corpo: null },
+  cachorro_escuro: { tex: 'dogDark',     corpo: null },
+  rede:            { tex: 'hammock',     corpo: [40, 6] },
+  banqueta:        { tex: 'stool',       corpo: [8, 4] },
+  mesa_jantar:     { tex: 'diningTable', corpo: [56, 16] },
+  casa:            { tex: 'house',       corpo: [56, 18] },
+  abobora:         { tex: 'pumpkin',     corpo: [10, 4] },
+  moto:            { tex: 'moto',        corpo: null },
 };

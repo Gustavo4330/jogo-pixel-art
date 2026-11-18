@@ -1265,6 +1265,87 @@ const TileArt = (() => {
       for (let i = 0; i < 4; i++) Pixel.blob(c, x + r() * 16, y + 11 + r() * 3, 2.5, '#3c7f3f');
       F(c, x, y + 14, 16, 2, '#4a8a3c');
     },
+
+    /* ---------- FASE 5: SALA DO GUSTAVO ---------- */
+    ripado(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#a8744d');
+      for (let i = 0; i < 16; i += 3) F(c, x + i, y, 1, 16, '#8a5c3b');
+      for (let i = 1; i < 16; i += 3) F(c, x + i, y, 1, 16, '#b88459');
+      if (n(0, -1) === 'T') F(c, x, y, 16, 2, '#7a5034');
+      if (n(0, 1) && !'wVq'.includes(n(0, 1))) F(c, x, y + 14, 16, 2, '#6e4a30');
+    },
+
+    tv_parede(c, x, y, r, n) {
+      T.ripado(c, x, y, r, n);
+      const l = n(-1, 0) === 'V', rr = n(1, 0) === 'V';
+      F(c, x + (l ? 0 : 1), y + 3, 16 - (l ? 0 : 1) - (rr ? 0 : 1), 10, '#151419');
+      F(c, x + (l ? 0 : 2), y + 4, 16 - (l ? 0 : 2) - (rr ? 0 : 2), 8, '#f28c38');
+      F(c, x + (l ? 0 : 2), y + 9, 16 - (l ? 0 : 2) - (rr ? 0 : 2), 3, '#4f9a5a');
+      if (l && rr) { F(c, x + 5, y + 5, 5, 5, '#2a1d18'); F(c, x + 6, y + 6, 3, 3, '#d9a47c'); }
+    },
+
+    quadro_luz(c, x, y, r, n) {
+      T.ripado(c, x, y, r, n);
+      F(c, x + 5, y + 5, 6, 4, '#efede9'); F(c, x + 6, y + 6, 1, 2, '#9a978f');
+    },
+
+    vidro_jardim(c, x, y, r, n) {
+      const bottom = n(0, -1) === n(0, 0);
+      F(c, x, y, 16, 16, '#2b2a30');
+      F(c, x + 1, y + (bottom ? 0 : 1), 14, 16, '#e8f2e2');
+      F(c, x + 1, y + (bottom ? 6 : 10), 14, bottom ? 10 : 6, '#7fbf5e');
+      if (!bottom) { Pixel.blob(c, x + 5, y + 8, 4, '#4f9446'); Pixel.blob(c, x + 11, y + 9, 3, '#3c7f3f'); }
+      else { if (r() < 0.5) { F(c, x + 4, y + 2, 7, 1, '#8a6a4a'); F(c, x + 5, y + 3, 1, 4, '#5a4636'); F(c, x + 10, y + 3, 1, 4, '#5a4636'); } F(c, x, y + 14, 16, 2, '#3a3940'); }
+    },
+
+    jardim_interno(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#e9e6e1');
+      F(c, x, y + 10, 16, 6, '#9c8a7a');
+      for (let i = 0; i < 4; i++) Pixel.blob(c, x + 2 + r() * 12, y + 3 + r() * 6, 3.5, i % 2 ? '#4f9446' : '#3c7f3f');
+      for (let i = 0; i < 4; i++) F(c, x + Math.floor(r() * 15), y + 2 + Math.floor(r() * 8), 1, 2, '#6db25a');
+    },
+
+    porcelanato(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#ebe8e3');
+      if ((x / 16 + y / 16) % 2 === 0) { F(c, x + 15, y, 1, 16, '#d8d4ce'); F(c, x, y + 15, 16, 1, '#d8d4ce'); }
+      if (r() < 0.3) F(c, x + 3, y + 3, 5, 1, '#f7f5f2');
+      const up = n(0, -1);
+      if (up && 'wVqGgCcJT'.includes(up)) { c.fillStyle = 'rgba(60,40,30,0.16)'; c.fillRect(x, y, 16, 4); }
+    },
+
+    cooktop(c, x, y, r, n) {
+      T.bancada_preta(c, x, y, r, n);
+      F(c, x + 1, y + 1, 14, 10, '#0e0d10');
+      for (const [bx, by] of [[4, 3], [11, 3], [4, 8], [11, 8]]) { Pixel.blob(c, x + bx, y + by, 2.2, '#3a3842'); F(c, x + bx - 1, y + by, 2, 1, '#5a5866'); }
+    },
+
+    parede_branca(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#efede9');
+      F(c, x + (n(1, 0) ? 12 : 0), y, 4, 16, '#f9f8f6');
+      if (n(0, -1) && n(0, -1) !== n(0, 0)) F(c, x, y, 16, 2, '#d9d6d0');
+    },
+
+    /* ---------- FASE 5: CONDOMÍNIO NO HALLOWEEN ---------- */
+    rua_livre(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#4b4559');
+      speckle(c, x, y, r, ['#57516a', '#413b4f', '#5d5770'], 10);
+      const ch = n(0, 0);
+      if (ch === 'l') F(c, x + 3, y + 7, 9, 2, '#efe6c8');
+      if (ch === 'i') F(c, x + 7, y + 3, 2, 9, '#efe6c8');
+    },
+
+    calcada_condo(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#bdb6bd');
+      F(c, x + 15, y, 1, 16, '#a39ca5'); F(c, x, y + 15, 16, 1, '#a39ca5');
+      speckle(c, x, y, r, ['#b2abb3', '#c8c2c8'], 4);
+    },
+
+    muro_condo(c, x, y, r, n) {
+      F(c, x, y, 16, 16, '#d6cfc4');
+      F(c, x, y, 16, 3, '#ece6dc'); F(c, x, y + 3, 16, 1, '#b5ad9f');
+      for (let i = 0; i < 16; i += 8) F(c, x + i, y + 4, 1, 12, '#c2baad');
+      if (r() < 0.25) { Pixel.blob(c, x + 8, y + 8, 3, '#3c7f3f'); }
+    },
   };
   return T;
 })();

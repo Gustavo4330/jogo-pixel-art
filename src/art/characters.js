@@ -37,6 +37,9 @@ const CharacterArt = {
       shorts: v.estiloCalca === 'shorts',
       dress: v.estiloRoupa === 'vestido',
       stain: v.mancha || null,       // mancha na roupa (ex.: sorvete que caiu)
+      mask: !!v.mascara,             // máscara cobrindo o rosto (Halloween)
+      face: v.mascara || v.pele, faceS: S(v.mascara || v.pele, -0.12),
+      belly: !!v.barriga,            // barriga de chopp
     };
   },
 
@@ -117,6 +120,12 @@ const CharacterArt = {
         R(3, y + 1, 1, 2, L.top); R(12, y + 1, 1, 2, L.topS);
         R(3, y + 3, 1, 3, L.skin); R(12, y + 3, 1, 3, L.skinS);
         if (D) { P(3, y + 2, D); P(12, y + 2, D); }
+        if (L.topStyle === 'jaqueta') {
+          // corta-vento: manga comprida e recortes pretos
+          R(3, y + 1, 1, 4, L.top); R(12, y + 1, 1, 4, L.topS); P(3, y + 5, L.skin); P(12, y + 5, L.skinS);
+          if (D) { R(4, y, 1, 6, D); R(11, y, 1, 6, D); R(3, y + 3, 1, 1, D); R(12, y + 3, 1, 1, D); }
+          if (d === 'down') { R(7, y + 1, 1, 5, D || L.topS); R(6, y, 4, 1, D || L.collar); }
+        }
         if (d === 'down') {
           if (L.topStyle === 'polo') {
             P(5, y, D || L.collar); P(6, y, D || L.collar); P(9, y, D || L.collar); P(10, y, D || L.collar);
@@ -131,15 +140,20 @@ const CharacterArt = {
         }
       }
       R(5, y + 6, 6, 1, L.pantsS); // cintura
+      if (L.belly) { R(3, y + 2, 1, 4, L.top); R(12, y + 2, 1, 4, L.topS); R(4, y + 5, 8, 1, L.top); P(8, y + 4, L.topS); }
     } else {
       R(5, y, 6, 6, L.top); R(10, y, 1, 6, L.topS); R(5, y, 1, 6, L.topHi);
       if (tank) { P(5, y, L.skin); P(6, y, L.skin); }
       else if (L.topStyle === 'polo') { P(5, y, D || L.collar); P(6, y, D || L.collar); }
       if (L.topStyle === 'top') R(5, y + 5, 6, 1, L.skin);
+      if (L.belly) { R(4, y + 2, 1, 4, L.topHi); P(3, y + 3, L.topHi); P(3, y + 4, L.topHi); }
       R(5, y + 6, 6, 1, L.pantsS);
       const ax = f === 1 ? 5 : f === 2 ? 8 : 7;
       if (tank) { R(ax, y, 2, 6, L.skin); R(ax + 1, y, 1, 6, L.skinS); }
-      else {
+      else if (L.topStyle === 'jaqueta') {
+        R(ax, y, 2, 5, L.top); R(ax + 1, y, 1, 5, L.topS); R(ax, y + 5, 2, 1, L.skin);
+        if (D) { R(ax, y + 2, 2, 1, D); R(10, y, 1, 6, D); }
+      } else {
         R(ax, y, 2, 2, L.top); R(ax + 1, y, 1, 2, L.topS); R(ax, y + 2, 2, 4, L.skin); R(ax + 1, y + 2, 1, 4, L.skinS);
         if (D) R(ax, y + 1, 2, 1, D);
       }
@@ -148,21 +162,24 @@ const CharacterArt = {
 
   head(P, R, L, d, b) {
     const y = b;
+    const K = L.face, KS = L.faceS;
+    const eye = L.mask ? '#111111' : L.eye;
+    const mouth = L.mask ? '#2a2a2a' : L.mouth;
     if (d === 'down') {
-      R(5, 3 + y, 6, 1, L.skin); R(4, 4 + y, 8, 7, L.skin); R(5, 11 + y, 6, 1, L.skin);
-      R(11, 5 + y, 1, 5, L.skinS); P(10, 11 + y, L.skinS);
-      R(5, 7 + y, 2, 2, L.eye); R(9, 7 + y, 2, 2, L.eye);
-      P(5, 7 + y, L.white); P(9, 7 + y, L.white);
-      P(5, 9 + y, L.blush); P(10, 9 + y, L.blush);
-      P(7, 10 + y, L.mouth); P(8, 10 + y, L.mouth);
+      R(5, 3 + y, 6, 1, K); R(4, 4 + y, 8, 7, K); R(5, 11 + y, 6, 1, K);
+      R(11, 5 + y, 1, 5, KS); P(10, 11 + y, KS);
+      R(5, 7 + y, 2, 2, eye); R(9, 7 + y, 2, 2, eye);
+      if (!L.mask) { P(5, 7 + y, L.white); P(9, 7 + y, L.white); P(5, 9 + y, L.blush); P(10, 9 + y, L.blush); }
+      P(7, 10 + y, mouth); P(8, 10 + y, mouth);
+      if (L.mask) { P(6, 10 + y, mouth); P(9, 10 + y, mouth); }
     } else if (d === 'up') {
       R(5, 3 + y, 6, 1, L.skin); R(4, 4 + y, 8, 7, L.skin); R(5, 11 + y, 6, 1, L.skinS);
     } else {
-      R(5, 3 + y, 6, 1, L.skin); R(4, 4 + y, 7, 7, L.skin); R(5, 11 + y, 5, 1, L.skin);
-      P(3, 8 + y, L.skin); // nariz
-      R(5, 7 + y, 1, 2, L.eye);
-      P(5, 9 + y, L.blush);
-      P(4, 10 + y, L.mouth);
+      R(5, 3 + y, 6, 1, K); R(4, 4 + y, 7, 7, K); R(5, 11 + y, 5, 1, K);
+      P(3, 8 + y, K); // nariz
+      R(5, 7 + y, 1, 2, eye);
+      if (!L.mask) P(5, 9 + y, L.blush);
+      P(4, 10 + y, mouth);
     }
   },
 
@@ -330,9 +347,9 @@ const CharacterArt = {
     R(13, 22, 6, 5, L.skinS);
     if (L.tankLike) R(13, 26, 6, 1, L.skin);
 
-    // rosto
-    R(9, 7, 14, 1, L.skin); R(8, 8, 16, 15, L.skin); R(9, 23, 14, 1, L.skin); R(11, 24, 10, 1, L.skin);
-    R(22, 10, 2, 12, L.skinS); R(12, 24, 9, 1, L.skinS);
+    // rosto (ou máscara)
+    R(9, 7, 14, 1, L.face); R(8, 8, 16, 15, L.face); R(9, 23, 14, 1, L.face); R(11, 24, 10, 1, L.face);
+    R(22, 10, 2, 12, L.faceS); R(12, 24, 9, 1, L.faceS);
     R(7, 14, 1, 4, L.skin); R(24, 14, 1, 4, L.skinS); // orelhas
 
     // sobrancelhas
@@ -382,6 +399,14 @@ const CharacterArt = {
       }
     }
 
+    if (L.mask) {
+      // máscara de monstro: olhos fundos, boca costurada, sem bochechas
+      R(8, 19, 3, 2, L.face); R(21, 19, 3, 2, L.face);
+      R(9, 14, 5, 5, '#2a2a2a'); R(18, 14, 5, 5, '#2a2a2a'); R(10, 15, 3, 3, '#111111'); R(19, 15, 3, 3, '#111111');
+      R(11, 20, 10, 3, L.face); R(11, 21, 10, 1, '#2a2a2a');
+      for (let i = 11; i < 21; i += 2) { P(i, 20, '#2a2a2a'); P(i, 22, '#2a2a2a'); }
+      R(15, 18, 2, 1, '#9a978f');
+    }
     const out = Pixel.outline(g, this.OUTLINE);
     const { c, ctx } = Pixel.canvas(32, 32);
     Pixel.drawGrid(ctx, out, 0, 0);

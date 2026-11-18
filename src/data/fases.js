@@ -62,9 +62,11 @@ const FASES = [
   {
     id: 5,
     nome: 'Conhecendo a minha família',
-    local: 'Aniversário da minha irmã',
+    local: 'Minha casa e o Halloween',
     data: '31 de outubro',
-    disponivel: false,
+    mapa: 'sala_gustavo',
+    spawn: 'inicio',
+    disponivel: true,
     roupas: {
       ele: { roupa: '#1d1b22', estiloRoupa: 'regata' },   // regata preta
       ela: { roupa: '#3f74c9', estiloRoupa: 'vestido' },  // vestido azul

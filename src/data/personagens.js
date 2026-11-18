@@ -6,7 +6,8 @@
    da pele, basta trocar o código da cor aqui.
 
    Estilos de cabelo disponíveis:  'longo' | 'curto' | 'rabo' | 'ondulado' | 'coque'
-   Estilos de roupa disponíveis:   'regata' | 'polo' | 'camiseta'
+   Estilos de roupa disponíveis:   'regata' | 'polo' | 'camiseta' | 'top' | 'vestido' | 'jaqueta'
+   Extras: barriga: true (barriga de chopp), mascara: '#cor' (máscara no rosto)
    ========================================================= */
 
 const PERSONAGENS = {
@@ -86,6 +87,30 @@ const PERSONAGENS = {
   vo: {
     nome: 'Vó Raquel',
     visual: { pele: '#d9a57e', cabelo: '#d6d2ce', cabeloBrilho: '#f2efec', estiloCabelo: 'coque', roupa: '#8e6aa6', estiloRoupa: 'vestido', calca: '#d9a57e', tenis: '#7a5a8a', bochecha: '#e8909a' },
+  },
+
+  // A família do Gustavo (Fase 5)
+  paula: {
+    nome: 'Paula',
+    visual: { pele: '#f0c8a8', cabelo: '#e3c063', cabeloBrilho: '#fbe3a0', estiloCabelo: 'longo', roupa: '#3f9a4a', estiloRoupa: 'camiseta', calca: '#2f3d66', tenis: '#f6f2f6', bochecha: '#ee9aa4' },
+  },
+  gabriela: {
+    nome: 'Gabriela',
+    visual: { pele: '#efc4a0', cabelo: '#6b4128', estiloCabelo: 'longo', roupa: '#f49ac1', estiloRoupa: 'camiseta', calca: '#83a9d8', estiloCalca: 'shorts', tenis: '#f6f2f6', bochecha: '#ee9aa4' },
+  },
+  vo_dele: {
+    nome: 'Vó',
+    visual: { pele: '#e8bf9c', cabelo: '#d8d2cb', cabeloBrilho: '#8a6a52', estiloCabelo: 'curto', roupa: '#6a8fc9', estiloRoupa: 'camiseta', calca: '#4a4a5a', tenis: '#7a5a8a', bochecha: '#e8909a' },
+  },
+  everton: {
+    nome: 'Everton',
+    visual: { pele: '#e2b08a', cabelo: '#5a3a28', estiloCabelo: 'curto', roupa: '#c94f3c', estiloRoupa: 'camiseta', calca: '#c9b48a', estiloCalca: 'shorts', tenis: '#3a3550', barriga: true },
+  },
+
+  // A moça entregando doces no Halloween (Fase 5)
+  moca: {
+    nome: 'Moça dos doces',
+    visual: { pele: '#d9a47c', cabelo: '#2b1d18', estiloCabelo: 'rabo', laco: '#ff8a2c', roupa: '#7a3fa0', estiloRoupa: 'camiseta', calca: '#2b2b33', tenis: '#f6f2f6' },
   },
 
   // Vozes do lado de fora (aparece só o nome, sem retrato)

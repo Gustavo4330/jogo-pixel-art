@@ -39,6 +39,8 @@ const ScriptRunner = {
       else if (p.foto) await UI.photo(p.foto, p.legenda);
       else if (p.colo) scene.lapPose(p.colo);
       else if (p.mancha) scene.stain(p.mancha);
+      else if (p.descer) scene.dismount(p.descer);
+      else if (p.tapa) await scene.slap(p.quem, p.alvo);
       else if (p.escolha) await UI.choice(p);
       else if (p.mudarMapa) {
         if (p.texto) await UI.timeskip(p.texto);

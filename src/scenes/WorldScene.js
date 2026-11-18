@@ -18,6 +18,7 @@ class WorldScene extends Phaser.Scene {
   create() {
     const map = (this.map = MAPAS[this.mapId]);
     ArtFactory.currentFase = map.fase;
+    ArtFactory.currentMap = map;
     const { w, h } = MapBuilder.size(map);
     this.worldW = w * T;
     this.worldH = h * T;
@@ -41,6 +42,14 @@ class WorldScene extends Phaser.Scene {
     this.player.face(sp.dir || 'down');
     this.physics.add.collider(this.player.sprite, this.solids);
     this.physics.add.collider(this.player.sprite, this.objBodies);
+
+    // Veículo (ex.: moto elétrica no Halloween): ela pilota com o Gustavo junto
+    if (map.veiculo) {
+      this.vehicle = this.add.image(this.player.x, this.player.y, map.veiculo.textura).setOrigin(0.5, 1);
+      this.player.sprite.setAlpha(0);
+      this.player.shadow.setScale(2.6, 1.6);
+      if (sp.dir === 'left') this.vehicle.setFlipX(true);
+    }
 
     // NPCs
     this.npcs = {};
@@ -132,7 +141,7 @@ class WorldScene extends Phaser.Scene {
     const def = OBJETOS[o.tipo];
     if (!def) { console.warn('Objeto desconhecido:', o.tipo); return; }
     const x = o.x * T, y = o.y * T;
-    this.add.image(x, y, def.tex).setOrigin(0.5, 1).setDepth(y);
+    this.add.image(x, y, def.tex).setOrigin(0.5, 1).setDepth(y + (o.z || 0)); // z: fica na frente (ex.: cachorro na poltrona)
     if (def.corpo) {
       const [bw, bh] = def.corpo;
       const z = this.add.zone(x, y - bh / 2, bw, bh);
@@ -153,6 +162,7 @@ class WorldScene extends Phaser.Scene {
     this.physics.add.collider(c.sprite, this.solids);
     this.physics.add.collider(c.sprite, this.objBodies);
     for (const other of Object.values(this.npcs)) this.physics.add.collider(c.sprite, other.sprite);
+    if (n.escala) { c.sprite.setScale(n.escala); c.shadow.setScale(n.escala); } // ex.: pessoa baixinha
     if (n.oculto) this.setHidden(c, true);
     if (n.destaque && !SaveSystem.flag(`fase${this.map.fase}_concluida`)) {
       c.bubble = this.add.image(c.x, c.y - 25, 'bubbleHeart').setOrigin(0.5, 1).setDepth(99999);
@@ -218,6 +228,28 @@ class WorldScene extends Phaser.Scene {
       const d = this.add.image(c.x + Phaser.Math.Between(-4, 4), c.y - 14, 'pixel').setTint(0x4a2a1c).setDepth(c.sprite.depth + 1);
       this.tweens.add({ targets: d, y: c.y - 3, duration: 250 + i * 60, onComplete: () => d.destroy() });
     }
+  }
+
+  /** Descer do veículo: a moto fica parada e os dois aparecem do lado. */
+  dismount(posicoes) {
+    if (!this.vehicle) return;
+    this.parked = true;
+    this.vehicle.setTexture('moto');
+    this.player.sprite.setAlpha(1);
+    this.player.shadow.setScale(1);
+    const ele = this.npcs.ele;
+    if (ele && ele.hidden) this.setHidden(ele, false);
+    this.place(posicoes);
+  }
+
+  /** O tapa! (tela treme e balão de raiva) */
+  async slap(quem = 'ela', alvo = 'ele') {
+    const a = this.charById(quem), b = this.charById(alvo);
+    if (a && b) a.faceTowards(b.x, b.y);
+    AudioSystem.play('tapa');
+    this.cameras.main.shake(260, 0.012);
+    if (b) this.tweens.add({ targets: b.sprite, x: b.x + (b.x > a.x ? 4 : -4), duration: 80, yoyo: true });
+    await this.emote(quem, 'raiva');
   }
 
   /** Ela sentada no colo dele (os dois de frente para a tela). */
@@ -300,7 +332,8 @@ class WorldScene extends Phaser.Scene {
 
     if (!this.locked) {
       const d = Controls.getDir();
-      if (d) this.player.move(d, CONFIG.velocidade);
+      const vel = this.vehicle && !this.parked ? this.map.veiculo.velocidade : CONFIG.velocidade;
+      if (d) this.player.move(d, vel);
       else if (this.player.sprite.body.velocity.lengthSq() > 0 || this.player.sprite.anims.isPlaying) this.player.stop();
 
       for (const door of this.doors) {
@@ -329,6 +362,12 @@ class WorldScene extends Phaser.Scene {
 
     this.updateNpcs(time);
     this.player.sync();
+    if (this.vehicle && !this.parked) {
+      const moving = this.player.sprite.body.velocity.lengthSq() > 0;
+      if (this.player.dir === 'left') this.vehicle.setFlipX(true);
+      if (this.player.dir === 'right') this.vehicle.setFlipX(false);
+      this.vehicle.setPosition(this.player.x, this.player.y + (moving ? Math.round(Math.sin(time / 60)) : 0)).setDepth(this.player.y + 1);
+    }
     this.updateCamera(false);
     this.updateGuide(time);
   }
@@ -517,8 +556,9 @@ class WorldScene extends Phaser.Scene {
   emote(quem, tipo) {
     const c = this.charById(quem);
     if (!c) return Promise.resolve();
-    AudioSystem.play(tipo === 'coracao' ? 'heart' : 'select');
-    const img = this.add.image(c.x, c.y - 24, tipo === 'coracao' ? 'bubbleHeart' : 'bubble')
+    if (tipo !== 'raiva') AudioSystem.play(tipo === 'coracao' ? 'heart' : 'select');
+    const icon = { coracao: 'bubbleHeart', raiva: 'bubbleAngry' }[tipo] || 'bubble';
+    const img = this.add.image(c.x, c.y - 24, icon)
       .setOrigin(0.5, 1).setDepth(100001).setScale(0);
     return new Promise((resolve) => {
       this.tweens.add({

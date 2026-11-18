@@ -3,6 +3,29 @@
    Cada função retorna um <canvas> com o desenho.
    ========================================================= */
 
+// Moto elétrica vista de lado (virada para a direita). Com o casal: Gustavo
+// pilotando (regata preta) e a Bia na garupa com a máscara de monstro.
+function CharArtMoto(c, comCasal) {
+  const F = Pixel.F, B = Pixel.blob;
+  const oy = comCasal ? 12 : 0;
+  for (const wx of [8, 30]) { B(c, wx, oy + 16, 5.5, '#1d1b22'); B(c, wx, oy + 16, 2.5, '#9aa0a8'); }
+  F(c, 9, oy + 9, 20, 5, '#2b2a33'); F(c, 9, oy + 9, 20, 1, '#4a4856');
+  F(c, 11, oy + 6, 14, 3, '#3a3842'); F(c, 11, oy + 6, 14, 1, '#55535f');   // banco
+  F(c, 27, oy + 3, 2, 8, '#55535f'); F(c, 26, oy + 2, 5, 2, '#2b2a33');      // guidão
+  F(c, 31, oy + 7, 4, 3, '#ffe28a'); F(c, 30, oy + 13, 3, 2, '#55535f');     // farol
+  F(c, 12, oy + 11, 10, 2, '#4fc3f7');                                       // faixa (elétrica)
+  if (!comCasal) return;
+  // Bia na garupa: corta-vento bege e preto, máscara branca, cabelo preto longo
+  F(c, 9, 4, 7, 9, '#141014'); F(c, 12, 1, 6, 7, '#f2f0ec'); F(c, 11, 0, 7, 2, '#141014');
+  F(c, 14, 3, 1, 2, '#111111'); F(c, 16, 3, 1, 2, '#111111'); F(c, 14, 6, 3, 1, '#2a2a2a');
+  F(c, 11, 8, 7, 8, '#d9c7a3'); F(c, 11, 8, 1, 8, '#1d1b22'); F(c, 16, 9, 2, 6, '#1d1b22');
+  F(c, 12, 15, 6, 3, '#83a9d8');
+  // Gustavo pilotando: regata preta
+  F(c, 20, 0, 6, 3, '#2e1f1a'); F(c, 20, 3, 6, 5, '#e6b590'); F(c, 24, 4, 1, 1, '#2a1a22'); F(c, 19, 2, 2, 4, '#2e1f1a');
+  F(c, 19, 8, 7, 8, '#1d1b22'); F(c, 25, 9, 3, 2, '#e6b590'); F(c, 27, 10, 1, 1, '#e6b590');
+  F(c, 20, 15, 6, 3, '#7aa2d4');
+}
+
 const ObjectArt = (() => {
   const F = Pixel.F, B = Pixel.blob;
 
@@ -250,6 +273,85 @@ const ObjectArt = (() => {
       F(c, 13, 2, 4, 4, 'rgba(0,0,0,0)'); c.clearRect(14, 2, 3, 3); F(c, 13, 5, 1, 1, '#f6efe2'); // mordidinha
       for (let j = 0; j < 12; j++) F(c, 27 - Math.floor((12 - j) / 2.2), 17 + j, Math.max(1, Math.floor((12 - j) / 1.1)), 1, j % 2 ? '#d9a35e' : '#c48c45');
       Pixel.blob(c, 27, 14, 6, '#6b3f2a'); Pixel.blob(c, 27, 9, 4.5, '#7a4a33'); F(c, 25, 7, 2, 1, '#a8704f');
+    }),
+
+    armchair: () => make(22, 20, (c) => {
+      F(c, 0, 4, 4, 14, '#8a6a4a'); F(c, 18, 4, 4, 14, '#8a6a4a');
+      F(c, 2, 0, 18, 8, '#f4f2ee'); F(c, 2, 0, 18, 1, '#ffffff');
+      F(c, 3, 8, 16, 9, '#ebe8e3'); F(c, 3, 8, 16, 1, '#ffffff'); F(c, 3, 16, 16, 1, '#cfcbc4');
+      F(c, 2, 17, 2, 3, '#6e5238'); F(c, 18, 17, 2, 3, '#6e5238');
+    }),
+
+    dogWhite: () => make(14, 10, (c) => {
+      Pixel.blob(c, 7, 6, 4.5, '#f2f0ec'); Pixel.blob(c, 11, 4, 3, '#f2f0ec');
+      F(c, 12, 3, 1, 1, '#1d1b22'); F(c, 13, 5, 1, 1, '#1d1b22'); F(c, 10, 1, 2, 2, '#e3ddd3'); F(c, 1, 6, 3, 2, '#f2f0ec');
+    }),
+
+    dogDark: () => make(14, 10, (c) => {
+      Pixel.blob(c, 7, 6, 4.5, '#3a2a22'); Pixel.blob(c, 11, 4, 3, '#4a3428');
+      F(c, 12, 3, 1, 1, '#f2f0ec'); F(c, 11, 6, 2, 1, '#c48a5a'); F(c, 9, 1, 2, 2, '#2a1d18'); F(c, 1, 6, 3, 2, '#3a2a22');
+    }),
+
+    hammock: () => make(44, 16, (c) => {
+      F(c, 0, 0, 2, 16, '#6e5238'); F(c, 42, 0, 2, 16, '#6e5238');
+      for (let i = 0; i < 40; i++) {
+        const yy = 3 + Math.round(Math.sin((i / 40) * Math.PI) * 7);
+        F(c, 2 + i, yy, 1, 4, ['#4f9446', '#d9b04a', '#c94f3c', '#4f9446'][Math.floor(i / 5) % 4]);
+      }
+      F(c, 14, 12, 16, 3, '#d63a5a');
+    }),
+
+    stool: () => make(10, 14, (c) => {
+      F(c, 1, 0, 8, 5, '#c9a06a'); F(c, 1, 0, 8, 1, '#e2bd88');
+      F(c, 2, 5, 1, 9, '#2b2a30'); F(c, 7, 5, 1, 9, '#2b2a30'); F(c, 2, 10, 6, 1, '#2b2a30');
+    }),
+
+    diningTable: () => make(60, 30, (c) => {
+      F(c, 2, 4, 56, 18, '#a8744d'); F(c, 2, 4, 56, 2, '#c08a5e'); F(c, 2, 20, 56, 2, '#7a5034');
+      F(c, 5, 22, 3, 8, '#5a3a28'); F(c, 52, 22, 3, 8, '#5a3a28');
+      F(c, 20, 8, 20, 9, '#d9d4cc'); F(c, 22, 10, 6, 3, '#8c3a24'); F(c, 29, 10, 8, 3, '#a8452f'); F(c, 23, 14, 13, 2, '#b04a2c');
+      Pixel.blob(c, 10, 12, 4, '#ffffff'); Pixel.blob(c, 50, 12, 4, '#ffffff'); Pixel.blob(c, 44, 7, 3, '#e8d08a');
+      F(c, 14, 6, 2, 5, '#7ec7f0'); F(c, 46, 15, 2, 5, '#7ec7f0');
+    }),
+
+    house: () => make(64, 60, (c, r) => {
+      // casa do condomínio vista de frente, com decoração de Halloween
+      F(c, 4, 24, 56, 36, '#e9dcc8'); F(c, 4, 24, 56, 2, '#f7efe2');
+      for (let i = 0; i < 26; i++) F(c, 32 - i - 6, 4 + i, (i + 6) * 2 + 1, 1, i % 4 === 3 ? '#5a2f24' : '#7a3a2a');
+      F(c, 26, 38, 12, 22, '#6e4a32'); F(c, 27, 39, 10, 20, '#8a5c3b'); F(c, 35, 48, 2, 2, '#e9cc6a');
+      for (const wx of [10, 44]) { F(c, wx, 32, 12, 12, '#3a3440'); F(c, wx + 1, 33, 10, 10, '#ffb84a'); F(c, wx + 5, 33, 2, 10, '#3a3440'); F(c, wx + 1, 37, 10, 2, '#3a3440'); }
+      // teias e fantasminha
+      c.strokeStyle = 'rgba(255,255,255,0.8)'; c.lineWidth = 1;
+      for (let a = 0; a < 4; a++) { c.beginPath(); c.moveTo(4, 24); c.lineTo(4 + Math.cos(a * 0.45) * 12, 24 + Math.sin(a * 0.45) * 12); c.stroke(); }
+      Pixel.blob(c, 52, 20, 4, '#f6f6f2'); F(c, 48, 20, 8, 5, '#f6f6f2'); F(c, 50, 19, 1, 1, '#1d1b22'); F(c, 53, 19, 1, 1, '#1d1b22');
+    }),
+
+    pumpkin: () => make(14, 12, (c) => {
+      Pixel.blob(c, 7, 7, 5.5, '#e8741c'); F(c, 4, 3, 1, 8, '#c95e12'); F(c, 9, 3, 1, 8, '#c95e12');
+      F(c, 6, 0, 2, 3, '#4f7a2a');
+      F(c, 4, 6, 2, 2, '#ffe28a'); F(c, 8, 6, 2, 2, '#ffe28a'); F(c, 4, 9, 6, 1, '#ffe28a');
+    }),
+
+    moto: () => make(38, 22, (c) => CharArtMoto(c, false)),
+    motoCasal: () => make(38, 34, (c) => CharArtMoto(c, true)),
+
+    candyBowl: () => make(16, 12, (c) => {
+      Pixel.blob(c, 8, 7, 6.5, '#e8741c'); F(c, 1, 3, 14, 3, '#ffd86b');
+      F(c, 3, 2, 2, 2, '#ff6fae'); F(c, 7, 1, 2, 2, '#7ec7f0'); F(c, 11, 2, 2, 2, '#9be3b9');
+    }),
+
+    doces: () => make(30, 22, (c) => {
+      F(c, 2, 4, 9, 6, '#ff6fae'); F(c, 0, 6, 2, 2, '#ff6fae'); F(c, 11, 6, 2, 2, '#ff6fae'); F(c, 4, 5, 5, 1, '#ffd0e4');
+      F(c, 16, 2, 10, 7, '#7a4a33'); F(c, 16, 2, 10, 1, '#a8704f'); F(c, 18, 4, 6, 1, '#ffd86b');
+      Pixel.blob(c, 8, 16, 5, '#7ec7f0'); F(c, 13, 16, 8, 1, '#efe6dc'); Pixel.blob(c, 22, 16, 4, '#9be3b9'); F(c, 22, 8, 1, 4, '#efe6dc');
+    }),
+
+    bubbleAngry: () => make(13, 14, (c) => {
+      F(c, 1, 0, 11, 11, '#ffffff'); F(c, 0, 1, 13, 9, '#ffffff');
+      F(c, 5, 11, 3, 1, '#ffffff'); F(c, 6, 12, 1, 1, '#ffffff');
+      // símbolo de raiva
+      F(c, 3, 3, 2, 2, '#e8343c'); F(c, 8, 3, 2, 2, '#e8343c'); F(c, 3, 6, 2, 2, '#e8343c'); F(c, 8, 6, 2, 2, '#e8343c');
+      F(c, 5, 4, 3, 3, '#ffffff');
     }),
 
     heart: () => make(9, 8, (c) => {

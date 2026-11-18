@@ -8,6 +8,7 @@ const ArtFactory = {
   EXPRESSOES: ['normal', 'feliz', 'timido', 'surpreso'],
 
   currentFase: null, // fase em andamento (define as roupas)
+  currentMap: null,  // mapa atual (pode trocar a roupa, ex.: fantasia de Halloween)
 
   /** Roupa da fase: junta o visual padrão com o que a fase troca. */
   outfit(id, faseId) {
@@ -15,13 +16,19 @@ const ArtFactory = {
     return f && f.roupas && f.roupas[id];
   },
 
+  mapOutfit(id, faseId) {
+    const m = this.currentMap;
+    return m && m.fase === faseId && m.roupas && m.roupas[id];
+  },
+
   visualFor(id, faseId) {
-    const o = this.outfit(id, faseId);
-    return o ? Object.assign({}, PERSONAGENS[id].visual, o) : PERSONAGENS[id].visual;
+    return Object.assign({}, PERSONAGENS[id].visual, this.outfit(id, faseId) || {}, this.mapOutfit(id, faseId) || {});
   },
 
   textureKey(id, faseId) {
-    return this.outfit(id, faseId) ? `char_${id}_f${faseId}` : `char_${id}`;
+    let k = this.outfit(id, faseId) ? `char_${id}_f${faseId}` : `char_${id}`;
+    if (this.mapOutfit(id, faseId)) k += '_' + this.currentMap.id;
+    return k;
   },
 
   /** Cria (uma vez) a folha de sprites, animações e retratos do personagem com a roupa da fase. */
