@@ -44,7 +44,7 @@ Não precisa instalar nada: o Phaser já está incluído em `lib/`.
 | Falas e quiz da Fase 5 | `src/data/roteiros/fase5.js` |
 | Falas do pedido (Fase 6) | `src/data/roteiros/fase6.js` |
 | A carta do pedido 💌 | `src/data/carta.js` |
-| O vídeo do pedido | coloque em `assets/videos/pedido.mp4` (caminho em `CONFIG.videoPedido`) |
+| Foto/vídeo no final | botões da carta abrem a câmera do celular dela (`UI.capture`) |
 | Memórias bônus (estrelinhas) | `src/data/bonus.js` |
 | Layout dos mapas (onde ficam paredes, objetos, NPCs) | `src/data/maps/*.js` |
 | Dicas / objetivos e a seta rosa | `objetivos` dentro de cada mapa |

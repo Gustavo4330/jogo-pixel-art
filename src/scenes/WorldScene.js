@@ -40,6 +40,7 @@ class WorldScene extends Phaser.Scene {
     const sp = map.spawns[this.spawnId] || Object.values(map.spawns)[0];
     this.player = new Character(this, sp.x * T, sp.y * T, 'ela', { player: true });
     this.player.face(sp.dir || 'down');
+    if (sp.sentado) { this.player.sprite.body.enable = false; this.player.sit(); this.player.shadow.setVisible(false); }
     this.physics.add.collider(this.player.sprite, this.solids);
     this.physics.add.collider(this.player.sprite, this.objBodies);
 
@@ -99,6 +100,12 @@ class WorldScene extends Phaser.Scene {
 
     // Gatilhos: áreas que iniciam um roteiro quando ela pisa
     this.triggers = (map.gatilhos || []).filter((g) => !SaveSystem.flag(g.flag));
+
+    // Pôr do sol (piquenique do pedido): luz laranja e rosada
+    if (map.luz === 'por_do_sol') {
+      this.add.rectangle(0, 0, this.worldW, this.worldH, 0xff7a3c, 0.27).setOrigin(0).setDepth(99000);
+      this.add.rectangle(0, 0, this.worldW, this.worldH * 0.55, 0xff4f8a, 0.14).setOrigin(0).setDepth(99001);
+    }
 
     // Noite na rua
     if (map.luz === 'noite') {

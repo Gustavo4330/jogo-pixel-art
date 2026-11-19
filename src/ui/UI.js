@@ -411,43 +411,71 @@ const UI = {
     el.hidden = false;
     el.innerHTML = `
       <div class="letter">
-        <div class="letter-stamp">💌</div>
+        <div class="letter-stamp">${UI.heart()}</div>
         <h2>${UI.esc(CARTA.titulo)}</h2>
         ${CARTA.paragrafos.map((p) => `<p>${UI.esc(p)}</p>`).join('')}
         <p class="letter-final">${UI.esc(CARTA.final)}</p>
         <p class="letter-sign">${UI.esc(CARTA.assinatura)}</p>
         <div class="letter-btns">
-          <button class="btn primary l-video">🎬 Assistir ao vídeo</button>
-          <button class="btn l-next">Continuar 💖</button>
+          <button class="btn primary l-foto">Tirar foto</button>
+          <button class="btn primary l-gravar">Gravar vídeo</button>
+          <button class="btn l-next">Continuar</button>
         </div>
       </div>`;
     el.scrollTop = 0;
     return new Promise((resolve) => {
-      el.querySelector('.l-video').onclick = () => UI.video();
+      el.querySelector('.l-foto').onclick = () => UI.capture('foto');
+      el.querySelector('.l-gravar').onclick = () => UI.capture('video');
       el.querySelector('.l-next').onclick = () => { el.hidden = true; el.innerHTML = ''; resolve(); };
     });
   },
 
-  /** O vídeo do Gustavo (arquivo em CONFIG.videoPedido). */
-  video() {
-    const v = UI.$('#video');
-    v.hidden = false;
-    v.innerHTML = `
-      <div class="video-box">
-        <video src="${UI.esc(CONFIG.videoPedido)}" controls playsinline autoplay></video>
-        <p class="video-miss" hidden>O vídeo ainda está chegando... 🎬💌</p>
-        <button class="btn primary v-close">Fechar</button>
-      </div>`;
-    const vid = v.querySelector('video');
-    const music = SaveSystem.data.musica;
-    AudioSystem.stopMusic();
-    vid.onerror = () => { vid.hidden = true; v.querySelector('.video-miss').hidden = false; };
-    v.querySelector('.v-close').onclick = () => {
-      vid.pause();
-      v.hidden = true;
-      v.innerHTML = '';
-      if (music) AudioSystem.startMusic();
+  /** Abre a câmera do celular dela para tirar uma foto ou gravar um vídeo,
+   *  e mostra o resultado numa moldura de lembrança. */
+  capture(tipo) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = tipo === 'video' ? 'video/*' : 'image/*';
+    input.setAttribute('capture', 'user'); // câmera da frente
+    input.style.display = 'none';
+    document.body.appendChild(input);
+    input.onchange = () => {
+      const file = input.files && input.files[0];
+      input.remove();
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      const isVideo = file.type.startsWith('video');
+      const v = UI.$('#video');
+      v.hidden = false;
+      v.innerHTML = `
+        <div class="memory-shot">
+          <div class="polaroid big">
+            ${isVideo
+              ? `<video src="${url}" controls playsinline autoplay></video>`
+              : `<img src="${url}" alt="A nossa foto">`}
+            <div class="polaroid-caption">O dia do nosso pedido — 19/11/2026 ♥</div>
+          </div>
+          ${isVideo ? '' : '<p class="shot-hint">Segure a foto para salvar no celular.</p>'}
+          <div class="letter-btns">
+            <button class="btn primary v-again">${isVideo ? 'Gravar outro' : 'Tirar outra'}</button>
+            <button class="btn v-close">Fechar</button>
+          </div>
+        </div>`;
+      AudioSystem.play('camera');
+      const music = SaveSystem.data.musica;
+      if (isVideo) AudioSystem.stopMusic();
+      const close = () => {
+        const vid = v.querySelector('video');
+        if (vid) vid.pause();
+        v.hidden = true;
+        v.innerHTML = '';
+        URL.revokeObjectURL(url);
+        if (isVideo && music) AudioSystem.startMusic();
+      };
+      v.querySelector('.v-close').onclick = close;
+      v.querySelector('.v-again').onclick = () => { close(); UI.capture(tipo); };
     };
+    input.click();
   },
 
   /** Tela final do jogo. */

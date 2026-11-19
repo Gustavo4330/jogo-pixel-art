@@ -2,7 +2,7 @@
    MAPA: O PIQUENIQUE DO PEDIDO (Fase 6 — fase final)
    ---------------------------------------------------------
    Gramado com a mesa de concreto revestida de madeira onde
-   os dois sentam, piquenique, árvores à direita, quadra de
+   os dois já estão sentados ao pôr do sol, piquenique, árvores à direita, quadra de
    futsal no canto superior esquerdo e escadas à esquerda.
    ========================================================= */
 
@@ -10,6 +10,7 @@ MAPAS.piquenique = {
   id: 'piquenique',
   fase: 6,
   nome: 'O piquenique',
+  luz: 'por_do_sol',
 
   legenda: {
     Q: { tile: 'quadra', solido: true, texto: 'A quadra de futsal.' },
@@ -37,7 +38,7 @@ MAPAS.piquenique = {
   ],
 
   spawns: {
-    inicio: { x: 1.2, y: 12.6, dir: 'right' }, // chegando pelas escadas
+    inicio: { x: 12.3, y: 8.6, dir: 'down', sentado: true }, // ela já começa sentada ao lado dele
   },
 
   objetos: [
@@ -53,19 +54,13 @@ MAPAS.piquenique = {
   ],
 
   npcs: [
-    { id: 'ele', x: 10.7, y: 8.6, dir: 'down', sentado: true, destaque: true },
-  ],
-
-  // Quando ela chega na frente da mesa, a cena começa
-  gatilhos: [
-    { x: 11.5, y: 10.9, raio: 30, roteiro: 'f6_pedido', flag: 'f6_sentou' },
+    { id: 'ele', x: 10.7, y: 8.6, dir: 'down', sentado: true },
   ],
 
   bonus: [],
 
-  objetivos: [
-    { seNao: 'f6_sentou', texto: 'Vá até a mesa do piquenique encontrar o seu amor', alvo: { x: 11.5, y: 10.6 } },
-  ],
+  objetivos: [],
 
-  aoEntrar: { roteiro: 'f6_intro', flag: 'f6_intro' },
+  // a cena começa assim que a fase abre
+  aoEntrar: { roteiro: 'f6_pedido', flag: 'f6_pedido' },
 };

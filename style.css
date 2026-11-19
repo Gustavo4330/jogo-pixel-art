@@ -517,6 +517,7 @@ body.ready #loading { display: none; }
 .letter .letter-final { text-indent: 0; text-align: center; font-size: 1.15em; color: #c2236a; margin-top: 22px; }
 .letter .letter-sign { text-indent: 0; text-align: right; }
 .letter-stamp { position: absolute; top: -18px; right: 18px; font-size: 40px; transform: rotate(12deg); }
+.letter-stamp .px-heart { fill: var(--rosa-forte); filter: drop-shadow(0 2px 0 #fff); }
 .letter-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 10px; font-family: var(--font); }
 
 /* vídeo */
@@ -528,6 +529,10 @@ body.ready #loading { display: none; }
 }
 .video-box { display: flex; flex-direction: column; align-items: center; gap: 14px; width: min(860px, 100%); }
 .video-box video { width: 100%; max-height: 74vh; background: #000; box-shadow: 0 0 0 4px var(--rosa-forte); }
+.memory-shot { display: flex; flex-direction: column; align-items: center; gap: 12px; width: min(560px, 100%); max-height: 100%; overflow-y: auto; }
+.polaroid.big { transform: rotate(-2deg); padding: 12px 12px 4px; width: 100%; }
+.polaroid.big img, .polaroid.big video { display: block; width: 100%; max-height: 62vh; object-fit: contain; background: #1d1b22; }
+.shot-hint { margin: 0; color: #ffe2f0; font-size: 15px; }
 .video-miss { font-size: clamp(18px, 3vmin, 26px); color: #ffe2f0; text-align: center; }
 
 /* final */
